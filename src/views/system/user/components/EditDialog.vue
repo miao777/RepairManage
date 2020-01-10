@@ -144,8 +144,8 @@ export default {
       this.$emit('close')
     },
     handleUploadSuccess(resp) {
-      console.log(resp, 'qqwqw')
       this.form.headerUrl = resp.data.url
+      console.log(this.form.headerUrl, 'dsdsasadsadsad')
     },
     handleChangeUsername() {
       if (!isNaN(this.form.username)) {

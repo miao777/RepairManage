@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
+// 角色（列表）**
 export function page(data) {
   return request({
-    url: '/role/page',
+    url: '/admin/role/page',
     method: 'post',
     data: data
   })
@@ -38,9 +39,10 @@ export function edit(data) {
   })
 }
 
+// 角色（删除）**
 export function remove(id) {
   return request({
-    url: '/role/delete/' + id,
+    url: '/admin/role/delete/' + id,
     method: 'delete'
   })
 }
