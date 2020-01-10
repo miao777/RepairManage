@@ -54,3 +54,20 @@ export function batchRemove(ids) {
     data: ids
   })
 }
+
+// 图片管理（列表）
+export function imagesList(data) {
+  return request({
+    url: '/admin/image/page',
+    method: 'post',
+    data: data
+  })
+}
+
+// 图片管理（删除）
+export function imagesRemove(id) {
+  return request({
+    url: '/admin/image/delete/' + id,
+    method: 'delete'
+  })
+}
