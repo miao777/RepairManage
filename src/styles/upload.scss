@@ -1,0 +1,234 @@
+#uploadImageId .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+#uploadImageId .avatar-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+#uploadImageId .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+#uploadImageId .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+#uploadImageId2 .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+#uploadImageId2 .avatar-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+#uploadImageId2 .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+#uploadImageId2 .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+#uploadImageId3 .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+#uploadImageId3 .avatar-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+#uploadImageId3 .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
+    text-align: center;
+    background-color: #fbfdff;
+  }
+#uploadImageId3 .avatar {
+    width: 148px;
+    height: 148px;
+    display: block;
+  }
+  .expand-content-show img {
+    width: 100%;
+  }
+  .my-custom-style .ql-align,.ql-snow {
+    line-height: 0; 
+  }
+  .my-custom-style .ql-header,.ql-snow {
+    line-height: 1; 
+  }
+  .my-custom-style .ql-size,.ql-snow {
+    line-height: 1; 
+  }
+
+#activityDiv .activitySwitchClass .el-switch__core {
+  outline: none;
+}
+#serviceMerchantDiv .activitySwitchClass .el-switch__core {
+  outline: none;
+}
+#serachKeywordsDiv .searchKeywordsSwitchClass .el-switch__core {
+  outline: none;
+}
+#checkReportImageId .el-upload--picture-card{
+  display: none;
+}
+.expandTableForm {
+	font-size: 0;
+}
+
+.expandTableForm label {
+	width: 140px;
+	color: #99a9bf;
+	text-align: right;
+}
+
+.expandTableForm .el-form-item {
+	margin-right: 0;
+	margin-bottom: 0;
+	width: 45%;
+}
+
+.expandTableForm .expand-content-item {
+  vertical-align: middle;
+  width: 85%;
+}
+
+.expandOrderTableForm {
+	font-size: 0;
+}
+
+.expandOrderTableForm label {
+	width: 140px;
+	color: #99a9bf;
+	text-align: right;
+}
+
+.expandOrderTableForm .el-form-item {
+	margin-right: 0;
+	margin-bottom: 0;
+	width: 30%;
+}
+
+.expandOrderTableForm .remarkClass {
+	margin-right: 0;
+	margin-bottom: 0;
+	width: 85%;
+}
+
+.expandOrderTableForm .productImagesClass {
+	margin-right: 0;
+  margin-bottom: 0;
+  margin-top: 20px;
+	width: 85%;
+}
+
+.expandRepairTableForm {
+	font-size: 0;
+}
+
+.expandRepairTableForm label {
+	width: 140px;
+	color: #99a9bf;
+	text-align: right;
+}
+
+.expandRepairTableForm .el-form-item {
+	margin-right: 0;
+	margin-bottom: 0;
+	width: 30%;
+}
+
+.expandRepairTableForm .repairImagesClass {
+	margin-right: 0;
+  margin-bottom: 0;
+  margin-top: 20px;
+	width: 85%;
+}
+.expandRepairTableForm .repairProblemDescClass {
+	margin-right: 0;
+  margin-bottom: 0;
+  margin-top: 20px;
+	width: 85%;
+}
+.expandRepairTableForm .repairProblemDescClass .el-form-item__content{
+  width: 85%;
+}
+
+.expandMonthEvaluateTableForm {
+	font-size: 0;
+}
+
+.expandMonthEvaluateTableForm label {
+	width: 140px;
+	color: #99a9bf;
+	text-align: right;
+}
+
+.expandMonthEvaluateTableForm .el-form-item {
+	margin-right: 0;
+	margin-bottom: 0;
+	width: 30%;
+}
+
+.expandMonthEvaluateTableForm .monthEvaluateContentClass {
+	margin-right: 0;
+  margin-bottom: 0;
+  margin-top: 20px;
+	width: 85%;
+}
+.expandMonthEvaluateTableForm .monthEvaluateContentClass .el-form-item__content{
+  width: 85%;
+}
+
+.expandRepairTableForm {
+	font-size: 0;
+}
+
+.expandRepairTableForm label {
+	width: 140px;
+	color: #99a9bf;
+	text-align: right;
+}
+
+.expandRepairTableForm .el-form-item {
+	margin-right: 0;
+	margin-bottom: 0;
+	width: 30%;
+}
+
+.expandRepairTableForm .repairImagesClass {
+	margin-right: 0;
+  margin-bottom: 0;
+  margin-top: 20px;
+	width: 85%;
+}
+.expandRepairTableForm .repairProblemDescClass {
+	margin-right: 0;
+  margin-bottom: 0;
+  margin-top: 20px;
+	width: 85%;
+}
+.expandRepairTableForm .repairProblemDescClass .el-form-item__content{
+  width: 85%;
+}
