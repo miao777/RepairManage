@@ -51,9 +51,10 @@ export function edit(data) {
   })
 }
 
+// 用户管理（删除用户）
 export function remove(id) {
   return request({
-    url: '/user/delete/' + id,
+    url: '/admin/user/delete/' + id,
     method: 'delete'
   })
 }
@@ -73,9 +74,10 @@ export function toggleStatus(id) {
   })
 }
 
+// 用户管理（重置密码）**
 export function resetPwd(id) {
   return request({
-    url: '/user/reset/pwd/' + id,
+    url: '/admin/user/reset/password/' + id,
     method: 'put'
   })
 }
