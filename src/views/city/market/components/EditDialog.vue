@@ -13,11 +13,11 @@
         </el-select>
       </el-form-item>
       <el-form-item label="城市" prop="name">
-        <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + $t('menu.title')" />
+        <el-input v-model="form.name" type="text" placeholder="请输入城市" />
       </el-form-item>
 
       <el-form-item label="编码" prop="code">
-        <el-input v-model="form.code" type="text" :placeholder="$t('common.please.enter') + $t('menu.title')" />
+        <el-input v-model="form.code" type="text" placeholder="请输入城市编码" />
       </el-form-item>
 
       <el-form-item class="form-footer" style="margin: 0">
@@ -71,7 +71,9 @@ export default {
         provinceId: ''
       },
       rules: {
-        // title: [{ required: true, message: '请输入菜单名', trigger: 'blur,change' }]
+        name: [{ required: true, message: '请输入城市', trigger: 'blur,change' }],
+        code: [{ required: true, message: '请输入城市编码', trigger: 'blur,change' }],
+        provinceId: [{ required: true, message: '请选择省级', trigger: 'blur,change' }]
       }
     }
   },

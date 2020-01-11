@@ -12,12 +12,12 @@
           <el-option v-for="item in parents" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
-      <el-form-item label="区县" prop="title">
-        <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + $t('menu.title')" />
+      <el-form-item label="区县" prop="name">
+        <el-input v-model="form.name" type="text" placeholder="请输入区县" />
       </el-form-item>
 
-      <el-form-item label="编码" prop="title">
-        <el-input v-model="form.code" type="text" :placeholder="$t('common.please.enter') + $t('menu.title')" />
+      <el-form-item label="编码" prop="code">
+        <el-input v-model="form.code" type="text" placeholder="请输入编码" />
       </el-form-item>
 
       <el-form-item class="form-footer" style="margin: 0">
@@ -71,7 +71,9 @@ export default {
         cityId: ''
       },
       rules: {
-        // title: [{ required: true, message: '请输入菜单名', trigger: 'blur,change' }]
+        name: [{ required: true, message: '请输入区县名', trigger: 'blur,change' }],
+        code: [{ required: true, message: '请输入区县编码', trigger: 'blur,change' }],
+        cityId: [{ required: true, message: '请选择市级', trigger: 'blur,change' }]
       }
     }
   },

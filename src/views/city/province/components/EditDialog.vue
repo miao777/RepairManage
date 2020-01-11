@@ -8,12 +8,12 @@
       label-width="100px"
     >
 
-      <el-form-item label="省份" prop="title">
-        <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + $t('menu.title')" />
+      <el-form-item label="省份" prop="name">
+        <el-input v-model="form.name" type="text" placeholder="请输入省份" />
       </el-form-item>
 
-      <el-form-item label="编码" prop="title">
-        <el-input v-model="form.code" type="text" :placeholder="$t('common.please.enter') + $t('menu.title')" />
+      <el-form-item label="编码" prop="code">
+        <el-input v-model="form.code" type="text" placeholder="请输入省份编码" />
       </el-form-item>
 
       <el-form-item class="form-footer" style="margin: 0">
@@ -65,7 +65,8 @@ export default {
         code: ''
       },
       rules: {
-        // title: [{ required: true, message: '请输入菜单名', trigger: 'blur,change' }]
+        name: [{ required: true, message: '请输入省份', trigger: 'blur,change' }],
+        code: [{ required: true, message: '请输入省份编码', trigger: 'blur,change' }]
       }
     }
   },
