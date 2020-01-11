@@ -40,7 +40,8 @@
 </template>
 
 <script>
-import { tree, add, edit } from '@/api/menu'
+// import { tree, add, edit } from '@/api/menu'
+import menuApi from '@/api/menu'
 import ElementIcon from '@/icons'
 
 export default {
@@ -93,19 +94,19 @@ export default {
   methods: {
     async addMenu() {
       delete this.form.id
-      const resp = await add(this.form)
+      const resp = await menuApi.add(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     async editMenu() {
-      const resp = await edit(this.form)
+      const resp = await menuApi.edit(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     async loadParentMenu() {
-      const resp = await tree({ page: { page: 0, size: 1000, sorts: [{ field: 'sortNo', order: 'asc' }] }})
+      const resp = await menuApi.tree({ page: { page: 0, size: 1000, sorts: [{ field: 'sortNo', order: 'asc' }] }})
       if (resp.success) {
         this.parents = resp.rows
       }

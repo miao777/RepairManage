@@ -6,7 +6,8 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 // import store from '../store/modules/user'
-import { loadLeftMenu } from '@/api/menu.js'
+// import { loadLeftMenu } from '@/api/menu.js'
+import menuApi from '@/api/menu'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -79,7 +80,7 @@ export function resetRouter(menus) {
 
 export function loadRemoteRouters() {
   return new Promise((resolve, reject) => {
-    loadLeftMenu().then(resp => {
+    menuApi.loadLeftMenu().then(resp => {
       if (resp.success) {
         const menus = resp.rows.map(row => {
           const rootMenu = {

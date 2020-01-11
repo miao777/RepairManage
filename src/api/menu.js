@@ -1,69 +1,120 @@
 import request from '@/utils/request'
+const UrlPath = '/admin/menu/'
 
-// 后去路由地址（router）**
-export function loadLeftMenu() {
-  return request({
-    url: '/admin/menu/show',
-    method: 'get'
-  })
-}
+class menuApi {
+  /**
+   * @description '后台路由地址（router）'
+   * @param
+   * @static
+   * @memberof menuApi
+   */
+  static loadLeftMenu = () => {
+    return request({
+      url: '/admin/menu/show',
+      method: 'get'
+    })
+  }
 
-// 菜单树形结构 **
-export function tree(data) {
-  return request({
-    url: '/admin/menu/tree',
-    method: 'post',
-    data: data
-  })
-}
-// 菜单排序 **
-export function sort(data) {
-  return request({
-    url: '/admin/menu/sort',
-    method: 'post',
-    data: data
-  })
-}
+  /**
+     * @description 菜单树形结构**
+     * @param {Object} filters  {field	,op,value} value [EQ, NEQ, LIKE, LLIKE, RLIKE, GT, LT, GTE, LTE, IN, NOTIN, EXISTS, NEXISTS, BETWEEN, ISNULL, NOTNULL, EMPTY, NOTEMPTY, DISTINCT]
+     * @param {Object} page  {page	,size,sorts } sort [ asc, desc]
+     * @static
+     * @memberof menuApi
+     */
+    static tree = (data) => {
+      return request({
+        url: UrlPath + 'tree',
+        method: 'post',
+        data
+      })
+    }
 
-// 新增目录 **
-export function add(data) {
-  return request({
-    url: '/admin/menu/append',
-    method: 'post',
-    data: data
-  })
-}
+    /**
+     * @description "菜单排序"**
+     * @param {string} id “id”
+     * @param {string} oldParentId oldParentId
+     * @param {number} oldSortNo “oldSortNo”
+     * @param {string} parentId parentId
+     * @param {number} sortNo sortNo
+     * @static
+     * @memberof menuApi
+     */
+    static sort = (data) => {
+      return request({
+        url: UrlPath + 'sort',
+        method: 'post',
+        data
+      })
+    }
 
-// 修改 **
-export function edit(data) {
-  return request({
-    url: '/admin/menu/edit',
-    method: 'put',
-    data: data
-  })
-}
+    /**
+     * @description "新增菜单"
+     * @param {string} href “href”
+     * @param {string} icon icon
+     * @param {number} sortNo “sortNo”
+     * @param {string} parentId parentId
+     * @param {number} title title
+     * @static
+     * @memberof menuApi
+     */
+    static add = (data) => {
+      return request({
+        url: UrlPath + 'append',
+        method: 'post',
+        data
+      })
+    }
 
-// 删除 **
-export function remove(parentId, id) {
-  return request({
-    url: '/admin/menu/delete/' + parentId + '/' + id,
-    method: 'delete'
-  })
-}
+    /**
+     * @description "修改菜单"
+     * @param {string} href “href”
+     * @param {string} icon icon
+     * @param {number} sortNo “sortNo”
+     * @param {string} parentId parentId
+     * @param {string} title title
+     * @param {string} id “id”
+     * @static
+     * @memberof menuApi
+     */
+    static edit = (data) => {
+      return request({
+        url: UrlPath + 'edit',
+        method: 'put',
+        data
+      })
+    }
 
-// 角色权限列表
-export function permissionList(id) {
-  return request({
-    url: '/menu/list/select/' + id,
-    method: 'post'
-  })
+    /**
+     * @description "根据id删除菜单"**
+     * @param {string} id "id"
+     * @param {string} parentId "parentId"
+     * @static
+     * @memberof menuApi
+     */
+    static remove = (parentId, id) => {
+      return request({
+        url: UrlPath + '/delete/' + parentId + '/' + id,
+        method: 'delete'
+      })
+    }
 }
-// 角色绑定菜单
-export function rolrList(id, data) {
-  return request({
-    url: '/menu/bind/role/' + id,
-    method: 'put',
-    data: data
-  })
-}
+export default menuApi
+
+// 为用到的接口
+// // 角色权限列表
+// export function permissionList(id) {
+//   return request({
+//     url: '/menu/list/select/' + id,
+//     method: 'post'
+//   })
+// }
+// // 角色绑定菜单
+// export function rolrList(id, data) {
+//   return request({
+//     url: '/menu/bind/role/' + id,
+//     method: 'put',
+//     data: data
+//   })
+// }
 

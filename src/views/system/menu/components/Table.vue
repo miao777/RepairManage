@@ -44,7 +44,8 @@
 <script>
 import EditDialog from './EditDialog'
 import { MessageBox } from 'element-ui'
-import { remove } from '@/api/menu'
+// import { remove } from '@/api/menu'
+import menuApi from '@/api/menu'
 import { isEmpty } from '@/utils'
 
 export default {
@@ -73,7 +74,7 @@ export default {
   },
   methods: {
     async deleteMenu() {
-      const resp = await remove(this.selectRow.parentId ? this.selectRow.parentId : null, this.selectRow.id)
+      const resp = await menuApi.remove(this.selectRow.parentId ? this.selectRow.parentId : null, this.selectRow.id)
       if (resp.success) {
         this.$emit('search')
       }

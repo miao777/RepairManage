@@ -96,10 +96,10 @@ export function getManagerRoles() {
   })
 }
 
-// 登陆用户修改自己密码
+// 登陆用户修改自己密码**
 export function updateUserPwd(data) {
   return request({
-    url: '/user/modify/pwd',
+    url: '/admin/user/modify/password/',
     method: 'put',
     data: data
   })

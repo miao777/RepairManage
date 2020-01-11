@@ -71,8 +71,8 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     updatePwd() {
-      this.updatePwdType = true
-      console.log('我点击了修改')
+      // this.updatePwdType = true
+      console.log(this.user, '我点击了修改')
     },
     handleAddDialogClose() {
       this.updatePwdType = false

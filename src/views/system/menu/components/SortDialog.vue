@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import { tree, sort } from '@/api/menu'
+// import { tree, sort } from '@/api/menu'
+import menuApi from '@/api/menu'
 import { isEmpty } from '@/utils'
 import { Message } from 'element-ui'
 export default {
@@ -51,7 +52,7 @@ export default {
   },
   methods: {
     async loadTreeMenu() {
-      const resp = await tree(this.filters)
+      const resp = await menuApi.tree(this.filters)
       if (resp.success) {
         this.data = resp.rows.map(row => {
           if (!isEmpty(row.children)) {
@@ -64,7 +65,7 @@ export default {
       }
     },
     async saveMenuSort() {
-      const resp = await sort(this.form)
+      const resp = await menuApi.sort(this.form)
       if (resp.success) {
         this.loadTreeMenu()
       }

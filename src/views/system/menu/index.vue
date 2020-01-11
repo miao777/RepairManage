@@ -10,7 +10,8 @@
 import SearchBar from './components/SearchBar'
 import Table from './components/Table'
 import Pagination from '@/components/Pagination'
-import { tree } from '@/api/menu'
+// import { tree } from '@/api/menu'
+import menuApi from '@/api/menu'
 
 export default {
   components: { SearchBar, Table, Pagination },
@@ -33,7 +34,7 @@ export default {
   methods: {
     async fetchData() { // 后台分页请求的数据
       this.table.loading = true
-      const resp = await tree(this.searchForm)
+      const resp = await menuApi.tree(this.searchForm)
       if (resp.success) {
         // 需要把父节点的id赋值到子节点上使用
         this.table.data = resp.rows.map(row => {
