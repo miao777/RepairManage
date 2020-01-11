@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { add, edit, getManagerRoles } from '@/api/user'
+// import { add, edit, getManagerRoles } from '@/api/user'
 import Uploader from '@/components/Uploader'
 import { assignExistField } from '@/utils'
 import { regular } from '@/utils/validate'
@@ -104,25 +104,25 @@ export default {
     // this.loadRoles()
   },
   methods: {
-    async loadRoles() {
-      const resp = await getManagerRoles()
-      if (resp.success) {
-        this.roles = resp.rows
-      }
-    },
-    async add() {
-      delete this.form.id
-      const resp = await add(this.form)
-      if (resp.success) {
-        this.handleClose()
-      }
-    },
-    async edit() {
-      const resp = await edit(this.form)
-      if (resp.success) {
-        this.handleClose()
-      }
-    },
+    // async loadRoles() {
+    //   const resp = await getManagerRoles()
+    //   if (resp.success) {
+    //     this.roles = resp.rows
+    //   }
+    // },
+    // async add() {
+    //   delete this.form.id
+    //   const resp = await add(this.form)
+    //   if (resp.success) {
+    //     this.handleClose()
+    //   }
+    // },
+    // async edit() {
+    //   const resp = await edit(this.form)
+    //   if (resp.success) {
+    //     this.handleClose()
+    //   }
+    // },
     handleOpen() {
       if (!this.$props.isAdd) {
         assignExistField(this.$props.data, this.form)

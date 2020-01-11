@@ -15,79 +15,7 @@
     >
       <el-table-column v-if="multiple" type="selection" width="35" />
       <el-table-column align="center" type="index" width="35" class-name="table-detail" />
-      <!-- 下拉框 -->
-      <el-table-column type="expand" width="35" class-name="table-detail">
-        <template slot-scope="props">
-          <el-form label-position="left" inline class="table-detail-expand">
-            <el-form-item :label="$t('order.oederNumber') + '：'">
-              <span>{{ props.row.orderNo }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.consignee') + '：'">
-              <span>{{ props.row.addressee.name }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.waybillNo') + '：'">
-              <span>{{ props.row.addressee.waybillNo }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.consigneePhone') + '：'">
-              <span>{{ props.row.addressee.phone }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.consigneeaddr') + '：'">
-              <span>{{ props.row.addressee.address }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.orderState') + '：'">
-              <span>{{ props.row.orderStatus_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.orderType') + '：'">
-              <span>{{ props.row.orderType_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.delivery') + '：'">
-              <span>{{ props.row.deliveryType_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.orderTime') + '：'">
-              <span>{{ props.row.orderTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.paymentTime') + '：'">
-              <span>{{ props.row.payTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.deliveryTime') + '：'">
-              <span>{{ props.row.shipTime_fmt }}</span>
-            </el-form-item><el-form-item :label="$t('order.receivingTime') + '：'">
-              <span>{{ props.row.receiveTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.commentTime') + '：'">
-              <span>{{ props.row.commentTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.remarks') + '：'">
-              <span>{{ props.row.remark }}</span>
-            </el-form-item>
-            <hr>
-            <div v-for="(product,index) in props.row.productInfosJson" :key="index">
-              <el-form-item :label="$t('order.goodsimg') + '：'" class="productImagesClass">
-                <div v-if="product.productJson.images && product.productJson.images.length > 0">
-                  <a v-for="img in product.productJson.images" :key="img" :href="img" target="_blank" style="margin-left:20px;"><img :src="img" width="80px" height="80px"></a>
-                </div>
-                <div v-else>
-                  <span>暂无</span>
-                </div>
-              </el-form-item>
-              <br>
-              <el-form-item :label="$t('order.goodsname') + '：'">
-                <span>{{ product.name }}</span>
-              </el-form-item>
 
-              <el-form-item :label="$t('order.goodsprice') + '：'">
-                <span>￥{{ (product.price/ 100).toFixed(2) }}</span>
-              </el-form-item>
-
-              <el-form-item :label="$t('order.ordernums') + '：'">
-                <span>{{ product.nums }}</span>
-              </el-form-item>
-
-              <div v-show="index < props.row.productInfosJson.length - 1" style="width:100%;height: 0px;border-bottom:#000000 1px dashed;" />
-            </div>
-          </el-form>
-        </template>
-      </el-table-column>
       <!-- 图片 -->
       <el-table-column label="图片" prop="localPath">
         <template slot-scope="scope">
