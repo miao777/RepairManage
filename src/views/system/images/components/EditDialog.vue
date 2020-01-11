@@ -101,7 +101,7 @@ export default {
     }
   },
   created() {
-    this.loadRoles()
+    // this.loadRoles()
   },
   methods: {
     async loadRoles() {

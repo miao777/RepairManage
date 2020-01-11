@@ -46,8 +46,7 @@ export default {
         if (resp.totalCount > 0 && resp.rows.length === 0) {
           this.fetchData(1)
         }
-        const preRows = resp.rows
-        this.table.data = preRows
+        this.table.data = resp.rows
         this.pagination.pageNo = resp.pageNo + 1
         this.pagination.pageSize = resp.pageSize
         this.pagination.totalCount = resp.totalCount
