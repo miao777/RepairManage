@@ -1,17 +1,17 @@
 import request from '@/utils/request'
-const UrlPath = '/admin/repair/item/'
+const UrlPath = '/repair/subclass/'
 /**
- * @description 维修项目 Api
+ * @description 维修小类 Api
  *
- * @class RepairItemApi
+ * @class SubclassApi
  */
-class RepairItemApi {
+class SubclassApi {
     /**
-     * @description "新增维修项目"
+     * @description "新增维修小类"
      * @param {string} code “code”
      * @param {string} name “name”
      * @static
-     * @memberof RepairItemApi
+     * @memberof SubclassApi
      */
     static add = (data) => {
       return request({
@@ -21,10 +21,10 @@ class RepairItemApi {
       })
     }
     /**
-     * @description "根据id删除维修项目"
+     * @description "根据id删除维修小类"
      * @param {string} id "id"
      * @static
-     * @memberof RepairItemApi
+     * @memberof SubclassApi
      */
     static delete = (id) => {
       return request({
@@ -33,12 +33,12 @@ class RepairItemApi {
       })
     }
     /**
-     * @description "修改维修项目"
+     * @description "修改维修小类"
      * @param {string} code “code”
      * @param {string} name “name”
      * @param {string} id “id”
      * @static
-     * @memberof RepairItemApi
+     * @memberof SubclassApi
      */
     static edit = (data) => {
       return request({
@@ -48,11 +48,11 @@ class RepairItemApi {
       })
     }
     /**
-     * @description 获取维修项目分页数据
+     * @description 获取维修小类分页数据
      * @param {Object} filters  {field	,op,value} value [EQ, NEQ, LIKE, LLIKE, RLIKE, GT, LT, GTE, LTE, IN, NOTIN, EXISTS, NEXISTS, BETWEEN, ISNULL, NOTNULL, EMPTY, NOTEMPTY, DISTINCT]
      * @param {Object} page  {page	,size,sorts } sort [ asc, desc]
      * @static
-     * @memberof RepairItemApi
+     * @memberof SubclassApi
      */
     static page = (data) => {
       return request({
@@ -62,10 +62,10 @@ class RepairItemApi {
       })
     }
     /**
-     * @description 切换维修项目状态
-     * @param {string} id 维修项目id
+     * @description 切换维修小类状态
+     * @param {string} id 维修小类id
      * @static
-     * @memberof RepairItemApi
+     * @memberof SubclassApi
      */
     static toggle = data => {
       return request({
@@ -75,4 +75,4 @@ class RepairItemApi {
     }
 }
 
-export default RepairItemApi
+export default SubclassApi
