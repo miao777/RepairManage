@@ -20,7 +20,12 @@
       <el-table-column label="状态" prop="status_fmt" />
       <el-table-column label="启停" prop="status">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.status" :active-value="true" @change="change(scope.row)" />
+          <el-switch
+            v-model="scope.row.status"
+            active-color="#13ce66"
+            :active-value="true"
+            @change="change(scope.row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="操作">
