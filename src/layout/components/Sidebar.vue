@@ -55,7 +55,6 @@ export default {
     }
   },
   created() {
-    console.log(this.$router.options.routes, 'this.$router.options.routes')
   },
   methods: {
   }
