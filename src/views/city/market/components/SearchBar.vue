@@ -7,8 +7,8 @@
       :rules="rules"
       class="demo-form-inline"
     >
-      <el-form-item label="区县" prop="filters[0].value">
-        <el-input v-model="form.filters[0].value" placeholder="输入区县" />
+      <el-form-item label="城市" prop="filters[0].value">
+        <el-input v-model="form.filters[0].value" placeholder="输入城市" />
       </el-form-item>
       <el-form-item label="编码" prop="filters[1].value">
         <el-input v-model="form.filters[1].value" placeholder="输入编码" />

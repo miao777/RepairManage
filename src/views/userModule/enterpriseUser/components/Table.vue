@@ -15,7 +15,7 @@
       :max-height="height"
     >
       <el-table-column type="index" label="序号" align="center" width="40px" />
-      <el-table-column label="省份" prop="name" />
+      <el-table-column label="城市" prop="name" />
       <el-table-column label="编码" prop="code" />
       <el-table-column label="状态" prop="status_fmt" />
       <el-table-column label="启停" prop="status">
@@ -40,7 +40,8 @@
 
 <script>
 import EditDialog from './EditDialog'
-import DistrictApi from '@/api/district'
+// import ProvinceApi from '@/api/province'
+import CityApi from '@/api/city'
 import { MessageBox } from 'element-ui'
 import { isEmpty } from '@/utils'
 export default {
@@ -68,14 +69,14 @@ export default {
   },
   methods: {
     async deleteMenu() {
-      const resp = await DistrictApi.delete(this.selectRow.id)
+      const resp = await CityApi.delete(this.selectRow.id)
       if (resp.success) {
         this.$emit('search')
       }
     },
     async change(row) {
       console.log(row)
-      const res = await DistrictApi.toggle(row.id)
+      const res = await CityApi.toggle(row.id)
       if (res.success) {
         this.$emit('search')
       }

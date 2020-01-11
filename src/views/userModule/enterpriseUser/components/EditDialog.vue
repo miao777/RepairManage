@@ -7,16 +7,16 @@
       :rules="rules"
       label-width="100px"
     >
-      <el-form-item label="城市" prop="cityId">
-        <el-select v-model="form.cityId" placeholder="选择城市" @change="handleChangeLevel">
+      <el-form-item label="省份" prop="provinceId">
+        <el-select v-model="form.provinceId" placeholder="选择省份" @change="handleChangeLevel">
           <el-option v-for="item in parents" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
-      <el-form-item label="区县" prop="title">
+      <el-form-item label="城市" prop="name">
         <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + $t('menu.title')" />
       </el-form-item>
 
-      <el-form-item label="编码" prop="title">
+      <el-form-item label="编码" prop="code">
         <el-input v-model="form.code" type="text" :placeholder="$t('common.please.enter') + $t('menu.title')" />
       </el-form-item>
 
@@ -31,7 +31,7 @@
 <script>
 // import { tree, add, edit } from '@/api/menu'
 import ElementIcon from '@/icons'
-import DistrictApi from '@/api/district'
+import ProvinceApi from '@/api/province'
 import CityApi from '@/api/city'
 export default {
   props: {
@@ -68,7 +68,7 @@ export default {
         id: '',
         name: '',
         code: '',
-        cityId: ''
+        provinceId: ''
       },
       rules: {
         // title: [{ required: true, message: '请输入菜单名', trigger: 'blur,change' }]
@@ -81,13 +81,13 @@ export default {
   methods: {
     async addMenu() {
       delete this.form.id
-      const resp = await DistrictApi.add(this.form)
+      const resp = await CityApi.add(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     async editMenu() {
-      const resp = await DistrictApi.edit(this.form)
+      const resp = await CityApi.edit(this.form)
       if (resp.success) {
         this.handleClose()
       }
@@ -95,7 +95,7 @@ export default {
     handleOpen() {
       this.handleChangeLevel()
       if (!this.$props.isAdd) {
-        this.form.cityId = this.$props.data.cityId
+        this.form.provinceId = this.$props.data.id
         this.form = this.$props.data
       }
     },
@@ -111,7 +111,7 @@ export default {
       }
     },
     async loadParentMenu() {
-      const resp = await CityApi.page({ page: { page: 0, size: 1000 }})
+      const resp = await ProvinceApi.page({ page: { page: 0, size: 1000 }})
       if (resp.success) {
         this.parents = resp.rows
       }
