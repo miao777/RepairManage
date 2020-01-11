@@ -1,23 +1,22 @@
 <template>
   <el-dialog :title="title" :visible.sync="isShow" width="50%" :before-close="handleClose" :close-on-click-modal="false" @open="handleOpen">
-    <el-form
-      ref="form"
-      :model="form"
-      status-icon
-      :rules="rules"
-      label-width="100px"
-    >
-      <el-form-item label="省份" prop="provinceId">
+    <el-form ref="form" :model="form" status-icon :rules="rules" label-width="100px">
+      <!-- <el-form-item label="省份" prop="provinceId">
         <el-select v-model="form.provinceId" placeholder="选择省份" @change="handleChangeLevel">
           <el-option v-for="item in parents" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
+      </el-form-item> -->
+      <el-form-item :label="$t('menu.icon')" prop="iconId">
+        <el-select v-model="form.iconId" filterable :placeholder="$t('common.please.select') + $t('menu.icon')">
+          <el-option v-for="item in icons" :key="item" :label="item" :value="item"> <i :class="item + ' icon-in-table'" />{{ item }} </el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="城市" prop="name">
-        <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + $t('menu.title')" />
+      <el-form-item label="名称" prop="name">
+        <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + '名称'" />
       </el-form-item>
 
-      <el-form-item label="编码" prop="code">
-        <el-input v-model="form.code" type="text" :placeholder="$t('common.please.enter') + $t('menu.title')" />
+      <el-form-item label="排序" prop="sortNo">
+        <el-input v-model="form.sortNo" type="tel" :placeholder="$t('common.please.enter') + '排序'" />
       </el-form-item>
 
       <el-form-item class="form-footer" style="margin: 0">
@@ -31,8 +30,8 @@
 <script>
 // import { tree, add, edit } from '@/api/menu'
 import ElementIcon from '@/icons'
-import ProvinceApi from '@/api/province'
-import CityApi from '@/api/city'
+import CategoryApi from '@/api/category'
+// import CityApi from '@/api/city'
 export default {
   props: {
     title: {
@@ -54,68 +53,53 @@ export default {
   },
   data() {
     return {
-      levels: [{
-        label: this.$t('menu.title1'),
-        value: 1
-      }, {
-        label: this.$t('menu.title2'),
-        value: 2
-      }],
+      levels: [
+        {
+          label: this.$t('menu.title1'),
+          value: 1
+        },
+        {
+          label: this.$t('menu.title2'),
+          value: 2
+        }
+      ],
       parents: [],
       icons: ElementIcon,
       showParent: false,
       form: {
         id: '',
         name: '',
-        code: '',
-        provinceId: ''
+        iconId: '',
+        sortNo: ''
       },
       rules: {
         // title: [{ required: true, message: '请输入菜单名', trigger: 'blur,change' }]
       }
     }
   },
-  created() {
-
-  },
+  created() {},
   methods: {
     async addMenu() {
       delete this.form.id
-      const resp = await CityApi.add(this.form)
+      const resp = await CategoryApi.add(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     async editMenu() {
-      const resp = await CityApi.edit(this.form)
+      const resp = await CategoryApi.edit(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     handleOpen() {
-      this.handleChangeLevel()
+      // this.handleChangeLevel()
       if (!this.$props.isAdd) {
         this.form.provinceId = this.$props.data.id
         this.form = this.$props.data
       }
     },
-    handleChangeLevel() {
-      if (this.form.level === 1) {
-        this.showParent = false
-        this.form.parentId = ''
-      } else {
-        this.showParent = true
-        if (this.parents.length === 0) {
-          this.loadParentMenu()
-        }
-      }
-    },
-    async loadParentMenu() {
-      const resp = await ProvinceApi.page({ page: { page: 0, size: 1000 }})
-      if (resp.success) {
-        this.parents = resp.rows
-      }
-    },
+
     handleSubmit() {
       this.$refs.form.validate(valid => {
         if (valid) {
@@ -132,9 +116,9 @@ export default {
 }
 </script>
 <style>
-.icon-in-table {
-  font-size:18px;
-  color:#F56C6C;
-  margin-right: 5px;
-}
+    .icon-in-table {
+        font-size: 18px;
+        color: #f56c6c;
+        margin-right: 5px;
+    }
 </style>

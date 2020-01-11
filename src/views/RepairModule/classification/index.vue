@@ -9,7 +9,7 @@
 
 <script>
 // import ProvinceApi from '@/api/province'
-import CityApi from '@/api/city'
+import CategoryApi from '@/api/category'
 import SearchBar from './components/SearchBar'
 import Table from './components/Table'
 import Pagination from '@/components/Pagination'
@@ -39,7 +39,7 @@ export default {
     //   初始化数据（TableData）
     fetchData() {
       this.table.loading = true
-      CityApi.page({ ...this.searchForm }).then(res => {
+      CategoryApi.page({ ...this.searchForm }).then(res => {
         if (res.success) {
           this.table.data = res.rows
           this.pagination.pageNo = res.pageNo + 1
