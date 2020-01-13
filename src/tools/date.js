@@ -52,11 +52,14 @@ export function checkMobile(rule, value, callback) {
 
 // 邮箱
 export function checkMailBox(rule, value, callback) {
+  console.log(value, '2121212121')
   const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
   if (!value) {
     return callback(new Error('请输入邮箱地址'))
   } else if (!reg.test(value)) {
     return callback(new Error('请输入正确邮箱地址'))
+  } else {
+    callback()
   }
 }
 // 手机号码(可为空，当存在时只校验位数和格式)

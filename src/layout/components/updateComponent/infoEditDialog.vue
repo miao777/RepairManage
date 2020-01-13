@@ -33,7 +33,8 @@
 </template>
 
 <script>
-import { getInfo, updateIfoContent } from '@/api/user'
+// import { getInfo, updateIfoContent } from '@/api/user'
+import updateUserconntentApi from '@/api/user'
 import Uploader from '@/components/Uploader'
 import { checkMobile, checkMailBox } from '@/tools/date.js'
 export default {
@@ -58,6 +59,7 @@ export default {
         headerUrl: '', // 头像
         mobileNo: '', // 电话
         name: '', // 名字
+        nickname: '',
         sex: true // 男女
       },
       rules: {
@@ -72,7 +74,8 @@ export default {
   methods: {
     // 修改自己信息
     async updateIfoContent() {
-      const resp = await updateIfoContent(this.form)
+      console.log(this.form, 'this.form')
+      const resp = await updateUserconntentApi.updateIfoContent(this.form)
       if (resp.success) {
         this.$store.dispatch('user/getInfo')
         this.handleClose()
@@ -80,7 +83,7 @@ export default {
     },
     // 获取用户自己的信息
     async getInfo() {
-      const resp = await getInfo()
+      const resp = await updateUserconntentApi.getInfo()
       if (resp.success) {
         const data = resp.data
         this.form.email = data.email
@@ -106,7 +109,8 @@ export default {
       this.$emit('close')
     },
     handleUploadSuccess(resp) {
-      this.form.headerUrl = resp.data.url
+      // this.form.headerUrl = resp.data.url
+      this.form.headerUrl = resp.data.fullPath
     },
     handleChangeUsername() {
       if (!isNaN(this.form.username)) {

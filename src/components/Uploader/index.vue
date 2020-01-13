@@ -108,9 +108,10 @@ export default {
       this.$forceUpdate()
     },
     onSuccess(resp, file, fileList) {
-      console.log('上传文件成功，返回内容', resp, fileList)
-      console.log(process.env.VUE_APP_BASE_API)
-      this.imageUrl = resp.data.url
+      // console.log('上传文件成功，返回内容', resp, fileList)
+      // console.log(process.env.VUE_APP_BASE_API)
+      // this.imageUrl = resp.data.url  //原本
+      this.imageUrl = resp.data.fullPath
       this.$emit('on-success', resp, fileList)
     },
     onPreview(file) {

@@ -113,3 +113,56 @@ export function updateIfoContent(data) {
     data: data
   })
 }
+
+const UrlPath = '/admin/user/'
+class updateUserconntentApi {
+  /**
+   * @description '请修改密码'
+   * @param {string} newPwd 'newPwd'
+   * @param {string} newPwd2 'newPwd2
+   * @param {string} oldPwd 'oldPwd
+   * @static
+   * @memberof updateUserconntentApi
+   */
+  static updateUserPwd = (data) => {
+    return request({
+      url: UrlPath + '/modify/password',
+      method: 'put',
+      data
+    })
+  }
+
+  /**
+   * @description '更新资料'
+   * @param {string} email 'email'
+   * @param {string} headerUrl 'headerUrl'
+   * @param {string} mobileNo 'mobileNo'
+   * @param {string} name 'name'
+   * @param {boolean} sex 'sex'
+   * @param {string} nickname 'nickname'
+   * @static
+   * @memberof updateUserconntentApi
+   */
+  static updateIfoContent = (data) => {
+    return request({
+      url: UrlPath + 'update',
+      method: 'put',
+      data
+    })
+  }
+
+  /**
+   * @description '获取用户登录信息'
+   * @param
+   * @static
+   * @memberof updateUserconntentApi
+   */
+  static getInfo = () => {
+    return request({
+      url: UrlPath + 'get/current',
+      method: 'get'
+    })
+  }
+}
+
+export default updateUserconntentApi

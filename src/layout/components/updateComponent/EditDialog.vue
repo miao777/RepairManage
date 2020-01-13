@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { updateUserPwd } from '@/api/user'
+import updateUserconntentApi from '@/api/user'
 export default {
   components: { },
   props: {
@@ -90,7 +90,7 @@ export default {
   methods: {
     // 修改密码
     async updateUserPwd() {
-      const resp = await updateUserPwd(this.form)
+      const resp = await updateUserconntentApi.updateUserPwd(this.form)
       if (resp.success) {
         console.log(resp, '修改成功')
         this.handleClose()
