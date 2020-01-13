@@ -70,7 +70,7 @@ export default {
         id: '',
         name: '',
         iconId: '',
-        sortNo: ''
+        sortNo: 0
       },
       rules: {
         // title: [{ required: true, message: '请输入菜单名', trigger: 'blur,change' }]
