@@ -25,17 +25,19 @@ export function getRoleTypes() {
   })
 }
 
+// 角色（新增）**
 export function add(data) {
   return request({
-    url: '/role/add',
+    url: '/admin/role/add',
     method: 'post',
     data: data
   })
 }
 
+// 角色（修改）**
 export function edit(data) {
   return request({
-    url: '/role/edit',
+    url: '/admin/role/edit',
     method: 'put',
     data: data
   })

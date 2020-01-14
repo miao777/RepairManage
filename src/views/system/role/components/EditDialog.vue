@@ -77,19 +77,16 @@ export default {
     }
   },
   created() {
-
   },
   methods: {
     async loadRoleTypes() {
       const resp = await getRoleTypes()
-      console.log(resp, '11111111')
       if (resp.success) {
         this.types = resp.rows
       }
     },
     async loadRoleKeys() {
       const resp = await getRoleKeys()
-      // console.log(resp, '22222')
       if (resp.success) {
         this.keys = resp.rows
       }
@@ -102,17 +99,17 @@ export default {
       }
     },
     async edit() {
+      console.log(this.form)
       const resp = await edit(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     handleOpen() {
+      this.loadRoleTypes()
+      this.loadRoleKeys()
       if (!this.$props.isAdd) {
         this.form = this.$props.data
-      } else {
-        this.loadRoleTypes()
-        this.loadRoleKeys()
       }
     },
     handleSubmit() {

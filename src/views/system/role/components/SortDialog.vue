@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import { tree, permissionList, rolrList } from '@/api/menu'
+// import { tree, permissionList, rolrList } from '@/api/menu'
+import menuApi from '@/api/menu'
 import { isEmpty } from '@/utils'
 export default {
   props: {
@@ -46,7 +47,7 @@ export default {
   methods: {
     // 树形列表
     async loadTreeMenu() {
-      const resp = await tree(this.filters)
+      const resp = await menuApi.tree(this.filters)
       if (resp.success) {
         this.data = resp.rows.map(row => {
           this.deleteId.push(row.id)
@@ -62,7 +63,7 @@ export default {
     },
     // 角色权限列表
     async permissionList() {
-      const res = await permissionList(this.list.id)
+      const res = await menuApi.permissionList(this.list.id)
       if (res.success) {
         // console.log(res.rows, '角色权限列表')
         const arr = []
@@ -77,7 +78,7 @@ export default {
     },
     // 绑定角色
     async rolrList(data) {
-      const resp = await rolrList(this.list.id, data)
+      const resp = await menuApi.rolrList(this.list.id, data)
       if (resp.success) {
         // console.log(resp, '绑定角色')
         this.data = []
@@ -101,7 +102,7 @@ export default {
         }
         arr.push(obj)
       })
-      // console.log(arr, '数组')
+      console.log(arr, '数组')
       this.rolrList(arr)
     },
     handleSubmit() {

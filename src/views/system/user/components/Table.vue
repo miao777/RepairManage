@@ -15,11 +15,12 @@
     >
       <el-table-column v-if="multiple" type="selection" width="35" />
       <el-table-column align="center" type="index" width="35" class-name="table-detail" />
+      <!-- 下拉框 -->
       <el-table-column type="expand" width="35" class-name="table-detail">
         <template slot-scope="props">
           <el-form label-position="left" inline class="table-detail-expand">
             <el-form-item :label="$t('role.name') + '：'">
-              <span>{{ props.row.roleName }}</span>
+              <span>{{ props.row.role.name }}</span>
             </el-form-item>
             <el-form-item :label="$t('user.username') + '：'">
               <span>{{ props.row.username }}</span>
@@ -41,7 +42,8 @@
               <span>{{ props.row.email }}</span>
             </el-form-item>
             <el-form-item :label="$t('user.sex') + '：'">
-              <span>{{ props.row.sex_fmt }}</span>
+              <span v-if="props.row.sex">男</span>
+              <span v-else>女</span>
             </el-form-item>
             <el-form-item :label="$t('user.createDate') + '：'">
               <span>{{ props.row.createDate_fmt }}</span>
@@ -52,6 +54,7 @@
           </el-form>
         </template>
       </el-table-column>
+      <!-- 头像 -->
       <el-table-column :label="$t('user.headerUrl')" prop="headerUrl">
         <template slot-scope="scope">
           <el-image :class="scope.row.headerUrl ? 'table-image-size' : ''" :src="scope.row.headerUrl" :preview-src-list="scope.row.headerUrls" fit="cover">
@@ -61,26 +64,32 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('user.username')" prop="username" sortable />
-      <el-table-column :label="$t('user.name')" prop="name" sortable />
-      <el-table-column :label="$t('user.sex')" prop="sex_fmt" width="50" />
-      <el-table-column :label="$t('user.mobileNo')" prop="mobileNo" sortable />
-      <el-table-column :label="$t('role.name')" prop="roleName" />
-      <el-table-column :label="$t('user.status')" prop="status_fmt">
+      <!-- 账号名 -->
+      <el-table-column :label="$t('user.username')" prop="username" align="center" />
+      <!-- 昵称 -->
+      <el-table-column :label="$t('user.name')" prop="name" align="center" />
+      <!-- 性别 -->
+      <el-table-column :label="$t('user.sex')" prop="sex" width="50" align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.sex">男</span>
+          <span v-else>女</span>
+        </template>
+      </el-table-column>
+      <!-- 电话 -->
+      <el-table-column :label="$t('user.mobileNo')" prop="mobileNo" align="center" />
+      <!-- 角色名 -->
+      <el-table-column :label="$t('role.name')" prop="role.name" align="center" />
+      <el-table-column :label="$t('user.status')" prop="status_fmt" align="center" />
+      <!-- 状态 -->
+      <el-table-column label="状态切换" prop="status_fmt">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.status" active-color="#0fb336" @change="hanldeToggleStatus(scope.row)" />
         </template>
       </el-table-column>
-      <el-table-column :label="$t('user.blacklist')" prop="blacklist">
-        <template slot-scope="scope">
-          <div v-if="scope.row.blacklist && scope.row.blacklist.length > 0" :gutter="20">
-            <span style="margin-right: 10px;">{{ scope.row.blacklist.length }}个</span>
-            <span :span="12"><el-link :underline="false" @click="handleShowBlacklist(scope.row)">查看<i class="el-icon-view el-icon--right" /></el-link></span>
-          </div>
-        </template>
-      </el-table-column>
+      <!-- 注册时间 -->
       <el-table-column :label="$t('user.createDate')" prop="createDate_fmt" sortable />
-      <el-table-column>
+      <!-- 操作 -->
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-tooltip :content="$t('common.edit')" placement="top">
             <el-button type="primary" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
@@ -137,6 +146,8 @@ export default {
       if (!resp.success) {
         this.selectRow.status = !this.selectRow.status
         this.$forceUpdate()
+      } else {
+        this.$emit('search')
       }
     },
     async resetPwd() {

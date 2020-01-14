@@ -25,7 +25,7 @@ export default {
           { field: 'status', op: 'EQ', value: '' },
           { field: 'role.key', op: 'EQ', value: '' }
         ],
-        page: { page: 0, size: 10, sorts: [{ field: 'createDate', order: 'desc' }] } // 请求分页栏和排序的数据
+        page: { page: 0, size: 10, sorts: [{ field: 'createDate', order: 'asc' }] } // 请求分页栏和排序的数据
       },
       table: { loading: false, data: [], multiple: false, multipleSelection: [] }, // 表格的数据
       pagination: { pageNo: 1, pageSize: 10, totalCount: 0 } // 这个是返回结果的时候的分页数据

@@ -98,23 +98,34 @@ class menuApi {
         method: 'delete'
       })
     }
+
+    /**
+     * @description "角色绑定菜单"
+     * @param {string} id “id”
+     * @param {Array}  '[ { "id": "string","parentId": "string" }]'
+     * @static
+     * @memberof menuApi
+     */
+    static rolrList = (id, data) => {
+      return request({
+        url: '/admin/role/bind/role/' + id,
+        method: 'post',
+        data
+      })
+    }
+
+    /**
+     * @description "角色权限列表"
+     * @param {string} id “id”
+     * @param {Array}  '[ { "id": "string","parentId": "string" }]'
+     * @static
+     * @memberof menuApi
+     */
+    static permissionList = (id) => {
+      return request({
+        url: UrlPath + 'list/select/' + id,
+        method: 'post'
+      })
+    }
 }
 export default menuApi
-
-// 为用到的接口
-// // 角色权限列表
-// export function permissionList(id) {
-//   return request({
-//     url: '/menu/list/select/' + id,
-//     method: 'post'
-//   })
-// }
-// // 角色绑定菜单
-// export function rolrList(id, data) {
-//   return request({
-//     url: '/menu/bind/role/' + id,
-//     method: 'put',
-//     data: data
-//   })
-// }
-

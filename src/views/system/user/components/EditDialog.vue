@@ -7,8 +7,8 @@
       :rules="rules"
       label-width="100px"
     >
-      <el-form-item :label="$t('role.name')" prop="role.id">
-        <el-select v-model="form.role.id" :placeholder="$t('role.name')">
+      <el-form-item :label="$t('role.name')" prop="roleId">
+        <el-select v-model="form.roleId" :placeholder="$t('role.name')">
           <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
@@ -29,7 +29,7 @@
         <el-radio v-model="form.sex" :label="false">女</el-radio>
       </el-form-item>
       <el-form-item :label="$t('user.mobileNo')" prop="mobileNo">
-        <el-input v-model="form.mobileNo" type="text" :placeholder="$t('common.please.enter') + $t('user.mobileNo')" />
+        <el-input v-model="form.mobileNo" type="text" :placeholder="$t('common.please.enter') + $t('user.mobileNo')" maxlength="11" />
       </el-form-item>
       <el-form-item :label="$t('user.email')" prop="email">
         <el-input v-model="form.email" type="text" :placeholder="$t('common.please.enter') + $t('user.email')" />
@@ -37,7 +37,7 @@
       <!-- <el-form-item :label="$t('user.status')" prop="status">
         <el-switch v-model="form.status" active-color="#0fb336" />
       </el-form-item> -->
-      <el-form-item class="form-footer" style="margin: 0">
+      <el-form-item class="form-footer" style="margin: 0" prop="">
         <el-button type="primary" icon="el-icon-check" @click="handleSubmit">{{ $t('common.confirm') }}</el-button>
         <el-button type="default" icon="el-icon-close" @click="handleClose">{{ $t('common.cancel') }}</el-button>
       </el-form-item>
@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import { add, edit, getManagerRoles } from '@/api/user'
+import { add, edit } from '@/api/user'
+import { page } from '@/api/role'
 import Uploader from '@/components/Uploader'
 import { assignExistField } from '@/utils'
 import { regular } from '@/utils/validate'
@@ -74,6 +75,9 @@ export default {
   },
   data() {
     return {
+      searchForm: {
+        page: { page: 0, size: 100 }
+      },
       roles: [],
       form: {
         id: '',
@@ -85,7 +89,8 @@ export default {
         mobileNo: '',
         // status: true,
         email: '',
-        role: { id: '' }
+        roleId: ''
+        // role: { id: '' }
       },
       rules: {
         username: [
@@ -103,8 +108,9 @@ export default {
     this.loadRoles()
   },
   methods: {
+    // 查询角色名
     async loadRoles() {
-      const resp = await getManagerRoles()
+      const resp = await page(this.searchForm)
       if (resp.success) {
         this.roles = resp.rows
       }
@@ -125,10 +131,11 @@ export default {
     handleOpen() {
       if (!this.$props.isAdd) {
         assignExistField(this.$props.data, this.form)
-        this.form.role.id = this.$props.data.roleId
+        this.form.roleId = this.$props.data.role.id
         this.$nextTick(() => {
           this.$refs.uploader.loadImage()
         })
+        console.log(this.$props.data, '121212121')
       }
     },
     handleSubmit() {
@@ -144,8 +151,7 @@ export default {
       this.$emit('close')
     },
     handleUploadSuccess(resp) {
-      this.form.headerUrl = resp.data.url
-      console.log(this.form.headerUrl, 'dsdsasadsadsad')
+      this.form.headerUrl = resp.data.fullPath
     },
     handleChangeUsername() {
       if (!isNaN(this.form.username)) {

@@ -42,9 +42,10 @@ export function batchRemove(ids) {
   })
 }
 
+// 用户管理（切换状态）
 export function toggleStatus(id) {
   return request({
-    url: '/user/toggle/status/' + id,
+    url: '/admin/user/toggle/status/' + id,
     method: 'put'
   })
 }
