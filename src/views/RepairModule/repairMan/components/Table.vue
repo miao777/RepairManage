@@ -16,60 +16,52 @@
       element-loading-background="rgba(0, 0, 0, 0.8)"
       @row-click="handleRowClick"
     >
+      <el-table-column v-if="multiple" type="selection" width="35" />
+      <el-table-column align="center" type="index" width="35" class-name="table-detail" />
       <!-- 下拉框 -->
-      <el-table-column type="expand">
+      <el-table-column type="expand" width="35" class-name="table-detail">
         <template slot-scope="props">
-          <el-form label-position="right" inline class="demo-table-expand" label-width="150px" style="margin-left:-50px;">
-            <div style="margin-bottom: -20px;">
-              <el-form-item :label="$t('clerk.headerUrl') + '：'">
-                <div v-if="props.row.user.headerUrl">
-                  <a :key="props.row.user.headerUrl" :href="props.row.user.headerUrl" target="_blank" style="margin-left:20px;"><img :src="props.row.user.headerUrl" width="80px" height="80px"></a>
-                </div>
-                <div v-else>
-                  <span><i class="el-icon-picture-outline" />{{ $t('common.noImgLoading') }}</span>
-                </div>
-              </el-form-item>
-            </div>
-            <div style="margin-bottom: -35px;">
-              <el-form-item :label="$t('clerk.username') + '：'">
-                <span>{{ props.row.user.username }}</span>
-              </el-form-item>
-            </div>
-            <div style="margin-bottom: -35px;">
-              <el-form-item :label="$t('clerk.name') + '：'">
-                <span>{{ props.row.user.name }}</span>
-              </el-form-item>
-            </div>
-            <div style="margin-bottom: -35px;">
-              <el-form-item :label="$t('clerk.roleName') + '：'">
-                <span>{{ props.row.user.roleName }}</span>
-              </el-form-item>
-            </div>
-            <div style="margin-bottom: -35px;">
-              <el-form-item :label="$t('clerk.sex') + '：'">
-                <span>{{ props.row.user.sex_fmt }}</span>
-              </el-form-item>
-            </div>
-            <div style="margin-bottom: -35px;">
-              <el-form-item :label="$t('clerk.mobileNo') + '：'">
-                <span>{{ props.row.user.mobileNo }}</span>
-              </el-form-item>
-            </div>
-            <div style="margin-bottom: -35px;">
-              <el-form-item :label="$t('clerk.email') + '：'">
-                <span>{{ props.row.user.email }}</span>
-              </el-form-item>
-            </div>
-            <div style="margin-bottom: -35px;">
-              <el-form-item :label="$t('clerk.status') + '：'">
-                <span>{{ props.row.user.status_fmt }}</span>
-              </el-form-item>
-            </div>
-            <div style="margin-bottom: -35px;">
-              <el-form-item :label="$t('clerk.signIn') + '：'">
-                <span>{{ props.row.user.isSignIn ? $t('clerk.signInTrue') : $t('clerk.signInFalse') }}</span>
-              </el-form-item>
-            </div>
+          <el-form label-position="left" inline class="table-detail-expand">
+            <!-- 头像 -->
+            <el-form-item label="头像">
+              <div v-if="props.row.user.headerUrl">
+                <a :key="props.row.user.headerUrl" :href="props.row.user.headerUrl" target="_blank" style="margin-left:20px;"><img :src="props.row.user.headerUrl" width="80px" height="80px"></a>
+              </div>
+              <div v-else>
+                <span><i class="el-icon-picture-outline" />{{ $t('common.noImgLoading') }}</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="姓名">
+              <span>{{ props.row.user.name }}</span>
+            </el-form-item>
+            <el-form-item label="账户名">
+              <span>{{ props.row.user.username }}</span>
+            </el-form-item>
+            <el-form-item label="电话">
+              <span>{{ props.row.user.mobileNo }}</span>
+            </el-form-item>
+            <el-form-item label="昵称">
+              <span>{{ props.row.user.nickname }}</span>
+            </el-form-item>
+            <el-form-item label="身份证">
+              <span>{{ props.row.idCard }}</span>
+            </el-form-item>
+            <el-form-item label="邮箱">
+              <span>{{ props.row.user.email }}</span>
+            </el-form-item>
+            <el-form-item label="角色">
+              <span>{{ props.row.user.role.key_fmt }}</span>
+            </el-form-item>
+            <el-form-item label="性别">
+              <span v-if="props.row.sex">男</span>
+              <span v-else>女</span>
+            </el-form-item>
+            <el-form-item label="状态">
+              <span>{{ props.row.user.status_fmt }}</span>
+            </el-form-item>
+            <el-form-item label="创建时间">
+              <span>{{ props.row.user.createDate_fmt }}</span>
+            </el-form-item>
           </el-form>
         </template>
       </el-table-column>
