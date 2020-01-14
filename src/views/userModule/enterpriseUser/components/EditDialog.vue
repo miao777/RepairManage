@@ -148,7 +148,7 @@ export default {
     },
 
     handleUploadSuccess(resp) {
-      this.form.user.headerUrl = resp.data.url
+      this.form.user.headerUrl = resp.data.fullPath
     },
     async addMenu() {
       delete this.form.id
