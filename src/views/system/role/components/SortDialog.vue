@@ -16,7 +16,6 @@
 </template>
 
 <script>
-// import { tree, permissionList, rolrList } from '@/api/menu'
 import menuApi from '@/api/menu'
 import { isEmpty } from '@/utils'
 export default {
@@ -68,7 +67,6 @@ export default {
         // console.log(res.rows, '角色权限列表')
         const arr = []
         res.rows.map(item => {
-          // if (this.deleteId.indexOf(item.id) === -1) {
           if (!~this.deleteId.indexOf(item.id)) {
             arr.push(item)
           }

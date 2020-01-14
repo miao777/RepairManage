@@ -59,7 +59,7 @@ export function batchRemove(ids) {
   })
 }
 
-// 图片管理（列表）
+// 图片管理（列表）**
 export function imagesList(data) {
   return request({
     url: '/admin/image/page',
@@ -68,7 +68,7 @@ export function imagesList(data) {
   })
 }
 
-// 图片管理（删除）
+// 图片管理（删除）**
 export function imagesRemove(id) {
   return request({
     url: '/admin/image/delete/' + id,
