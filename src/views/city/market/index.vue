@@ -2,7 +2,6 @@
   <div class="app-container">
     <search-bar :form="searchForm" @search="fetchData" @reset="reset" />
     <Table :loading="table.loading" :data="table.data" :multiple="table.multiple" @search="fetchData" />
-    <!-- <Table :data="[]" /> -->
     <Pagination :page="pagination" @pagination="handleChangePagination" />
   </div>
 </template>

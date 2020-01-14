@@ -29,7 +29,6 @@
 </template>
 
 <script>
-// import { tree, add, edit } from '@/api/menu'
 import ElementIcon from '@/icons'
 import DistrictApi from '@/api/district'
 import CityApi from '@/api/city'
@@ -97,8 +96,9 @@ export default {
     handleOpen() {
       this.handleChangeLevel()
       if (!this.$props.isAdd) {
-        this.form.cityId = this.$props.data.cityId
+        // this.form.cityId = this.$props.data.cityId
         this.form = this.$props.data
+        console.log(this.form, '1212121')
       }
     },
     handleChangeLevel() {

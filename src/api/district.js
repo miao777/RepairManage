@@ -4,10 +4,10 @@ const UrlPath = '/admin/district/'
 
 class DistrictApi {
     /**
-     * @description "新增城市"
+     * @description "新增区县"
      * @param {string} code “code”
      * @param {string} name “name”
-     * @param {string} provinceId provinceId
+     * @param {string} cityId cityId
      * @static
      * @memberof DistrictApi
      */
@@ -19,19 +19,23 @@ class DistrictApi {
       })
     }
     /**
-     * @description "根据id删除城市"
-     * @param {string} id "id"
+     * @description "编辑区县"
+     * @param {string} code “code”
+     * @param {string} name “name”
+     * @param {string} id “id”
+     * @param {string} cityId 'cityId'
      * @static
      * @memberof DistrictApi
      */
-    static delete = (id) => {
+    static edit = (data) => {
       return request({
-        url: UrlPath + '/delete/' + id,
-        method: 'delete'
+        url: UrlPath + 'edit',
+        method: 'put',
+        data
       })
     }
     /**
-     * @description 获取城市分页数据
+     * @description 获取区县分页数据
      * @param {Object} filters  {field	,op,value} value [EQ, NEQ, LIKE, LLIKE, RLIKE, GT, LT, GTE, LTE, IN, NOTIN, EXISTS, NEXISTS, BETWEEN, ISNULL, NOTNULL, EMPTY, NOTEMPTY, DISTINCT]
      * @param {Object} page  {page	,size,sorts } sort [ asc, desc]
      * @static
@@ -45,7 +49,7 @@ class DistrictApi {
       })
     }
     /**
-     * @description "根据id删除城市"
+     * @description "根据id删除区县"
      * @param {string} id "id"
      * @static
      * @memberof DistrictApi
@@ -57,8 +61,8 @@ class DistrictApi {
       })
     }
     /**
-     * @description 切换城市状态
-     * @param {string} id 城市id
+     * @description 切换曲线状态
+     * @param {string} id 区县id
      * @static
      * @memberof DistrictApi
      */

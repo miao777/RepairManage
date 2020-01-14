@@ -1,6 +1,6 @@
-import { login, getInfo, logout } from '@/api/user'
+// import { login, getInfo, logout } from '@/api/user'
+import updateUserconntentApi from '@/api/user'
 import { getToken, setToken, removeToken, removeRole, setRole } from '@/utils/auth'
-// import { resetRouter } from '@/router'
 import HeaderUrl from '@/images/avatar.png'
 
 const state = {
@@ -26,7 +26,7 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password })
+      updateUserconntentApi.login({ username: username.trim(), password: password })
         .then(response => {
           const { data } = response
           commit('SET_TOKEN', data.Authorization)
@@ -42,7 +42,7 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo().then(response => {
+      updateUserconntentApi.getInfo().then(response => {
         const { data } = response
         if (!data) {
           reject('当前用户状态异常，请重新登录。')
@@ -60,13 +60,11 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout().then(() => {
+      updateUserconntentApi.logout().then(() => {
         commit('SET_TOKEN', '')
         commit('SET_NAME', '')
         removeToken()
         removeRole()
-        // resetRouter()
-        // sessionStorage.setItem('num', '1')
         resolve()
       }).catch(error => {
         reject(error)

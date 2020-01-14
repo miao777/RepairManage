@@ -15,7 +15,7 @@
       :max-height="height"
     >
       <el-table-column type="index" label="序号" align="center" width="40px" />
-      <el-table-column label="省份" prop="name" />
+      <el-table-column label="区县" prop="name" />
       <el-table-column label="编码" prop="code" />
       <el-table-column label="状态" prop="status_fmt" />
       <el-table-column label="启停" prop="status">

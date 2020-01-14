@@ -17,10 +17,10 @@
       <el-table-column align="center" type="index" width="35" class-name="table-detail" />
 
       <!-- 图片 -->
-      <el-table-column label="图片" prop="localPath">
+      <el-table-column label="图片" prop="fullPath">
         <template slot-scope="scope">
-          <el-image :class="scope.row.localPath ? 'table-image-size' : ''" :src="scope.row.localPath" :preview-src-list="scope.row.localPaths" fit="cover">
-            <div v-if="!scope.row.localPath" slot="error" class="image-slot">
+          <el-image :class="scope.row.fullPath ? 'table-image-size' : ''" :src="scope.row.fullPath" :preview-src-list="scope.row.fullPaths" fit="cover">
+            <div v-if="!scope.row.fullPath" slot="error" class="image-slot">
               <i class="el-icon-picture-outline" />{{ $t('common.notLoading') }}
             </div>
           </el-image>

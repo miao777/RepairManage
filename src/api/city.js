@@ -59,6 +59,7 @@ class CityApi {
   * @param {string} code “code”
   * @param {string} name “name”
   * @param {string} id “id”
+  * @param {string} provinceId 'provinceId'
   * @static
   * @memberof CityApi
   */

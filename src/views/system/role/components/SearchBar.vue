@@ -20,7 +20,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="success" icon="el-icon-plus" @click="handleAddDialogOpen">{{ $t('common.add') }}</el-button>
-        <el-button type="danger" icon="el-icon-folder-remove" @click="handleBatchDelete">{{ $t('common.batch.delete') }}</el-button>
+        <!-- <el-button type="danger" icon="el-icon-folder-remove" @click="handleBatchDelete">{{ $t('common.batch.delete') }}</el-button> -->
       </el-form-item>
     </el-form>
     <add-dialog ref="AddDialog" :is-show="isAddShow" :is-add="true" @close="handleAddDialogClose" />
@@ -89,10 +89,10 @@ export default {
     handleAddDialogClose() {
       this.isAddShow = false
       this.$emit('search')
-    },
-    handleBatchDelete() {
-      this.$emit('batch-delete')
     }
+    // handleBatchDelete() {
+    //   this.$emit('batch-delete')
+    // }
   }
 }
 </script>

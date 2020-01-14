@@ -85,6 +85,7 @@ export default {
     async getInfo() {
       const resp = await updateUserconntentApi.getInfo()
       if (resp.success) {
+        console.log(resp, 'sadsadasdsamdklas')
         const data = resp.data
         this.form.email = data.email
         this.form.headerUrl = data.headerUrl

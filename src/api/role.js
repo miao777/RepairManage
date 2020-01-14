@@ -9,16 +9,18 @@ export function page(data) {
   })
 }
 
+// 角色键值（列表）**
 export function getRoleKeys() {
   return request({
-    url: '/role/enum/RoleKey',
+    url: '/admin/role/list/role/key',
     method: 'get'
   })
 }
 
+// 角色类型（列表）**
 export function getRoleTypes() {
   return request({
-    url: '/role/enum/RoleType',
+    url: '/admin/role/list/role/type',
     method: 'get'
   })
 }

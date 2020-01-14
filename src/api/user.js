@@ -1,30 +1,5 @@
 import request from '@/utils/request'
 
-// 登陆 **
-export function login(data) {
-  return request({
-    url: '/login',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, // formdata专用
-    method: 'post',
-    data: data
-  })
-}
-
-// 获取登陆用户信息 **
-export function getInfo() {
-  return request({
-    url: '/admin/user/get/current',
-    method: 'get'
-  })
-}
-
-export function logout() {
-  return request({
-    url: '/logout',
-    method: 'get'
-  })
-}
-
 // 用户管理（列表）**
 export function page(data) {
   return request({
@@ -96,24 +71,6 @@ export function getManagerRoles() {
   })
 }
 
-// 登陆用户修改自己密码**
-export function updateUserPwd(data) {
-  return request({
-    url: '/admin/user/modify/password/',
-    method: 'put',
-    data: data
-  })
-}
-
-// 修改用户自己资料
-export function updateIfoContent(data) {
-  return request({
-    url: '/user/own/edit',
-    method: 'put',
-    data: data
-  })
-}
-
 const UrlPath = '/admin/user/'
 class updateUserconntentApi {
   /**
@@ -160,6 +117,35 @@ class updateUserconntentApi {
   static getInfo = () => {
     return request({
       url: UrlPath + 'get/current',
+      method: 'get'
+    })
+  }
+
+  /**
+   * @description '登陆'
+   * @param {string} username 'username'
+   * @param {string} password 'password'
+   * @static
+   * @memberof updateUserconntentApi
+   */
+  static login = (data) => {
+    return request({
+      url: '/login',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, // formdata专用
+      method: 'post',
+      data
+    })
+  }
+
+  /**
+   * @description '退出登录'
+   * @param
+   * @static
+   * @memberof updateUserconntentApi
+   */
+  static logout = () => {
+    return request({
+      url: '/logout',
       method: 'get'
     })
   }
