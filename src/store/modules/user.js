@@ -30,6 +30,7 @@ const actions = {
         .then(response => {
           const { data } = response
           commit('SET_TOKEN', data.Authorization)
+          sessionStorage.setItem('info', JSON.stringify('1'))
           setToken(data.Authorization)
           setRole(response.role)
           resolve()
@@ -38,7 +39,6 @@ const actions = {
         })
     })
   },
-
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
@@ -65,6 +65,7 @@ const actions = {
         commit('SET_NAME', '')
         removeToken()
         removeRole()
+        sessionStorage.setItem('num', '1')
         resolve()
       }).catch(error => {
         reject(error)
