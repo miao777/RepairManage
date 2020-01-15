@@ -43,11 +43,14 @@
       <el-table-column label="联系电话" prop="contractPhone" width="120" />
       <el-table-column label="员工人数" prop="staffCount" width="80" align="center" />
       <el-table-column label="企业地址" prop="address" />
-      <el-table-column label="操作" align="center" width="190">
+      <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
           <!-- 新增登陆用户 -->
           <el-tooltip content="新增用户" placement="top">
             <el-button type="success" icon="el-icon-s-custom" circle @click="handleBindServiceMerchantBtn(scope.row)" />
+          </el-tooltip>
+          <el-tooltip content="地址" placement="top">
+            <el-button type="warning" icon="el-icon-s-promotion" circle @click="handleBindServiceMerchantBtnss(scope.row)" />
           </el-tooltip>
           <el-tooltip :content="$t('common.edit')" placement="top">
             <el-button type="primary" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
@@ -59,21 +62,21 @@
       </el-table-column>
     </el-table>
     <edit-dialog ref="EditDialog" :is-show="isEditShow" :title="$t('common.edit')" :is-add="false" :data="selectRow" @close="handleEditDialogClose" />
-    <show-merchant
-      :show.sync="enterpriserighttable.visible"
-      :shop-id="enterpriserighttable.id"
-      @handleBindClose="handleBindClose"
-    />
+    <!-- 企业登陆用户 -->
+    <show-merchant :show.sync="enterpriserighttable.visible" :shop-id="enterpriserighttable.id" @handleBindClose="handleBindClose" />
+    <!-- 用户地位 -->
+    <MapShowMerchant :show.sync="map.visible" :shop-id="enterpriserighttable.id" @handleBindClose="handleBindClosess" />
   </div>
 </template>
 
 <script>
 import EditDialog from './EditDialog'
 import ShowMerchant from './ShowMerchant'
+import MapShowMerchant from './mapShowMerchant'
 import EnterpriseApi from '@/api/enterprise'
 import { MessageBox } from 'element-ui'
 export default {
-  components: { EditDialog, ShowMerchant },
+  components: { EditDialog, ShowMerchant, MapShowMerchant },
   props: {
     loading: {
       type: Boolean,
@@ -92,7 +95,8 @@ export default {
     return {
       isEditShow: false,
       selectRow: {},
-      enterpriserighttable: { visible: false, id: '' }
+      enterpriserighttable: { visible: false, id: '' },
+      map: { visible: false, addr: '' }
     }
   },
   computed: {
@@ -132,6 +136,13 @@ export default {
     },
     handleBindClose() {
       this.enterpriserighttable.visible = false
+    },
+    handleBindServiceMerchantBtnss(row) {
+      console.log(row, 'sizhi')
+      this.map.visible = true
+    },
+    handleBindClosess() {
+      this.map.visible = false
     }
   }
 }
