@@ -49,9 +49,9 @@
           <el-tooltip content="新增用户" placement="top">
             <el-button type="success" icon="el-icon-s-custom" circle @click="handleBindServiceMerchantBtn(scope.row)" />
           </el-tooltip>
-          <el-tooltip content="地址" placement="top">
+          <!-- <el-tooltip content="地址" placement="top">
             <el-button type="warning" icon="el-icon-s-promotion" circle @click="handleBindServiceMerchantBtnss(scope.row)" />
-          </el-tooltip>
+          </el-tooltip> -->
           <el-tooltip :content="$t('common.edit')" placement="top">
             <el-button type="primary" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
           </el-tooltip>
@@ -65,18 +65,19 @@
     <!-- 企业登陆用户 -->
     <show-merchant :show.sync="enterpriserighttable.visible" :shop-id="enterpriserighttable.id" @handleBindClose="handleBindClose" />
     <!-- 用户地位 -->
-    <MapShowMerchant :show.sync="map.visible" :shop-id="enterpriserighttable.id" @handleBindClose="handleBindClosess" />
+    <!-- <MapShowMerchant :show.sync="map.visible" :shop-id="enterpriserighttable.id" @handleBindClose="handleBindClosess" /> -->
   </div>
 </template>
 
 <script>
 import EditDialog from './EditDialog'
 import ShowMerchant from './ShowMerchant'
-import MapShowMerchant from './mapShowMerchant'
+// import MapShowMerchant from './mapShowMerchant'
 import EnterpriseApi from '@/api/enterprise'
 import { MessageBox } from 'element-ui'
 export default {
-  components: { EditDialog, ShowMerchant, MapShowMerchant },
+  components: { EditDialog, ShowMerchant },
+  // components: { EditDialog, ShowMerchant, MapShowMerchant },
   props: {
     loading: {
       type: Boolean,
@@ -95,8 +96,8 @@ export default {
     return {
       isEditShow: false,
       selectRow: {},
-      enterpriserighttable: { visible: false, id: '' },
-      map: { visible: false, addr: '' }
+      enterpriserighttable: { visible: false, id: '' }
+      // map: { visible: false, addr: '' }
     }
   },
   computed: {
@@ -136,14 +137,14 @@ export default {
     },
     handleBindClose() {
       this.enterpriserighttable.visible = false
-    },
-    handleBindServiceMerchantBtnss(row) {
-      console.log(row, 'sizhi')
-      this.map.visible = true
-    },
-    handleBindClosess() {
-      this.map.visible = false
     }
+    // handleBindServiceMerchantBtnss(row) {
+    //   console.log(row, 'sizhi')
+    //   this.map.visible = true
+    // }
+    // handleBindClosess() {
+    //   this.map.visible = false
+    // }
   }
 }
 </script>
