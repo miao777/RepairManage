@@ -98,7 +98,6 @@ class menuApi {
         method: 'delete'
       })
     }
-
     /**
      * @description "角色绑定菜单"
      * @param {string} id “id”

@@ -7,18 +7,15 @@
       :rules="rules"
       class="demo-form-inline"
     >
-      <el-form-item label="城市" prop="filters[0].value">
-        <el-input v-model="form.filters[0].value" placeholder="输入城市" />
+      <el-form-item label="企业名称" prop="filters[0].value">
+        <el-input v-model="form.filters[0].value" placeholder="输入企业名称" />
       </el-form-item>
-      <el-form-item label="编码" prop="filters[1].value">
-        <el-input v-model="form.filters[1].value" placeholder="输入编码" />
+      <el-form-item label="企业联系人" prop="filters[1].value">
+        <el-input v-model="form.filters[1].value" placeholder="输入企业联系人" />
       </el-form-item>
-      <el-form-item label="状态" prop="filters[2].value">
-        <el-select v-model="form.filters[2].value">
-          <el-option v-for="(item,i) in statuses" :key="i" :value="item.value" :label="item.label" />
-        </el-select>
+      <el-form-item label="企业联系电话" prop="filters[2].value">
+        <el-input v-model="form.filters[1].value" placeholder="输入企业联系电话" />
       </el-form-item>
-
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">{{
           $t("common.search")

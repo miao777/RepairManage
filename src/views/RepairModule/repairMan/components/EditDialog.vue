@@ -24,7 +24,7 @@
           <el-input v-model="dialogForm.user.username" placeholder="请输入用户名" clearable />
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item label="密码" prop="user.password">
+        <el-form-item v-if="isAdd" label="密码" prop="user.password">
           <el-input v-model="dialogForm.user.password" placeholder="请输入密码" clearable />
         </el-form-item>
         <!-- 姓名 -->
@@ -163,9 +163,19 @@ export default {
     },
     // 打开时候处理数据
     handleOpen() {
-      if (this.$props.isAdd) {
+      if (!this.$props.isAdd) {
         this.operatorTag = false
         assignExistField(this.$props.data, this.dialogForm)
+        delete this.dialogForm.user.createDate
+        delete this.dialogForm.user.createDate_fmt
+        delete this.dialogForm.user.lastLoginTime
+        delete this.dialogForm.user.lastLoginTime_fmt
+        delete this.dialogForm.user.password
+        delete this.dialogForm.user.status
+        delete this.dialogForm.user.status_fmt
+        this.dialogForm.user.roleId = JSON.parse(JSON.stringify(this.dialogForm.user.role.id))
+        delete this.dialogForm.user.role
+        console.log(this.dialogForm, '1212121212121')
       }
       this.$nextTick(() => {
         this.$refs.uploader.loadImage()
@@ -197,7 +207,6 @@ export default {
 
     // 新增or编辑事件
     handleAddOrUpdate(formName) {
-      // const params = this.dialogForm
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$props.isAdd ? this.add() : this.edit()
@@ -209,14 +218,14 @@ export default {
      * @description 编辑
      * @param params 对象
      */
-    // async edit(params) {
-    //   const resp = await edit(params)
-    //   this.dialogBtnDisabled = false
-    //   if (resp.success) {
-    //     this.dialogVisible = false
-    //     this.$emit('reloadTableData')
-    //   }
-    // },
+    async edit(params) {
+      const resp = await repairManApi.edit(this.dialogForm)
+      // this.dialogBtnDisabled = false
+      if (resp.success) {
+        // this.dialogVisible = false
+        this.$emit('reloadTableData')
+      }
+    },
 
     /**
      * @description 新增

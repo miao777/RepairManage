@@ -1,45 +1,42 @@
 <template>
   <el-dialog :title="title" :visible.sync="isShow" width="50%" :before-close="handleClose" :close-on-click-modal="false" @open="handleOpen">
     <el-form ref="form" :model="form" status-icon :rules="rules" label-width="100px">
-      <el-form-item label="企业地址" prop="address">
-        <el-input v-model="form.address" type="text" placeholder="输入企业地址" />
+      <el-form-item label="企业名称" prop="name">
+        <el-input v-model="form.name" type="text" placeholder="输入企业联系电话" />
       </el-form-item>
       <el-form-item label="企业联系人" prop="contactPerson">
         <el-input v-model="form.contactPerson" type="text" placeholder="输入企业联系人" />
       </el-form-item>
-
       <el-form-item label="企业联系电话" prop="contractPhone">
-        <el-input v-model="form.contractPhone" type="text" placeholder="输入企业联系电话" />
+        <el-input v-model="form.contractPhone" type="text" placeholder="输入企业联系电话" maxlength="11" />
       </el-form-item>
-
-      <el-form-item label="企业名称" prop="name">
-        <el-input v-model="form.name" type="text" placeholder="输入企业联系电话" />
+      <el-form-item label="企业地址" prop="address">
+        <el-input v-model="form.address" type="text" placeholder="输入企业地址" />
       </el-form-item>
-
-      <el-form-item label="管理员邮箱" prop="user.email">
-        <el-input v-model="form.user.email" type="text" placeholder="输入企业联系电话" />
-      </el-form-item>
-      <el-form-item label="管理员头像" prop="user.headerUrl">
+      <el-form-item v-if="isAdd" label="管理员头像" prop="user.headerUrl">
         <Uploader ref="uploader" :image="form.headerUrl" @on-success="handleUploadSuccess" />
       </el-form-item>
-      <el-form-item label="联系电话" prop="user.mobileNo">
-        <el-input v-model="form.user.mobileNo" type="text" placeholder="输入企业联系电话" />
-      </el-form-item>
-      <el-form-item label="性别" prop="user.sex">
-        <el-radio v-model="form.user.sex" :label="true">男</el-radio>
-        <el-radio v-model="form.user.sex" :label="false">女</el-radio>
-      </el-form-item>
-      <el-form-item label="姓名" prop="user.name">
-        <el-input v-model="form.user.name" type="text" :placeholder="$t('common.please.enter') + $t('user.username')" />
-      </el-form-item>
-      <el-form-item label="昵称" prop="user.nickname">
+      <el-form-item v-if="isAdd" label="昵称" prop="user.nickname">
         <el-input v-model="form.user.nickname" type="text" placeholder="输入昵称" />
       </el-form-item>
-      <el-form-item label="用户名" prop="user.username">
+      <el-form-item v-if="isAdd" label="用户名" prop="user.username">
         <el-input v-model="form.user.username" type="text" placeholder="输入昵称" />
       </el-form-item>
       <el-form-item v-if="isAdd" :label="$t('user.password')" prop="user.password">
         <el-input v-model="form.user.password" type="password" show-password :placeholder="$t('common.please.enter') + $t('user.password')" />
+      </el-form-item>
+      <el-form-item v-if="isAdd" label="姓名" prop="user.name">
+        <el-input v-model="form.user.name" type="text" :placeholder="$t('common.please.enter') + $t('user.username')" />
+      </el-form-item>
+      <el-form-item v-if="isAdd" label="性别" prop="user.sex">
+        <el-radio v-model="form.user.sex" :label="true">男</el-radio>
+        <el-radio v-model="form.user.sex" :label="false">女</el-radio>
+      </el-form-item>
+      <el-form-item v-if="isAdd" label="联系电话" prop="user.mobileNo">
+        <el-input v-model="form.user.mobileNo" type="text" placeholder="输入企业联系电话" />
+      </el-form-item>
+      <el-form-item v-if="isAdd" label="管理员邮箱" prop="user.email">
+        <el-input v-model="form.user.email" type="text" placeholder="输入企业联系电话" />
       </el-form-item>
       <el-form-item class="form-footer" style="margin: 0">
         <el-button type="primary" icon="el-icon-check" @click="handleSubmit">{{ $t('common.confirm') }}</el-button>
@@ -50,13 +47,10 @@
 </template>
 
 <script>
-// import { tree, add, edit } from '@/api/menu'
 import Uploader from '@/components/Uploader'
-import ElementIcon from '@/icons'
-import ProvinceApi from '@/api/province'
+import { assignExistField } from '@/utils'
 import EnterpriseApi from '@/api/enterprise'
-import { page } from '@/api/role'
-// import CityApi from '@/api/city'
+import { checkMobile, checkMailBox } from '@/tools/date.js'
 export default {
   components: { Uploader },
   props: {
@@ -79,18 +73,6 @@ export default {
   },
   data() {
     return {
-      levels: [
-        {
-          label: this.$t('menu.title1'),
-          value: 1
-        },
-        {
-          label: this.$t('menu.title2'),
-          value: 2
-        }
-      ],
-      parents: [],
-      icons: ElementIcon,
       showParent: false,
       form: {
         address: '',
@@ -98,18 +80,29 @@ export default {
         contractPhone: '',
         name: '',
         user: {
-          email: '',
+          email: '', //
           headerUrl: '',
-          name: '',
-          nickname: '',
-          password: '',
-          roleId: '',
+          name: '', //
+          nickname: '', //
+          mobileNo: '', //
+          password: '', //
+          roleId: '', //
           sex: false,
-          username: ''
+          username: ''//
         }
       },
       rules: {
-        // title: [{ required: true, message: '请输入菜单名', trigger: 'blur,change' }]
+        address: [{ required: true, message: '请输入企业地址', trigger: 'blur' }],
+        contactPerson: [{ required: true, message: '请输入企业联系人', trigger: 'blur' }],
+        contractPhone: [{ required: true, message: '请输入企业联系电话', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入企业名称', trigger: 'blur' }],
+        'user.email': [{ required: true, validator: checkMailBox, trigger: 'blur' }],
+        'user.name': [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+        'user.nickname': [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+        'user.mobileNo': [{ required: true, validator: checkMobile, trigger: 'blur' }],
+        'user.password': [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        'user.roleId': [{ required: true, message: '请选择角色', trigger: 'blur' }],
+        'user.username': [{ required: true, message: '请输入账号', trigger: 'blur' }]
       },
       searchForm: {
         filters: [
@@ -124,29 +117,16 @@ export default {
       }
     }
   },
-  watch: {
-    isShow: function(val) {
-      if (val) {
-        // console.log(this);
-        this.getKeys()
-      }
-    }
-  },
   created() {},
   methods: {
-    getKeys() {
-      page(this.searchForm).then(res => {
-        if (res.success) {
-          res.rows.map(el => {
-            if (el.key === 'ENTERPRISE_MANAGER_CUSTOMER') {
-              this.form.user.roleId = el.id
-            }
-          })
-          console.log(this.form.user.roleId)
-        }
-      })
+    // 获取企业角色id
+    async getroles() {
+      const resp = await EnterpriseApi.getroles()
+      if (resp.success) {
+        const el = resp.rows.filter(item => item.key === 'ENTERPRISE_MANAGER_CUSTOMER')
+        this.form.user.roleId = el[0].id
+      }
     },
-
     handleUploadSuccess(resp) {
       this.form.user.headerUrl = resp.data.fullPath
     },
@@ -158,33 +138,18 @@ export default {
       }
     },
     async editMenu() {
-      const resp = await EnterpriseApi.edit(this.form)
+      const resp = await EnterpriseApi.edituser(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     handleOpen() {
-      this.handleChangeLevel()
       if (!this.$props.isAdd) {
-        this.form.provinceId = this.$props.data.id
-        this.form = this.$props.data
-      }
-    },
-    handleChangeLevel() {
-      if (this.form.level === 1) {
-        this.showParent = false
-        this.form.parentId = ''
+        delete this.form.user
+        assignExistField(this.$props.data, this.form)
+        this.form.id = this.$props.data.id
       } else {
-        this.showParent = true
-        if (this.parents.length === 0) {
-          this.loadParentMenu()
-        }
-      }
-    },
-    async loadParentMenu() {
-      const resp = await ProvinceApi.page({ page: { page: 0, size: 1000 }})
-      if (resp.success) {
-        this.parents = resp.rows
+        this.getroles()
       }
     },
     handleSubmit() {

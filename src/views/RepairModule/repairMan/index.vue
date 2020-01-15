@@ -3,18 +3,15 @@
     <!-- 搜索 -->
     <search-bar
       :search-form.sync="searchForm"
-      @search="handleSearch"
       @reset="handleResetSearch"
       @reloadTableData="loadData"
     />
-
     <!-- 表格 -->
     <Table
       :loading="table.loading"
       :table-data="table.tableData"
       @reloadTableData="loadData"
     />
-
     <!-- 分页 -->
     <pagination
       :page="pagination"
@@ -22,7 +19,6 @@
       :limit.sync="pagination.pageSize"
       @pagination="loadData"
     />
-    <!-- :role-data="roleData" -->
   </div>
 </template>
 
@@ -34,13 +30,14 @@ import repairManApi from '@/api/repairMan'
 
 export default {
   components: { SearchBar, Table, Pagination },
-  // components: { SearchBar, Pagination },
   data() {
     return {
       searchForm: {
         filters: [
-          { field: 'user.name', op: 'EQ', value: '' }
-
+          { field: 'user.name', op: 'EQ', value: '' },
+          { field: 'user.mobileNo', op: 'EQ', value: '' },
+          { field: 'user.username', op: 'EQ', value: '' },
+          { field: 'idCard', op: 'EQ', value: '' }
         ],
         page: { page: 0, size: 10, sorts: [
           {
@@ -51,23 +48,19 @@ export default {
       },
       table: { loding: false, tableData: [], businessCategory: [], businessType: [] },
       pagination: { pageNo: 1, pageSize: 10, totalCount: 0 }
-      // table: { loading: false, data: [], multiple: false, multipleSelection: [] }, // 表格的数据
-
     }
   },
   created() {
     this.loadData()
   },
   methods: {
-    // 搜索
-    handleSearch() {
-      this.pagination.pageNo = 1
-      this.loadData()
-    },
     // 重置搜索
     handleResetSearch() {
       this.searchForm.filters = [
-        { field: 'user.name', op: 'LIKE', value: '' }
+        { field: 'user.name', op: 'EQ', value: '' },
+        { field: 'user.mobileNo', op: 'EQ', value: '' },
+        { field: 'user.username', op: 'EQ', value: '' },
+        { field: 'idCard', op: 'EQ', value: '' }
       ]
       this.searchForm.page = { page: 0, size: 10 }
       this.loadData()
@@ -88,7 +81,6 @@ export default {
           this.loadData(1)
         }
         this.table.tableData = resp.rows
-        console.log(this.table.tableData, 'this.table.tableData')
         this.pagination.pageNo = resp.pageNo + 1
         this.pagination.pageSize = resp.pageSize
         this.pagination.totalCount = resp.totalCount

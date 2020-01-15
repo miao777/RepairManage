@@ -53,11 +53,8 @@
               <span>{{ props.row.user.role.key_fmt }}</span>
             </el-form-item>
             <el-form-item label="性别">
-              <span v-if="props.row.sex">男</span>
+              <span v-if="props.row.user.sex">男</span>
               <span v-else>女</span>
-            </el-form-item>
-            <el-form-item label="状态">
-              <span>{{ props.row.user.status_fmt }}</span>
             </el-form-item>
             <el-form-item label="创建时间">
               <span>{{ props.row.user.createDate_fmt }}</span>
@@ -92,16 +89,8 @@
       <!-- 性别 -->
       <el-table-column prop="user.sex" label="性别" width="50" align="center">
         <template slot-scope="scope">
-          <span v-if="scope.row.sex">男</span>
+          <span v-if="scope.row.user.sex">男</span>
           <span v-else>女</span>
-        </template>
-      </el-table-column>
-      <!-- 状态 -->
-      <el-table-column prop="user.status_fmt" label="状态" align="center" width="50" />
-      <!-- 状态操作 -->
-      <el-table-column label="状态切换" prop="status" width="80" align="center">
-        <template slot-scope="scope">
-          <el-switch v-model="scope.row.status" active-color="#0fb336" @change="hanldeToggleStatus(scope.row)" />
         </template>
       </el-table-column>
       <!-- 创建时间 -->
@@ -124,7 +113,7 @@
       :show.sync="dialogVisible"
       :dialog-title="dialogTitle"
       :data="dialogData"
-      :role-data="roleData"
+      :is-add="false"
       @reloadTableData="handleReloadTableData"
     />
   </div>
@@ -133,8 +122,8 @@
 <script>
 
 import EditDialog from './EditDialog'
-// import { remove } from '@/api/merchant/clerk'
 import { MessageBox } from 'element-ui'
+import repairManApi from '@/api/repairMan'
 import('@/styles/upload.scss')
 
 export default {
@@ -142,6 +131,10 @@ export default {
   components: { EditDialog },
   props: {
     loading: {
+      type: Boolean,
+      default: false
+    },
+    multiple: {
       type: Boolean,
       default: false
     },
@@ -187,42 +180,23 @@ export default {
         this.remove(row.id)
       }).catch(() => {})
     },
-
     // 点击一行事件
     handleRowClick(row, event, column) {
       this.selectedRow = row
       this.$refs.tableRef.toggleRowSelection(row)
     },
-
     // 将子组件重新加载table数据的方法传递到父组件
     handleReloadTableData() {
+      this.dialogVisible = false
       this.$emit('reloadTableData')
     },
-    //  async toggleStatus() {
-    //   const resp = await toggleStatus(this.selectRow.id)
-    //   if (!resp.success) {
-    //     this.selectRow.status = !this.selectRow.status
-    //     this.$forceUpdate()
-    //   } else {
-    //     this.$emit('search')
-    //   }
-    // },
-    hanldeToggleStatus(row) {
-      this.selectRow = row
-      // this.toggleStatus()
+    // 删除
+    async remove(id) {
+      const resp = await repairManApi.delete(id)
+      if (resp.success) {
+        this.$emit('reloadTableData', 1)
+      }
     }
-
-    // ----------------------------------------ajax----------------------------------------------
-    /**
-     * @description 删除店员
-     * @param id 店员id
-     */
-    // async remove(id) {
-    //   const resp = await remove(id)
-    //   if (resp.success) {
-    //     this.$emit('reloadTableData', 1)
-    //   }
-    // }
   }
 }
 </script>

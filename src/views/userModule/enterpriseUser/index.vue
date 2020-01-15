@@ -19,9 +19,9 @@ export default {
     return {
       searchForm: {
         filters: [
-          { field: 'name', op: 'EQ', value: '' },
-          { field: 'code', op: 'EQ', value: '' },
-          { field: 'status', op: 'EQ', value: '' }
+          { field: 'name', op: 'LIKE', value: '' },
+          { field: 'contactPerson', op: 'EQ', value: '' },
+          { field: 'contractPhone', op: 'EQ', value: '' }
         ],
         page: {
           page: 0,

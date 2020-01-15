@@ -14,17 +14,41 @@
       highlight-current-row
       :max-height="height"
     >
-      <el-table-column type="index" label="序号" align="center" width="40px" />
-      <el-table-column label="城市" prop="name" />
-      <el-table-column label="编码" prop="code" />
-      <el-table-column label="状态" prop="status_fmt" />
-      <el-table-column label="启停" prop="status">
-        <template slot-scope="scope">
-          <el-switch v-model="scope.row.status" :active-value="true" @change="change(scope.row)" />
+      <el-table-column v-if="multiple" type="selection" width="35" />
+      <el-table-column align="center" type="index" width="35" class-name="table-detail" />
+      <!-- 下拉框 -->
+      <el-table-column type="expand" width="35" class-name="table-detail">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="table-detail-expand">
+            <el-form-item label="企业名称">
+              <span>{{ props.row.name }}</span>
+            </el-form-item>
+            <el-form-item label="员工人数">
+              <span>{{ props.row.staffCount }}</span>
+            </el-form-item>
+            <el-form-item label="联系人">
+              <span>{{ props.row.contactPerson }}</span>
+            </el-form-item>
+            <el-form-item label="联系电话">
+              <span>{{ props.row.contractPhone }}</span>
+            </el-form-item>
+            <el-form-item label="企业地址">
+              <span>{{ props.row.address }}</span>
+            </el-form-item>
+          </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="企业名称" prop="name" />
+      <el-table-column label="联系人" prop="contactPerson" width="120" />
+      <el-table-column label="联系电话" prop="contractPhone" width="120" />
+      <el-table-column label="员工人数" prop="staffCount" width="80" align="center" />
+      <el-table-column label="企业地址" prop="address" />
+      <el-table-column label="操作" align="center" width="190">
         <template slot-scope="scope">
+          <!-- 新增登陆用户 -->
+          <el-tooltip content="新增用户" placement="top">
+            <el-button type="success" icon="el-icon-s-custom" circle @click="handleBindServiceMerchantBtn(scope.row)" />
+          </el-tooltip>
           <el-tooltip :content="$t('common.edit')" placement="top">
             <el-button type="primary" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
           </el-tooltip>
@@ -35,19 +59,27 @@
       </el-table-column>
     </el-table>
     <edit-dialog ref="EditDialog" :is-show="isEditShow" :title="$t('common.edit')" :is-add="false" :data="selectRow" @close="handleEditDialogClose" />
+    <show-merchant
+      :show.sync="enterpriserighttable.visible"
+      :shop-id="enterpriserighttable.id"
+      @handleBindClose="handleBindClose"
+    />
   </div>
 </template>
 
 <script>
 import EditDialog from './EditDialog'
-// import ProvinceApi from '@/api/province'
-import CityApi from '@/api/city'
+import ShowMerchant from './ShowMerchant'
+import EnterpriseApi from '@/api/enterprise'
 import { MessageBox } from 'element-ui'
-import { isEmpty } from '@/utils'
 export default {
-  components: { EditDialog },
+  components: { EditDialog, ShowMerchant },
   props: {
     loading: {
+      type: Boolean,
+      default: false
+    },
+    multiple: {
       type: Boolean,
       default: false
     },
@@ -59,7 +91,8 @@ export default {
   data() {
     return {
       isEditShow: false,
-      selectRow: {}
+      selectRow: {},
+      enterpriserighttable: { visible: false, id: '' }
     }
   },
   computed: {
@@ -68,16 +101,10 @@ export default {
     }
   },
   methods: {
-    async deleteMenu() {
-      const resp = await CityApi.delete(this.selectRow.id)
+    // 删除企业用户
+    async delete() {
+      const resp = await EnterpriseApi.delete(this.selectRow.id)
       if (resp.success) {
-        this.$emit('search')
-      }
-    },
-    async change(row) {
-      console.log(row)
-      const res = await CityApi.toggle(row.id)
-      if (res.success) {
         this.$emit('search')
       }
     },
@@ -87,27 +114,24 @@ export default {
     },
     handleDeteleMenu(row) {
       this.selectRow = row
-      if (this.selectRow.level === 1 && !isEmpty(this.selectRow.children)) {
-        MessageBox.confirm(this.$t('menu.deleteLevel1Menu'), this.$t('common.please.confirm'), {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.deleteMenu()
-        }).catch(() => {})
-      } else {
-        MessageBox.confirm(this.$t('common.alert.delete'), this.$t('common.confirm'), {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.deleteMenu()
-        }).catch(() => {})
-      }
+      MessageBox.confirm(this.$t('common.alert.delete'), this.$t('common.confirm'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'warning'
+      }).then(() => {
+        this.delete()
+      }).catch(() => {})
     },
     handleEditDialogClose() {
       this.isEditShow = false
       this.$emit('search')
+    },
+    handleBindServiceMerchantBtn(row) {
+      this.enterpriserighttable.id = row.id
+      this.enterpriserighttable.visible = true
+    },
+    handleBindClose() {
+      this.enterpriserighttable.visible = false
     }
   }
 }
