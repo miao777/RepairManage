@@ -48,13 +48,55 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.8)"
       >
-        <el-table-column align="center" type="index" width="35" class-name="table-detail" />
+        <el-table-column align="center" type="index" width="30" class-name="table-detail" />
+        <!-- 下拉框 -->
+        <el-table-column type="expand" width="30" class-name="table-detail">
+          <template slot-scope="props">
+            <el-form label-position="left" inline class="table-detail-expand">
+              <el-form-item :label="$t('user.headerUrl') + '：'">
+                <el-image :class="props.row.headerUrl ? 'table-image-size' : ''" :src="props.row.headerUrl" :preview-src-list="[props.row.headerUrl]" fit="cover">
+                  <div v-if="!props.row.headerUrl" slot="error" class="image-slot">
+                    <i class="el-icon-picture-outline" />{{ $t('common.notLoading') }}
+                  </div>
+                </el-image>
+              </el-form-item>
+              <el-form-item label="姓名">
+                <span>{{ props.row.name }}</span>
+              </el-form-item>
+              <el-form-item label="账号">
+                <span>{{ props.row.username }}</span>
+              </el-form-item>
+              <el-form-item label="昵称">
+                <span>{{ props.row.nickname }}</span>
+              </el-form-item>
+              <el-form-item label="性别">
+                <span v-if=" props.row.sex">男</span>
+                <span v-else>女</span>
+              </el-form-item>
+              <el-form-item label="电话">
+                <span>{{ props.row.mobileNo }}</span>
+              </el-form-item>
+              <el-form-item label="邮箱">
+                <span>{{ props.row.email }}</span>
+              </el-form-item>
+              <el-form-item label="角色">
+                <span>{{ props.row.role.name }}</span>
+              </el-form-item>
+              <el-form-item label="状态">
+                <span>{{ props.row.status_fmt }}</span>
+              </el-form-item>
+              <el-form-item label="创建时间">
+                <span>{{ props.row.createDate_fmt }}</span>
+              </el-form-item>
+            </el-form>
+          </template>
+        </el-table-column>
         <!-- 头像 -->
-        <el-table-column prop="headerUrl" label="头像" min-width="80px" align="center">
+        <el-table-column prop="headerUrl" label="头像" min-width="60px" align="center">
           <template slot-scope="scope">
-            <el-image :class="scope.row.headerUrl ? 'table-image-size' : ''" :src="scope.row.headerUrl" :preview-src-list="scope.row.previewImage" fit="cover">
+            <el-image :class="scope.row.headerUrl ? 'table-image-size' : ''" :src="scope.row.headerUrl" :preview-src-list="[scope.row.headerUrl]" fit="cover">
               <div v-if="!scope.row.headerUrl" slot="error" class="image-slot">
-                <i class="el-icon-picture-outline" />{{ $t('common.noImgLoading') }}
+                <i class="el-icon-picture-outline" />{{ $t('common.notLoading') }}
               </div>
             </el-image>
           </template>

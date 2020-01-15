@@ -43,7 +43,7 @@
       <el-table-column label="联系电话" prop="contractPhone" width="120" />
       <el-table-column label="员工人数" prop="staffCount" width="80" align="center" />
       <el-table-column label="企业地址" prop="address" />
-      <el-table-column label="操作" align="center" width="200">
+      <el-table-column label="操作" align="center" width="180">
         <template slot-scope="scope">
           <!-- 新增登陆用户 -->
           <el-tooltip content="新增用户" placement="top">
