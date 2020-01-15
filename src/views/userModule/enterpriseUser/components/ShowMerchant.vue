@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- 选择周边服务商家列表 -->
+    <!-- 企业登陆用户列表 -->
     <el-drawer
       :title="title"
       :visible.sync="drawerVisible"
@@ -9,7 +9,6 @@
       @open="handleOpen"
       @close="handleClose"
     >
-
       <el-form :inline="true" class="demo-form-inline" style="margin-left:10px">
         <el-form-item label="姓名">
           <div style="width:150px;">
@@ -212,11 +211,6 @@ export default {
       this.loadMerchantData()
     },
     // 分页
-    // handleCurrentChange(val) {
-    //   this.pagination.pageNo = val
-    //   this.loadMerchantData()
-    // },
-    // 分页
     handleChangePagination() {
       this.searchForm.page.page = this.pagination.pageNo - 1
       this.searchForm.page.size = this.pagination.pageSize
@@ -265,7 +259,6 @@ export default {
     },
     handleDetele(row) {
       this.selectRow = row
-      console.log(row)
       MessageBox.confirm(this.$t('common.alert.delete'), this.$t('common.please.confirm'), {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
