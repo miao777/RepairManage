@@ -1,26 +1,12 @@
-import Vue from 'vue' // 引入VUE
-
-import Cookies from 'js-cookie' // 引入一个Cookies的工具
-
-import 'normalize.css/normalize.css' // A modern alternative to CSS resets
-
-import ElementUI from 'element-ui' // 引入ElementUI
-import './styles/element-variables.scss'
-
-import '@/styles/index.scss' // global css
-
-import App from './App'
-import store from './store'
-import router from './router'
-
-import i18n from './lang' // 国际化
-
 import '@/icons' // icon
 import '@/permission' // permission control
+import '@/styles/index.scss' // global css
+import ElementUI from 'element-ui' // 引入ElementUI
+import Cookies from 'js-cookie' // 引入一个Cookies的工具
+import 'normalize.css/normalize.css' // A modern alternative to CSS resets
+import Vue from 'vue' // 引入VUE
 // import Print from './tools/Print'
 import Print from 'vue-print-nb'
-Vue.use(Print)
-
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -30,6 +16,13 @@ Vue.use(Print)
  * please remove it before going online! ! !
  */
 import { mockXHR } from '../mock'
+import App from './App'
+import i18n from './lang' // 国际化
+import router from './router'
+import store from './store'
+import './styles/element-variables.scss'
+
+Vue.use(Print)
 if (process.env.NODE_ENV === 'production') {
   mockXHR()
 }

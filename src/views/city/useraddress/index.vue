@@ -8,7 +8,8 @@
 </template>
 
 <script>
-import ProvinceApi from '@/api/province'
+import AddressApi from '@/api/address'
+// import ProvinceApi from '@/api/province'
 import SearchBar from './components/SearchBar'
 import Table from './components/Table'
 import Pagination from '@/components/Pagination'
@@ -38,7 +39,7 @@ export default {
     //   初始化数据（TableData）
     fetchData() {
       this.table.loading = true
-      ProvinceApi.page({ ...this.searchForm }).then(res => {
+      AddressApi.page({ ...this.searchForm }).then(res => {
         if (res.success) {
           this.table.data = res.rows
           this.pagination.pageNo = res.pageNo + 1
