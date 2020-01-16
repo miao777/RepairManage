@@ -179,7 +179,6 @@ export default {
         this.getAllProvince()
       }
     }
-
   },
   created() {
     // this.getAllProvince();
@@ -190,26 +189,6 @@ export default {
       console.log('捕获到点击坐标', ev)
       this.form.longitude = ev.lng
       this.form.latitude = ev.lat
-    },
-    getLongitudeAndLatitude() {
-      if (this.form.provinceId && this.form.cityId && this.form.districtId) {
-        // console.log(this.form.provinceId.name, this.form.cityId.name, this.form.districtId.name, this.form.address)
-        // axios.get('https://apis.map.qq.com/ws/geocoder/v1/?address=' + this.form.provinceId.name + this.form.cityId.name + this.form.districtId.name + this.form.address + '&key=SJRBZ-YNH6U-44AVY-2IJXM-ISBAZ-BMFI7', {
-        //   headers: {
-        //     'Access-Control-Allow-Origin': '*'
-        //   }
-        // }).then(res => {
-        //   console.log(res)
-        // })
-        // this.$jsonp('https://apis.map.qq.com/ws/geocoder/v1/', {
-        //   address: this.form.provinceId.name + this.form.cityId.name + this.form.districtId.name + this.form.address,
-        //   key: 'SJRBZ-YNH6U-44AVY-2IJXM-ISBAZ-BMFI7'
-        // }).then(res => {
-        //   console.log(res)
-        // })
-      } else {
-        this.$message.error('请先选择省市县')
-      }
     },
     getAllEnterPrise() {
       EnterPrise.page(this.EnterPriseSearch).then(res => {
@@ -298,7 +277,6 @@ export default {
       this.$refs.form.clearValidate()
       this.$emit('close')
     }
-
   }
 }
 </script>
