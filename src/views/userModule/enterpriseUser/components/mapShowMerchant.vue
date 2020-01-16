@@ -11,21 +11,21 @@
     >
       <div>
         <el-form :inline="true" class="demo-form-inline" style="margin-left:10px">
-          <el-form-item label="位置1">
+          <el-form-item label="联系人">
             <div style="width:150px;">
               <el-input v-model="searchForm.filters[0].value" :placeholder="$t('common.please.enter')+'名字'" size="small" clearable />
             </div>
           </el-form-item>
-          <el-form-item label="位置2">
+          <el-form-item label="联系电话">
             <div style="width:150px;">
               <el-input v-model="searchForm.filters[1].value" :placeholder="$t('common.please.enter')+'账号'" size="small" clearable />
             </div>
           </el-form-item>
-          <el-form-item label="位置3">
+          <!-- <el-form-item label="位置3">
             <div style="width:150px;">
               <el-input v-model="searchForm.filters[2].value" :placeholder="$t('common.please.enter')+'电话'" size="small" clearable />
             </div>
-          </el-form-item>
+          </el-form-item> -->
           <!-- <el-form-item label="状态">
             <el-select v-model="searchForm.filters[3].value" placeholder="请选择状态">
               <el-option v-for="item in statuses" :key="item.label" :label="item.label" :value="item.value" />
@@ -131,9 +131,8 @@ export default {
       selectRow: {},
       searchForm: {
         filters: [
-          { field: 'name', op: 'EQ', value: '' },
-          { field: 'code', op: 'EQ', value: '' },
-          { field: 'status', op: 'EQ', value: '' }
+          { field: 'contactMan', op: 'EQ', value: '' },
+          { field: 'mobileNo', op: 'EQ', value: '' }
         ],
         page: { page: 0, size: 10 }
       },
@@ -199,9 +198,8 @@ export default {
     // 重置
     handleReset() {
       this.searchForm.filters = [
-        { field: 'name', op: 'EQ', value: '' },
-        { field: 'code', op: 'EQ', value: '' },
-        { field: 'status', op: 'EQ', value: '' }
+        { field: 'contactMan', op: 'EQ', value: '' },
+        { field: 'mobileNo', op: 'EQ', value: '' }
       ]
       this.searchForm.page = { page: 0, size: 10 }
       this.fetchData()
