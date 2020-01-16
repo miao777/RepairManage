@@ -12,7 +12,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="区县" prop="districtId">
-        <el-select v-model="form.districtIdtow" filterable placeholder="请选择区县" value-key="id" @change="getqu">
+        <el-select v-model="form.districtIdtow" filterable placeholder="请选择区县" value-key="id" @change="form.address='';form.longitude='';form.latitude=''">
           <el-option v-for="item in DistrictList" :key="item.id" :value="item" :label="item.name" />
         </el-select>
       </el-form-item>
