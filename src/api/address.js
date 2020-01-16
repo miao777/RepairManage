@@ -2,9 +2,17 @@ import request from '@/utils/request'
 const UrlPath = '/admin/address/'
 class AddressApi {
     /**
-     * @description "新增用户数据"
-     * @param {string} code “code”
-     * @param {string} name “name”
+     * @description "新增用户地址"
+     * @param {string} address “address”
+     * @param {string} cityId “cityId”
+     * @param {string} contactMan “contactMan”
+     * @param {string} districtId “districtId”
+     * @param {string} enterpriseId “enterpriseId”
+     * @param {string} familyId “familyId”
+     * @param {string} latitude “latitude”
+     * @param {string} longitude “longitude”
+     * @param {string} mobileNo “mobileNo”
+     * @param {string} provinceId “provinceId”
      * @static
      * @memberof AddressApi
      */
