@@ -28,13 +28,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="联系人" prop="contactMan">
-        <el-input v-model="form.contactMan" type="text" size="small" placeholder="请输入电话号码" @blur="getLongitudeAndLatitude" />
+        <el-input v-model="form.contactMan" type="text" size="small" placeholder="请输入电话号码" />
       </el-form-item>
       <el-form-item label="联系电话" prop="mobileNo">
-        <el-input v-model="form.mobileNo" type="text" size="small" maxlength="11" placeholder="请输入电话号码" @blur="getLongitudeAndLatitude" />
+        <el-input v-model="form.mobileNo" type="text" size="small" maxlength="11" placeholder="请输入电话号码" />
       </el-form-item>
       <el-form-item label="详细地址" prop="address">
-        <el-input v-model="form.address" type="text" size="small" placeholder="请输入详细地址" @blur="getLongitudeAndLatitude" @input="adderget" />
+        <el-input v-model="form.address" type="text" size="small" placeholder="请输入详细地址" @input="adderget" />
       </el-form-item>
       <el-form-item label="经纬度">
         <el-form-item prop="longitude" style="width:400px;display:inline-block;margin-right:13px;">
@@ -184,8 +184,8 @@ export default {
           this.form.cityIdtow = this.$props.data.city
           this.form.districtId = this.$props.data.district.id
           this.form.districtIdtow = this.$props.data.district
-          this.getCityByProvince(this.$props.data.province.id)
-          this.getDistrictByCity(this.$props.data.city.id)
+          this.getCityByProvince(this.$props.data.province, true)
+          this.getDistrictByCity(this.$props.data.city, true)
           this.addrposition = {
             sn: this.$props.data.province.name,
             si: this.$props.data.city.name,
@@ -227,23 +227,40 @@ export default {
         }
       })
     },
-    getCityByProvince(val) {
+    getCityByProvince(val, type = false) {
       this.addrposition.sn = val.name
       this.form.provinceId = val.id
       this.CitySearch.filters[0].value = val.id
-      this.$set(this.form, 'cityId', '')
-      this.$set(this.form, 'districtId', '')
+      if (!type) {
+        this.$set(this.form, 'cityIdtow', '')
+        this.$set(this.form, 'districtIdtow', '')
+        this.$set(this.form, 'address', '')
+        this.$set(this.addrposition, 'si', '')
+        this.$set(this.addrposition, 'qu', '')
+        this.$set(this.addrposition, 'addr', '')
+        this.$set(this.form, 'latitude', '')
+        this.$set(this.form, 'longitude', '')
+      }
+
       CityApi.page(this.CitySearch).then(res => {
         if (res.success) {
           this.CityList = res.rows
         }
       })
     },
-    getDistrictByCity(val) {
+    getDistrictByCity(val, type = false) {
       this.addrposition.si = val.name
       this.form.cityId = val.id
       this.DistrictSearch.filters[0].value = val.id
-      this.$set(this.form, 'districtId', '')
+      if (!type) {
+        this.$set(this.form, 'districtIdtow', '')
+        this.$set(this.form, 'address', '')
+        this.$set(this.addrposition, 'qu', '')
+        this.$set(this.addrposition, 'addr', '')
+        this.$set(this.form, 'latitude', '')
+        this.$set(this.form, 'longitude', '')
+      }
+
       DistrictApi.page(this.DistrictSearch).then(res => {
         if (res.success) {
           this.DistrictList = res.rows
@@ -256,6 +273,8 @@ export default {
     },
     adderget(val) {
       this.addrposition.addr = val
+      this.$set(this.form, 'latitude', '')
+      this.$set(this.form, 'longitude', '')
     },
     changeType(val) {
       console.log(val)
@@ -307,15 +326,16 @@ export default {
         color: #f56c6c;
         margin-right: 5px;
     }
-    .qqmap { width: 800px;
+    .qqmap {
+        width: 800px;
         height: 600px;
         position: relative;
     }
-    .positions{
-      width: 800px;
-      height: 600px;
-      background-color: rgba(0, 0, 0, 0.1);
-      position: absolute;
-      top: 0;
+    .positions {
+        width: 800px;
+        height: 600px;
+        background-color: rgba(0, 0, 0, 0.1);
+        position: absolute;
+        top: 0;
     }
 </style>
