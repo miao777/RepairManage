@@ -12,7 +12,17 @@
         </el-select>
       </el-form-item>
       <el-form-item label="区县" prop="districtId">
-        <el-select v-model="form.districtIdtow" filterable placeholder="请选择区县" value-key="id" @change="form.address='';form.longitude='';form.latitude=''">
+        <el-select
+          v-model="form.districtIdtow"
+          filterable
+          placeholder="请选择区县"
+          value-key="id"
+          @change="
+            form.address = '';
+            form.longitude = '';
+            form.latitude = '';
+          "
+        >
           <el-option v-for="item in DistrictList" :key="item.id" :value="item" :label="item.name" />
         </el-select>
       </el-form-item>
@@ -199,6 +209,23 @@ export default {
           this.form.contactMan = this.$props.data.contactMan
           this.form.mobileNo = this.$props.data.mobileNo
         }
+      } else {
+        this.form = {
+          address: '',
+          cityId: '',
+          contactMan: '', //
+          districtId: '',
+          enterpriseId: '',
+          familyId: '',
+          latitude: '',
+          longitude: '',
+          mobileNo: '',
+          provinceId: '',
+          id: '',
+          provinceIdtow: '',
+          cityIdtow: '',
+          districtIdtow: ''
+        }
       }
     }
   },
@@ -241,7 +268,6 @@ export default {
         this.$set(this.form, 'latitude', '')
         this.$set(this.form, 'longitude', '')
       }
-
       CityApi.page(this.CitySearch).then(res => {
         if (res.success) {
           this.CityList = res.rows
