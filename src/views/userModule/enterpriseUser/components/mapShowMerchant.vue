@@ -57,10 +57,14 @@
           :max-height="height"
         >
           <el-table-column type="index" label="序号" align="center" width="40px" />
-          <el-table-column label="省份" prop="name" />
-          <el-table-column label="编码" prop="code" />
-          <el-table-column label="状态" prop="status_fmt" />
-          <el-table-column label="启停" prop="status">
+          <el-table-column label="地址">
+            <template slot-scope="scope">
+              <div>{{ scope.row.province.name }}{{ scope.row.city.name }}{{ scope.row.district.name }}{{ scope.row.address }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column label="联系人" prop="contactMan" />
+          <el-table-column label="联系电话" prop="mobileNo" />
+          <!-- <el-table-column label="启停" prop="status">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.status"
@@ -69,7 +73,7 @@
                 @change="change(scope.row)"
               />
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-tooltip :content="$t('common.edit')" placement="top">
@@ -95,6 +99,7 @@
 
 // import { MessageBox } from 'element-ui'
 import AddressApi from '@/api/address'
+
 // import SearchBar from './mapSearchBar'
 import EditDialogmap from './mapEditDialog'
 import Pagination from '@/components/Pagination'
@@ -149,8 +154,16 @@ export default {
       return window.innerHeight - 170
     }
   },
+  watch: {
+    show: function(val) {
+      if (val) {
+        this.fetchData()
+      }
+    }
+  },
   created() {
   },
+
   methods: {
     // 打开事件
     handleOpen() {
@@ -207,16 +220,25 @@ export default {
     // 关闭edit弹窗
     handleEditDialogClose() {
       this.mapisEditShow = false
-      this.$emit('search')
+      this.fetchData(1)
+      // this.$emit('search')
     },
     // 关闭新增框
     handleEditDialogCloseadd() {
       this.isEditShow = false
-      this.$emit('search')
+      this.fetchData(1)
+      // this.$emit('search')
     },
     // 删除按钮
     handleDeteleMenu(row) {
       this.selectRow = row
+      AddressApi.delete(row.id).then(
+        res => {
+          if (res.success) {
+            this.fetchData(1)
+          }
+        }
+      )
     },
     // table编辑按钮
     handleEditDialogOpen(row) {

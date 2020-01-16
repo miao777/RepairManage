@@ -16,13 +16,13 @@
           <el-option v-for="item in DistrictList" :key="item.id" :value="item" :label="item.name" />
         </el-select>
       </el-form-item>
-      <el-form-item label="类型" prop="type">
+      <!-- <el-form-item label="类型" prop="type">
         <el-select v-model="form.type" placeholder="请选择类型" @change="changeType">
           <el-option :value="1" label="企业" />
           <el-option :value="2" label="家庭" />
         </el-select>
-      </el-form-item>
-      <el-form-item v-if="form.type == 1" label="企业" prop="enterpriseId">
+      </el-form-item> -->
+      <el-form-item label="企业" prop="enterpriseId">
         <el-select v-model="form.enterpriseId" filterable placeholder="请选择企业">
           <el-option v-for="item in EnterPriseList" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
@@ -122,7 +122,6 @@ export default {
         mobileNo: '',
         provinceId: '',
         id: '',
-        type: '', // 选择企业或家庭  默认为空,调用接口许删除
         provinceIdtow: '',
         cityIdtow: '',
         districtIdtow: ''
@@ -177,6 +176,29 @@ export default {
     isShow: function(val) {
       if (val) {
         this.getAllProvince()
+        this.getAllEnterPrise()
+        if (!this.$props.isAdd) {
+          this.form.provinceId = this.$props.data.province.id
+          this.form.provinceIdtow = this.$props.data.province
+          this.form.cityId = this.$props.data.city.id
+          this.form.cityIdtow = this.$props.data.city
+          this.form.districtId = this.$props.data.district.id
+          this.form.districtIdtow = this.$props.data.district
+          this.getCityByProvince(this.$props.data.province.id)
+          this.getDistrictByCity(this.$props.data.city.id)
+          this.addrposition = {
+            sn: this.$props.data.province.name,
+            si: this.$props.data.city.name,
+            qu: this.$props.data.district.name,
+            addr: this.$props.data.address
+          }
+          this.form.address = this.$props.data.address
+          this.oldMarker = this.$props.data.latitude + ',' + this.$props.data.longitude
+          this.form.latitude = this.$props.data.latitude
+          this.form.longitude = this.$props.data.longitude
+          this.form.contactMan = this.$props.data.contactMan
+          this.form.mobileNo = this.$props.data.mobileNo
+        }
       }
     }
 
@@ -229,7 +251,6 @@ export default {
     getCityByProvince(val) {
       this.addrposition.sn = val.name
       this.form.provinceId = val.id
-      // console.log(val)
       this.CitySearch.filters[0].value = val.id
       this.$set(this.form, 'cityId', '')
       this.$set(this.form, 'districtId', '')
@@ -265,7 +286,7 @@ export default {
     },
     async addMenu() {
       delete this.form.id
-      delete this.form.type
+      // delete this.form.type
       delete this.form.provinceIdtow
       delete this.form.cityIdtow
       delete this.form.districtIdtow
@@ -282,9 +303,9 @@ export default {
     },
     // 默认打开窗口事件
     handleOpen() {
-      if (!this.$props.isAdd) {
-        this.form = this.$props.data
-      }
+      // if (!this.$props.isAdd) {
+      //   this.form = this.$props.data
+      // }
     },
     handleSubmit() {
       this.$refs.form.validate(valid => {
