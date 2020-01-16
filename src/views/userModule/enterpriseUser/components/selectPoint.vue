@@ -126,7 +126,7 @@ export default {
       const geocoder = new qq.maps.Geocoder({
         complete: function(result) {
           that.qqmap.setCenter(result.detail.location)
-          that.qqmap.setZoom(12)
+          that.qqmap.setZoom(16)
         }
       })
       const address = this.inputVal
