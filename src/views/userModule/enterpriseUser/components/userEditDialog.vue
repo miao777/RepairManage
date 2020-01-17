@@ -8,11 +8,8 @@
       <el-form-item label="姓名" prop="name">
         <el-input v-model="forms.name" type="text" placeholder="请输入姓名" />
       </el-form-item>
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="forms.username" type="text" placeholder="请输入昵称" />
-      </el-form-item>
-      <el-form-item v-if="!isAdd" :label="$t('user.password')" prop="password">
-        <el-input v-model="forms.password" type="password" show-password :placeholder="$t('common.please.enter') + $t('user.password')" />
+      <el-form-item label="登陆手机号" prop="username">
+        <el-input v-model="forms.username" type="text" placeholder="请输入登陆手机号" maxlength="11" />
       </el-form-item>
       <el-form-item label="昵称" prop="nickname">
         <el-input v-model="forms.nickname" type="text" placeholder="请输入昵称" />
@@ -26,11 +23,8 @@
         <el-radio v-model="forms.sex" :label="true">男</el-radio>
         <el-radio v-model="forms.sex" :label="false">女</el-radio>
       </el-form-item>
-      <el-form-item label="联系电话" prop="mobileNo">
-        <el-input v-model="forms.mobileNo" type="text" placeholder="输入联系电话" maxlength="11" />
-      </el-form-item>
       <el-form-item label="邮箱" prop="email">
-        <el-input v-model="forms.email" type="text" placeholder="输入联系电话" />
+        <el-input v-model="forms.email" type="text" placeholder="输入邮箱" />
       </el-form-item>
       <el-form-item class="form-footer" style="margin: 0">
         <el-button type="primary" icon="el-icon-check" @click="handleSubmit">{{ $t('common.confirm') }}</el-button>
@@ -78,20 +72,16 @@ export default {
         headerUrl: '',
         name: '',
         nickname: '',
-        mobileNo: '',
-        password: '',
         roleId: '',
         sex: false,
         username: ''
       },
       rules: {
-        email: [{ required: true, validator: checkMailBox, trigger: 'blur' }],
+        email: [{ validator: checkMailBox, trigger: 'blur' }],
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         nickname: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
-        mobileNo: [{ required: true, validator: checkMobile, trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         roleId: [{ required: true, message: '请选择角色', trigger: 'blur' }],
-        username: [{ required: true, message: '请输入账号', trigger: 'blur' }]
+        username: [{ required: true, validator: checkMobile, trigger: 'blur' }]
       },
       searchForm: {
         filters: [
@@ -99,10 +89,7 @@ export default {
           { field: 'type', op: 'EQ', value: '' },
           { field: 'key', op: 'EQ', value: '' }
         ],
-        page: {
-          page: 0,
-          size: 99999999
-        }
+        page: { page: 0, size: 99999999 }
       }
     }
   },
@@ -137,6 +124,7 @@ export default {
         assignExistField(this.$props.data, this.forms)
         this.forms.roleId = this.$props.data.role.id
         this.forms.id = this.$props.data.id
+        this.forms.username = this.forms.username.substr(1, this.forms.username.length - 1)
         this.$nextTick(() => {
           this.$refs.uploader.loadImage()
         })

@@ -15,7 +15,7 @@
             <el-input v-model="searchForm.filters[0].value" :placeholder="$t('common.please.enter')+'名字'" size="small" clearable />
           </div>
         </el-form-item>
-        <el-form-item label="账号">
+        <el-form-item label="登陆手机号">
           <div style="width:150px;">
             <el-input v-model="searchForm.filters[1].value" :placeholder="$t('common.please.enter')+'账号'" size="small" clearable />
           </div>
@@ -104,7 +104,7 @@
         <!-- 姓名 -->
         <el-table-column prop="name" label="姓名" min-width="110" />
         <!-- 账号 -->
-        <el-table-column prop="username" label="账号" min-width="140" />
+        <el-table-column prop="username" label="登陆手机号" min-width="140" />
         <!-- 昵称 -->
         <el-table-column prop="nickname" label="昵称" min-width="140" />
         <!-- 性别 -->

@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="title" :visible.sync="isShow" width="50%" :before-close="handleClose" :close-on-click-modal="false" @open="handleOpen">
-    <el-form ref="form" :model="form" status-icon :rules="rules" label-width="100px">
+    <el-form ref="form" :model="form" status-icon :rules="rules" label-width="110px">
       <el-form-item label="企业名称" prop="name">
         <el-input v-model="form.name" type="text" placeholder="输入企业联系电话" />
       </el-form-item>
@@ -8,7 +8,7 @@
         <el-input v-model="form.contactPerson" type="text" placeholder="输入企业联系人" />
       </el-form-item>
       <el-form-item label="企业联系电话" prop="contractPhone">
-        <el-input v-model="form.contractPhone" type="text" placeholder="输入企业联系电话" maxlength="11" />
+        <el-input v-model="form.contractPhone" type="text" placeholder="输入企业联系电话" maxlength="11" @input="settel" />
       </el-form-item>
       <el-form-item label="企业地址" prop="address">
         <el-input v-model="form.address" type="text" placeholder="输入企业地址" />
@@ -19,24 +19,18 @@
       <el-form-item v-if="isAdd" label="昵称" prop="user.nickname">
         <el-input v-model="form.user.nickname" type="text" placeholder="输入昵称" />
       </el-form-item>
-      <el-form-item v-if="isAdd" label="用户名" prop="user.username">
-        <el-input v-model="form.user.username" type="text" placeholder="输入昵称" />
-      </el-form-item>
-      <el-form-item v-if="isAdd" :label="$t('user.password')" prop="user.password">
-        <el-input v-model="form.user.password" type="password" show-password :placeholder="$t('common.please.enter') + $t('user.password')" />
+      <el-form-item v-if="isAdd" label="登陆手机号" prop="user.username">
+        <el-input v-model="form.user.username" type="text" placeholder="输入登陆手机号" maxlength="11" />
       </el-form-item>
       <el-form-item v-if="isAdd" label="姓名" prop="user.name">
-        <el-input v-model="form.user.name" type="text" :placeholder="$t('common.please.enter') + $t('user.username')" />
+        <el-input v-model="form.user.name" type="text" :placeholder="$t('common.please.enter') + '姓名'" />
       </el-form-item>
       <el-form-item v-if="isAdd" label="性别" prop="user.sex">
         <el-radio v-model="form.user.sex" :label="true">男</el-radio>
         <el-radio v-model="form.user.sex" :label="false">女</el-radio>
       </el-form-item>
-      <el-form-item v-if="isAdd" label="联系电话" prop="user.mobileNo">
-        <el-input v-model="form.user.mobileNo" type="text" placeholder="输入企业联系电话" />
-      </el-form-item>
       <el-form-item v-if="isAdd" label="管理员邮箱" prop="user.email">
-        <el-input v-model="form.user.email" type="text" placeholder="输入企业联系电话" />
+        <el-input v-model="form.user.email" type="text" placeholder="输入管理员邮箱" />
       </el-form-item>
       <el-form-item class="form-footer" style="margin: 0">
         <el-button type="primary" icon="el-icon-check" @click="handleSubmit">{{ $t('common.confirm') }}</el-button>
@@ -80,15 +74,13 @@ export default {
         contractPhone: '',
         name: '',
         user: {
-          email: '', //
+          email: '',
           headerUrl: '',
-          name: '', //
-          nickname: '', //
-          mobileNo: '', //
-          password: '', //
-          roleId: '', //
+          name: '',
+          nickname: '',
+          roleId: '',
           sex: false,
-          username: ''//
+          username: ''
         }
       },
       rules: {
@@ -96,13 +88,12 @@ export default {
         contactPerson: [{ required: true, message: '请输入企业联系人', trigger: 'blur' }],
         contractPhone: [{ required: true, message: '请输入企业联系电话', trigger: 'blur' }],
         name: [{ required: true, message: '请输入企业名称', trigger: 'blur' }],
-        'user.email': [{ required: true, validator: checkMailBox, trigger: 'blur' }],
+        'user.email': [{ validator: checkMailBox, trigger: 'blur' }],
         'user.name': [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         'user.nickname': [{ required: true, message: '请输入昵称', trigger: 'blur' }],
-        'user.mobileNo': [{ required: true, validator: checkMobile, trigger: 'blur' }],
+        'user.username': [{ required: true, validator: checkMobile, trigger: 'blur' }],
         'user.password': [{ required: true, message: '请输入密码', trigger: 'blur' }],
-        'user.roleId': [{ required: true, message: '请选择角色', trigger: 'blur' }],
-        'user.username': [{ required: true, message: '请输入账号', trigger: 'blur' }]
+        'user.roleId': [{ required: true, message: '请选择角色', trigger: 'blur' }]
       },
       searchForm: {
         filters: [
@@ -110,10 +101,7 @@ export default {
           { field: 'type', op: 'EQ', value: '' },
           { field: 'key', op: 'EQ', value: '' }
         ],
-        page: {
-          page: 0,
-          size: 99999999
-        }
+        page: { page: 0, size: 99999999 }
       }
     }
   },
@@ -163,6 +151,12 @@ export default {
       this.$refs.form.resetFields()
       this.$refs.form.clearValidate()
       this.$emit('close')
+    },
+    // 企业联系电话同步用户登录电话号码
+    settel(row) {
+      if (this.isAdd) {
+        this.form.user.username = row
+      }
     }
   }
 }
