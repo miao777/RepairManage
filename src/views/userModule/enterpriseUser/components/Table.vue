@@ -65,7 +65,7 @@
     <!-- 企业登陆用户 -->
     <show-merchant :show.sync="enterpriserighttable.visible" :shop-id="enterpriserighttable.id" @handleBindClose="handleBindClose" />
     <!-- 用户地位 -->
-    <MapShowMerchant :show.sync="map.visible" :shop-id="enterpriserighttable.id" @handleBindClose="handleBindClosess" />
+    <MapShowMerchant :show.sync="map.visible" :shop-id="map.id" @handleBindClose="handleBindClosess" />
   </div>
 </template>
 
@@ -97,7 +97,7 @@ export default {
       isEditShow: false,
       selectRow: {},
       enterpriserighttable: { visible: false, id: '' },
-      map: { visible: false, addr: '' }
+      map: { visible: false, id: '' }
     }
   },
   computed: {
@@ -139,7 +139,7 @@ export default {
       this.enterpriserighttable.visible = false
     },
     handleBindServiceMerchantBtnss(row) {
-      console.log(row, 'sizhi')
+      this.map.id = row.id
       this.map.visible = true
     },
     handleBindClosess() {

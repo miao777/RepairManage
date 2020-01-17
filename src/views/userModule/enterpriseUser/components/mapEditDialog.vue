@@ -17,11 +17,7 @@
           filterable
           placeholder="请选择区县"
           value-key="id"
-          @change="
-            form.address = '';
-            form.longitude = '';
-            form.latitude = '';
-          "
+          @change="getqu"
         >
           <el-option v-for="item in DistrictList" :key="item.id" :value="item" :label="item.name" />
         </el-select>
@@ -56,7 +52,7 @@
       </el-form-item>
       <el-form-item label="定位">
         <div class="padd20">
-          <mapselect :mapcenter="centerLatLng" :oldmarker="oldMarker" :datamap="addrposition" @mapclick="pointChange" />
+          <mapselect v-if="openMapType" :mapcenter="centerLatLng" :oldmarker="oldMarker" :addrposition="addrposition" @mapclick="pointChange" />
         </div>
       </el-form-item>
       <el-form-item class="form-footer" style="margin: 0">
@@ -68,7 +64,7 @@
 </template>
 
 <script>
-import ElementIcon from '@/icons'
+// import ElementIcon from '@/icons'
 import ProvinceApi from '@/api/province'
 import CityApi from '@/api/city'
 import EnterPrise from '@/api/enterprise'
@@ -76,7 +72,6 @@ import DistrictApi from '@/api/district'
 import AddressApi from '@/api/address'
 import qqMapSelectPoint from './selectPoint.vue'
 import { checkMobile } from '@/tools/date.js'
-// import axios from 'axios'
 export default {
   components: {
     mapselect: qqMapSelectPoint
@@ -101,29 +96,18 @@ export default {
   },
   data() {
     return {
+      openMapType: false, // 地图充值状态
+      // 地图
       pointName: '成都',
       qqmap: null,
       centerLatLng: '34.759666,113.648071',
       oldMarker: '34.759666,113.648071',
       newMarker: null,
       addrposition: { sn: '', si: '', qu: '', addr: '' },
-      levels: [
-        {
-          label: this.$t('menu.title1'),
-          value: 1
-        },
-        {
-          label: this.$t('menu.title2'),
-          value: 2
-        }
-      ],
-      parents: [],
-      icons: ElementIcon,
-      showParent: false,
       form: {
         address: '',
         cityId: '',
-        contactMan: '', //
+        contactMan: '',
         districtId: '',
         enterpriseId: '',
         familyId: '',
@@ -148,52 +132,36 @@ export default {
         mobileNo: [{ required: true, validator: checkMobile, trigger: 'blur' }],
         provinceId: [{ required: true, message: '请选择省份', trigger: 'blur,change' }]
       },
-      // type: '', // 选择企业或家庭  默认为空
       ProvinceList: [], // 省份列表
       EnterPriseList: [], // 企业列表
       FamilyList: [], // 家庭列表
       CityList: [], // 城市列表
       DistrictList: [], // 区县列表
-      EnterPriseSearch: {
-        page: {
-          page: 0,
-          size: 99999
-        }
+      EnterPriseSearch: { page: { page: 0, size: 99999 }},
+      ProvinceSearch: { page: { page: 0, size: 9999999 }},
+      CitySearch: { filters: [{ field: 'province.id', op: 'EQ', value: '' }],
+        page: { page: 0, size: 9999999 }
       },
-      ProvinceSearch: {
-        page: {
-          page: 0,
-          size: 9999999
-        }
-      },
-      CitySearch: {
-        filters: [{ field: 'province.id', op: 'EQ', value: '' }],
-        page: {
-          page: 0,
-          size: 9999999
-        }
-      },
-      DistrictSearch: {
-        filters: [{ field: 'city.id', op: 'EQ', value: '' }],
-        page: {
-          page: 0,
-          size: 9999999
-        }
+      DistrictSearch: { filters: [{ field: 'city.id', op: 'EQ', value: '' }],
+        page: { page: 0, size: 9999999 }
       }
     }
   },
   watch: {
     isShow: function(val) {
       if (val) {
+        this.openMapType = true
         this.getAllProvince()
         this.getAllEnterPrise()
         if (!this.$props.isAdd) {
+          this.form.id = this.$props.data.id
           this.form.provinceId = this.$props.data.province.id
           this.form.provinceIdtow = this.$props.data.province
           this.form.cityId = this.$props.data.city.id
           this.form.cityIdtow = this.$props.data.city
           this.form.districtId = this.$props.data.district.id
           this.form.districtIdtow = this.$props.data.district
+          this.form.enterpriseId = this.$props.data.enterprise.id
           this.getCityByProvince(this.$props.data.province, true)
           this.getDistrictByCity(this.$props.data.city, true)
           this.addrposition = {
@@ -213,7 +181,7 @@ export default {
         this.form = {
           address: '',
           cityId: '',
-          contactMan: '', //
+          contactMan: '',
           districtId: '',
           enterpriseId: '',
           familyId: '',
@@ -243,10 +211,12 @@ export default {
       EnterPrise.page(this.EnterPriseSearch).then(res => {
         if (res.success) {
           this.EnterPriseList = res.rows
+          console.log(this.EnterPriseList, 'EnterPriseListEnterPriseList')
         }
       })
     },
-    getAllFaimly() {},
+    // 家庭用户
+    // getAllFaimly() {},
     getAllProvince() {
       ProvinceApi.page(this.ProvinceSearch).then(res => {
         if (res.success) {
@@ -286,7 +256,6 @@ export default {
         this.$set(this.form, 'latitude', '')
         this.$set(this.form, 'longitude', '')
       }
-
       DistrictApi.page(this.DistrictSearch).then(res => {
         if (res.success) {
           this.DistrictList = res.rows
@@ -296,21 +265,24 @@ export default {
     getqu(val) {
       this.form.districtId = val.id
       this.addrposition.qu = val.name
+      this.form.address = ''
+      this.form.longitude = ''
+      this.form.latitude = ''
+      this.addrposition.addr = ''
     },
     adderget(val) {
       this.addrposition.addr = val
       this.$set(this.form, 'latitude', '')
       this.$set(this.form, 'longitude', '')
     },
-    changeType(val) {
-      console.log(val)
-      if (val === 1) this.getAllEnterPrise()
-      // 选择企业
-      else this.getAllFaimly() // 选择家庭
-    },
+    // changeType(val) {
+    //   console.log(val)
+    //   if (val === 1) this.getAllEnterPrise()
+    //   // 选择企业
+    //   else this.getAllFaimly() // 选择家庭
+    // },
     async addMenu() {
       delete this.form.id
-      // delete this.form.type
       delete this.form.provinceIdtow
       delete this.form.cityIdtow
       delete this.form.districtIdtow
@@ -320,6 +292,9 @@ export default {
       }
     },
     async editMenu() {
+      delete this.form.provinceIdtow
+      delete this.form.cityIdtow
+      delete this.form.districtIdtow
       const resp = await AddressApi.edit(this.form)
       if (resp.success) {
         this.handleClose()
@@ -328,7 +303,6 @@ export default {
     // 默认打开窗口事件
     handleOpen() {
       // if (!this.$props.isAdd) {
-      //   this.form = this.$props.data
       // }
     },
     handleSubmit() {
@@ -339,6 +313,7 @@ export default {
       })
     },
     handleClose(done) {
+      this.openMapType = false
       this.$refs.form.resetFields()
       this.$refs.form.clearValidate()
       this.$emit('close')

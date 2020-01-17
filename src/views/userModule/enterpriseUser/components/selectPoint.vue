@@ -52,7 +52,7 @@ export default {
       type: String,
       default: ''
     },
-    datamap: {
+    addrposition: {
       type: Object,
       default: () => {}
     }
@@ -76,11 +76,12 @@ export default {
         this.qqmap && this.createMarker()
       }
     },
-    inputDefault(newVal, oldVal) {
-      console.log('默认地址变成：', newVal)
-      this.inputVal = newVal
-    },
-    datamap: {
+    // inputDefault(newVal, oldVal) {
+    //   console.log('默认地址变成：', newVal)
+    //   this.inputVal = newVal
+    // },
+    addrposition: {
+      immediate: true,
       handler: function(newVal) {
         const data = newVal
         this.inputVal = data.sn + data.si + data.qu + data.addr
@@ -95,7 +96,7 @@ export default {
   },
   mounted() {
     const that = this
-    this.inputVal = this.inputDefault
+    // this.inputVal = this.inputDefault
     if (this.oldmarker) {
       this.latlngCurrent = this.oldmarker || this.mapcenter
     }
