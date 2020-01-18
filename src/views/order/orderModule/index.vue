@@ -1,9 +1,11 @@
 <template>
   <div class="app-container">
     <!-- 订单管理 -->
-    <search-bar :form="searchForm" @reset="handleResetSearchForm" @search="fetchData" />
+    111
+    <search-bar :form="searchForm" @reset="handleResetSearchForm" @search="fetchData" @service="addServiceVisible=true" />
     <Table :loading="table.loading" :data="table.data" :multiple="table.multiple" @search="fetchData" @selection-change="handleSelectRows" />
     <Pagination :page="pagination" @pagination="handleChangePagination" />
+    <el-dialog title="新增服务" :visible.sync="addServiceVisible" />
   </div>
 </template>
 
@@ -11,7 +13,8 @@
 import SearchBar from './components/SearchBar'
 import Table from './components/Table'
 import Pagination from '@/components/Pagination'
-import { orderPage } from '@/api/order'
+// import { orderPage } from '@/api/order'
+import BookingApi from '@/api/booking'
 export default {
   components: { SearchBar, Table, Pagination },
   data() {
@@ -27,7 +30,8 @@ export default {
         page: { page: 0, size: 10 }
       },
       table: { loading: false, data: [], multiple: false, multipleSelection: [] }, // 表格的数据
-      pagination: { pageNo: 1, pageSize: 10, totalCount: 0 } // 这个是返回结果的时候的分页数据
+      pagination: { pageNo: 1, pageSize: 10, totalCount: 0 }, // 这个是返回结果的时候的分页数据
+      addServiceVisible: false
     }
   },
   created() {
@@ -39,7 +43,7 @@ export default {
         this.searchForm.page.page = page - 1
       }
       this.table.loading = true
-      const resp = await orderPage(this.searchForm)
+      const resp = await BookingApi.page(this.searchForm)
       if (resp.success) {
         if (resp.totalCount > 0 && resp.rows.length === 0) {
           this.fetchData(1)

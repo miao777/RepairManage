@@ -21,6 +21,7 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">{{ $t('common.search') }}</el-button>
         <el-button type="default" icon="el-icon-refresh" @click="handleReset">{{ $t('common.reset') }}</el-button>
+        <!-- <el-button type="default" icon="el-icon-refresh" @click="$emit('service')">新增服务</el-button> -->
       </el-form-item>
     </el-form>
     <add-dialog ref="AddDialog" :is-show="isAddShow" :is-add="true" @close="handleAddDialogClose" />
