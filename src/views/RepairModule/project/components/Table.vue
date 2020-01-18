@@ -15,8 +15,8 @@
       :max-height="height"
     >
       <el-table-column type="index" label="#" align="center" width="40px" />
-      <!-- 维修小类（名称） -->
-      <el-table-column label="维修小类（名称）" prop="name" />
+      <!-- 项目 -->
+      <el-table-column label="项目" prop="name" />
       <!-- 状态 -->
       <el-table-column label="状态" prop="isShow_fmt" align="center" />
       <!-- 启停 -->
@@ -31,6 +31,8 @@
       <el-table-column label="维修分类（关联）" prop="category.name" />
       <!-- 用户类型（关联） -->
       <el-table-column label="用户类型（关联）" prop="category.type_fmt" />
+      <!-- 维修小类（关联） -->
+      <el-table-column label="维修小类（关联）" prop="subclass.name" />
       <!-- 操作 -->
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
@@ -49,7 +51,7 @@
 
 <script>
 import EditDialog from './EditDialog'
-import SubclassApi from '@/api/subclass'
+import RepairItemApi from '@/api/repairItem'
 import { MessageBox } from 'element-ui'
 export default {
   components: { EditDialog },
@@ -77,14 +79,14 @@ export default {
   methods: {
     // 删除
     async deleteMenu() {
-      const resp = await SubclassApi.delete(this.selectRow.id)
+      const resp = await RepairItemApi.delete(this.selectRow.id)
       if (resp.success) {
         this.$emit('search')
       }
     },
     // 状态切换
     async change(row) {
-      const res = await SubclassApi.toggle(row.id)
+      const res = await RepairItemApi.toggle(row.id)
       if (res.success) {
         this.$emit('search')
       }

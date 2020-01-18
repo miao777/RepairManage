@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="title" :visible.sync="isShow" width="50%" :before-close="handleClose" :close-on-click-modal="false" @open="handleOpen">
-    <el-form ref="form" :model="form" status-icon :rules="rules" label-width="100px">
+    <el-form ref="form" :model="form" status-icon :rules="rules" label-width="120px">
       <el-form-item label="类型" prop="categoryId">
         <el-cascader
           v-model="values"
@@ -10,8 +10,14 @@
           @change="handleChange"
         />
       </el-form-item>
-      <el-form-item label="小类名称" prop="name">
-        <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + '小类名称'" />
+      <el-form-item label="维修项目名称" prop="name">
+        <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + '维修项目名称'" />
+      </el-form-item>
+      <el-form-item label="价格" prop="price">
+        <el-input v-model="form.price" type="text" :placeholder="$t('common.please.enter') + '价格'" />
+      </el-form-item>
+      <el-form-item label="预计维修分钟数" prop="repairMinute">
+        <el-input v-model="form.repairMinute" type="text" :placeholder="$t('common.please.enter') + '预计维修分钟数'" />
       </el-form-item>
       <el-form-item label="排序" prop="sortNo">
         <el-input v-model="form.sortNo" type="tel" :placeholder="$t('common.please.enter') + '排序'" />
@@ -28,6 +34,7 @@
 import { assignExistField } from '@/utils'
 import CategoryApi from '@/api/category'
 import SubclassApi from '@/api/subclass'
+import RepairItemApi from '@/api/repairItem'
 export default {
   props: {
     title: {
@@ -52,16 +59,23 @@ export default {
       values: [],
       form: {
         id: '',
-        categoryId: '',
         name: '',
-        sortNo: ''
+        price: '',
+        repairMinute: '',
+        sortNo: '',
+        subclassId: ''
       },
       rules: {
         name: [{ required: true, message: '请输入名称', trigger: 'blur,change' }],
+        price: [{ required: true, message: '请输入指导价格', trigger: 'blur,change' }],
+        repairMinute: [{ required: true, message: '请输入预计维修分钟数', trigger: 'blur,change' }],
         sortNo: [{ required: true, message: '请填写顺序', trigger: 'blur,change' }],
-        categoryId: [{ required: true, message: '请选择类型', trigger: 'blur,change' }]
+        subclassId: [{ required: true, message: '请选择维修类型', trigger: 'blur,change' }]
       },
       searchForms: {
+        page: { page: 0, size: 1000 }
+      },
+      subclassSearchForm: {
         page: { page: 0, size: 1000 }
       },
       options: []
@@ -71,6 +85,23 @@ export default {
     this.custormerTypess()
   },
   methods: {
+    async subclassFun() {
+      const resp = await SubclassApi.page(this.subclassSearchForm)
+      if (resp.success) {
+        this.options.map(item => {
+          item.children.map(i => {
+            resp.rows.map(g => {
+              const obj = {}
+              if (g.category.id === i.value) {
+                obj.value = g.id
+                obj.label = g.name
+                i.children.push(obj)
+              }
+            })
+          })
+        })
+      }
+    },
     // 维修分类
     async categoryList() {
       const resp = await CategoryApi.page(this.searchForms)
@@ -82,10 +113,12 @@ export default {
           if (item.type === 'ENTERPRISE') {
             obj.value = item.id
             obj.label = item.name
+            obj.children = []
             Earr.push(obj)
           } else if (item.type === 'FAMILY') {
             obj.value = item.id
             obj.label = item.name
+            obj.children = []
             Farr.push(obj)
           }
         })
@@ -96,6 +129,7 @@ export default {
             item.children = Farr
           }
         })
+        this.subclassFun()
       }
     },
     async custormerTypess() {
@@ -116,24 +150,23 @@ export default {
     // 新增
     async addMenu() {
       delete this.form.id
-      const resp = await SubclassApi.add(this.form)
+      const resp = await RepairItemApi.add(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     // 修改
     async editMenu() {
-      const resp = await SubclassApi.edit(this.form)
+      const resp = await RepairItemApi.edit(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     handleOpen() {
       if (!this.$props.isAdd) {
-        console.log(this.$props.data, '11111222')
         assignExistField(this.$props.data, this.form)
-        this.form.categoryId = this.$props.data.category.id
-        this.values = [this.$props.data.category.type, this.$props.data.category.id]
+        this.form.subclassId = this.$props.data.subclass.id
+        this.values = [this.$props.data.category.type, this.$props.data.category.id, this.$props.data.subclass.id]
       }
     },
     handleSubmit() {
@@ -150,7 +183,7 @@ export default {
       this.$emit('close')
     },
     handleChange(value) {
-      this.form.categoryId = value[1]
+      this.form.subclassId = value[2]
     }
   }
 }

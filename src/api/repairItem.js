@@ -8,8 +8,11 @@ const UrlPath = '/admin/repair/item/'
 class RepairItemApi {
     /**
      * @description "新增维修项目"
-     * @param {string} code “code”
      * @param {string} name “name”
+     * @param {string} price “price”
+     * @param {string} repairMinute 'repairMinute'
+     * @param {string} sortNo 'sortNo'
+     * @param {string} subclassId 'subclassId'
      * @static
      * @memberof RepairItemApi
      */
@@ -34,9 +37,12 @@ class RepairItemApi {
     }
     /**
      * @description "修改维修项目"
-     * @param {string} code “code”
-     * @param {string} name “name”
      * @param {string} id “id”
+     * @param {string} name “name”
+     * @param {string} price “price”
+     * @param {string} repairMinute 'repairMinute'
+     * @param {string} sortNo 'sortNo'
+     * @param {string} subclassId 'subclassId'
      * @static
      * @memberof RepairItemApi
      */
