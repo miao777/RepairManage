@@ -9,8 +9,10 @@ const UrlPath = '/admin/repair/category/'
 class CategoryApi {
     /**
      * @description "新增维修分类"
-     * @param {string} code “code”
+     * @param {string} iconId 'iconId'
      * @param {string} name “name”
+     * @param {string} sortNo 'sortNo'
+     * @param {string} type 'type'
      * @static
      * @memberof CategoryApi
      */
@@ -35,9 +37,11 @@ class CategoryApi {
     }
     /**
      * @description "修改维修分类"
-     * @param {string} code “code”
-     * @param {string} name “name”
      * @param {string} id “id”
+     * @param {string} iconId 'iconId'
+     * @param {string} name “name”
+     * @param {string} sortNo 'sortNo'
+     * @param {string} type 'type'
      * @static
      * @memberof CategoryApi
      */
@@ -68,10 +72,22 @@ class CategoryApi {
      * @static
      * @memberof CategoryApi
      */
-    static toggle = data => {
+    static toggle = (id) => {
       return request({
-        url: UrlPath + 'toggle/show/' + data,
+        url: UrlPath + 'toggle/show/' + id,
         method: 'put'
+      })
+    }
+    /**
+     * @description '获取用户类型'
+     * @param
+     * @static
+     * @memberof CategoryApi
+     */
+    static custormerType = () => {
+      return request({
+        url: UrlPath + 'list/customer/type',
+        method: 'get'
       })
     }
 }

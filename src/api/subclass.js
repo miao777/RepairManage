@@ -8,8 +8,9 @@ const UrlPath = '/repair/subclass/'
 class SubclassApi {
     /**
      * @description "新增维修小类"
-     * @param {string} code “code”
-     * @param {string} name “name”
+     * @param {string} categoryId 'categoryId'
+     * @param {string} name 'name'
+     * @param {string} sortNo 'sortNo'
      * @static
      * @memberof SubclassApi
      */
@@ -33,10 +34,11 @@ class SubclassApi {
       })
     }
     /**
-     * @description "修改维修小类"
-     * @param {string} code “code”
-     * @param {string} name “name”
+     * @description "编辑维修小类"
      * @param {string} id “id”
+     * @param {string} categoryId 'categoryId'
+     * @param {string} name 'name'
+     * @param {string} sortNo 'sortNo'
      * @static
      * @memberof SubclassApi
      */
@@ -67,9 +69,9 @@ class SubclassApi {
      * @static
      * @memberof SubclassApi
      */
-    static toggle = data => {
+    static toggle = id => {
       return request({
-        url: UrlPath + 'toggle/show/' + data,
+        url: UrlPath + 'toggle/show/' + id,
         method: 'put'
       })
     }

@@ -2,13 +2,11 @@
   <div class="app-container">
     <search-bar :form="searchForm" @search="fetchData" @reset="reset" />
     <Table :loading="table.loading" :data="table.data" :multiple="table.multiple" @search="fetchData" />
-    <!-- <Table :data="[]" /> -->
     <Pagination :page="pagination" @pagination="handleChangePagination" />
   </div>
 </template>
 
 <script>
-// import ProvinceApi from '@/api/province'
 import CategoryApi from '@/api/category'
 import SearchBar from './components/SearchBar'
 import Table from './components/Table'
@@ -20,8 +18,8 @@ export default {
       searchForm: {
         filters: [
           { field: 'name', op: 'EQ', value: '' },
-          { field: 'code', op: 'EQ', value: '' },
-          { field: 'status', op: 'EQ', value: '' }
+          { field: 'type', op: 'EQ', value: '' },
+          { field: 'isShow', op: 'EQ', value: '' }
         ],
         page: {
           page: 0,
@@ -49,13 +47,13 @@ export default {
         this.table.loading = false
       })
     },
-    search() {},
     reset() {
       this.searchForm.filters = [
         { field: 'name', op: 'EQ', value: '' },
-        { field: 'code', op: 'EQ', value: '' },
-        { field: 'status', op: 'EQ', value: '' }
+        { field: 'type', op: 'EQ', value: '' },
+        { field: 'isShow', op: 'EQ', value: '' }
       ]
+      this.searchForm.page = { page: 0, size: 10 }
       this.fetchData()
     },
     handleChangePagination() {

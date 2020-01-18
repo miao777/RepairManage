@@ -1,16 +1,17 @@
 <template>
   <el-dialog :title="title" :visible.sync="isShow" width="50%" :before-close="handleClose" :close-on-click-modal="false" @open="handleOpen">
     <el-form ref="form" :model="form" status-icon :rules="rules" label-width="100px">
-      <el-form-item label="图片" prop="iconId">
-        <Uploader ref="uploader" :image="form.icon" @on-success="handleUploadSuccess" />
+      <el-form-item label="类型" prop="categoryId">
+        <el-cascader
+          v-model="values"
+          placeholder="试试搜索：指南"
+          :options="options"
+          filterable
+          @change="handleChange"
+        />
       </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select v-model="form.type" placeholder="请选择类型">
-          <el-option v-for="item in customerList" :key="item.name" :label="item.value" :value="item.name" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="分类名称" prop="name">
-        <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + '名称'" />
+      <el-form-item label="小类名称" prop="name">
+        <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + '小类名称'" />
       </el-form-item>
       <el-form-item label="排序" prop="sortNo">
         <el-input v-model="form.sortNo" type="tel" :placeholder="$t('common.please.enter') + '排序'" />
@@ -25,10 +26,9 @@
 
 <script>
 import { assignExistField } from '@/utils'
-import Uploader from '@/components/Uploader'
 import CategoryApi from '@/api/category'
+import SubclassApi from '@/api/subclass'
 export default {
-  components: { Uploader },
   props: {
     title: {
       type: String,
@@ -49,55 +49,93 @@ export default {
   },
   data() {
     return {
-      customerList: [],
+      values: [],
       form: {
         id: '',
-        iconId: '',
+        categoryId: '',
         name: '',
-        sortNo: '',
-        type: ''
+        sortNo: ''
       },
       rules: {
-        iconId: [{ required: true, message: '请上传图片', trigger: 'blur,change' }],
         name: [{ required: true, message: '请输入名称', trigger: 'blur,change' }],
         sortNo: [{ required: true, message: '请填写顺序', trigger: 'blur,change' }],
-        type: [{ required: true, message: '请选择类型', trigger: 'blur,change' }]
-      }
+        categoryId: [{ required: true, message: '请选择类型', trigger: 'blur,change' }]
+      },
+      searchForms: {
+        page: { page: 0, size: 1000 }
+      },
+      options: []
     }
   },
   created() {
-    this.custormerType()
+    this.custormerTypess()
   },
   methods: {
-    async custormerType() {
-      const resp = await CategoryApi.custormerType()
+    // 维修分类
+    async categoryList() {
+      const resp = await CategoryApi.page(this.searchForms)
       if (resp.success) {
-        this.customerList = resp.rows
+        const Earr = []
+        const Farr = []
+        resp.rows.map(item => {
+          const obj = {}
+          if (item.type === 'ENTERPRISE') {
+            obj.value = item.id
+            obj.label = item.name
+            Earr.push(obj)
+          } else if (item.type === 'FAMILY') {
+            obj.value = item.id
+            obj.label = item.name
+            Farr.push(obj)
+          }
+        })
+        this.options.map(item => {
+          if (item.value === 'ENTERPRISE') {
+            item.children = Earr
+          } else if (item.value === 'FAMILY') {
+            item.children = Farr
+          }
+        })
       }
     },
+    async custormerTypess() {
+      const resp = await CategoryApi.custormerType()
+      if (resp.success) {
+        const arr = []
+        resp.rows.map(item => {
+          const obj = {}
+          obj.value = item.name
+          obj.label = item.value
+          obj.children = []
+          arr.push(obj)
+        })
+        this.options = arr
+        this.categoryList()
+      }
+    },
+    // 新增
     async addMenu() {
       delete this.form.id
-      const resp = await CategoryApi.add(this.form)
+      const resp = await SubclassApi.add(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
+    // 修改
     async editMenu() {
-      const resp = await CategoryApi.edit(this.form)
+      const resp = await SubclassApi.edit(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     handleOpen() {
       if (!this.$props.isAdd) {
+        console.log(this.$props.data, '11111222')
         assignExistField(this.$props.data, this.form)
-        this.$nextTick(() => {
-          this.$refs.uploader.loadImage()
-        })
-        this.form.icon = this.$props.data.icon
+        this.form.categoryId = this.$props.data.category.id
+        this.values = [this.$props.data.category.type, this.$props.data.category.id]
       }
     },
-
     handleSubmit() {
       this.$refs.form.validate(valid => {
         if (valid) {
@@ -110,8 +148,8 @@ export default {
       this.$refs.form.clearValidate()
       this.$emit('close')
     },
-    handleUploadSuccess(resp) {
-      this.form.iconId = resp.data.id
+    handleChange(value) {
+      this.form.categoryId = value[1]
     }
   }
 }

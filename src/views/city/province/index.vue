@@ -48,13 +48,13 @@ export default {
         this.table.loading = false
       })
     },
-    search() {},
     reset() {
       this.searchForm.filters = [
         { field: 'name', op: 'EQ', value: '' },
         { field: 'code', op: 'EQ', value: '' },
         { field: 'status', op: 'EQ', value: '' }
       ]
+      this.searchForm.page = { page: 0, size: 10 }
       this.fetchData()
     },
     handleChangePagination() {

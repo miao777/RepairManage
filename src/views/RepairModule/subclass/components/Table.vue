@@ -15,20 +15,8 @@
       :max-height="height"
     >
       <el-table-column type="index" label="#" align="center" width="40px" />
-      <!-- 图片 -->
-      <el-table-column prop="image" label="图片">
-        <template slot-scope="scope">
-          <el-image :class="scope.row.icon ? 'table-image-size' : ''" :src="scope.row.icon" :preview-src-list="[scope.row.icon]" fit="cover">
-            <div v-if="!scope.row.icon" slot="error" class="image-slot">
-              <i class="el-icon-picture-outline" />{{ $t('common.noImgLoading') }}
-            </div>
-          </el-image>
-        </template>
-      </el-table-column>
-      <!-- 维修类型 -->
-      <el-table-column label="维修类型" prop="name" />
-      <!-- 用户类型 -->
-      <el-table-column label="用户类型" prop="type_fmt" />
+      <!-- 维修小类（名称） -->
+      <el-table-column label="维修小类（名称）" prop="name" />
       <!-- 状态 -->
       <el-table-column label="状态" prop="isShow_fmt" align="center" />
       <!-- 启停 -->
@@ -39,6 +27,10 @@
       </el-table-column>
       <!-- 排序 -->
       <el-table-column label="序号" prop="sortNo" align="center" />
+      <!-- 维修分类名称（关联） -->
+      <el-table-column label="维修分类名称（关联）" prop="category.name" />
+      <!-- 用户类型（关联） -->
+      <el-table-column label="用户类型（关联）" prop="category.type_fmt" />
       <!-- 操作 -->
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
@@ -57,7 +49,7 @@
 
 <script>
 import EditDialog from './EditDialog'
-import CategoryApi from '@/api/category'
+import SubclassApi from '@/api/subclass'
 import { MessageBox } from 'element-ui'
 export default {
   components: { EditDialog },
@@ -85,14 +77,14 @@ export default {
   methods: {
     // 删除
     async deleteMenu() {
-      const resp = await CategoryApi.delete(this.selectRow.id)
+      const resp = await SubclassApi.delete(this.selectRow.id)
       if (resp.success) {
         this.$emit('search')
       }
     },
     // 状态切换
     async change(row) {
-      const res = await CategoryApi.toggle(row.id)
+      const res = await SubclassApi.toggle(row.id)
       if (res.success) {
         this.$emit('search')
       }

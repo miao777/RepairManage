@@ -8,15 +8,18 @@
       class="demo-form-inline"
     >
       <el-form-item label="维修类型" prop="filters[0].value">
-        <el-input v-model="form.filters[0].value" placeholder="输入维修类型" />
+        <el-input v-model="form.filters[0].value" placeholder="维修类型" />
       </el-form-item>
-      <el-form-item label="用户类型" prop="filters[1].value">
-        <el-select v-model="form.filters[1].value">
+      <el-form-item label="维修分类名称（关联）" prop="filters[1].value">
+        <el-input v-model="form.filters[1].value" placeholder="维修分类名称（关联）" />
+      </el-form-item>
+      <el-form-item label="用户类型（关联）" prop="filters[2].value">
+        <el-select v-model="form.filters[2].value">
           <el-option v-for="item in customerListserch" :key="item.name" :label="item.value" :value="item.name" />
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="filters[2].value">
-        <el-select v-model="form.filters[2].value">
+      <el-form-item label="状态" prop="filters[3].value">
+        <el-select v-model="form.filters[3].value">
           <el-option v-for="(item,i) in statuses" :key="i" :value="item.value" :label="item.label" />
         </el-select>
       </el-form-item>
