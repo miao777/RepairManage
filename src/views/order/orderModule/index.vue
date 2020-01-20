@@ -3,7 +3,7 @@
     <!-- 订单管理 -->
     111
     <search-bar :form="searchForm" @reset="handleResetSearchForm" @search="fetchData" @service="addServiceVisible=true" />
-    <Table :loading="table.loading" :data="table.data" :multiple="table.multiple" @search="fetchData" @selection-change="handleSelectRows" />
+    <!-- <Table :loading="table.loading" :data="table.data" :multiple="table.multiple" @search="fetchData" @selection-change="handleSelectRows" /> -->
     <Pagination :page="pagination" @pagination="handleChangePagination" />
     <el-dialog title="新增服务" :visible.sync="addServiceVisible" />
   </div>
@@ -11,12 +11,13 @@
 
 <script>
 import SearchBar from './components/SearchBar'
-import Table from './components/Table'
+// import Table from './components/Table'
 import Pagination from '@/components/Pagination'
 // import { orderPage } from '@/api/order'
 import BookingApi from '@/api/booking'
 export default {
-  components: { SearchBar, Table, Pagination },
+  // components: { SearchBar, Table, Pagination },
+  components: { SearchBar, Pagination },
   data() {
     return {
       searchForm: {
@@ -35,7 +36,7 @@ export default {
     }
   },
   created() {
-    this.fetchData()
+    // this.fetchData()
   },
   methods: {
     async fetchData(page) { // 后台分页请求的数据
@@ -49,16 +50,17 @@ export default {
           this.fetchData(1)
         }
         const preRows = resp.rows
-        if (preRows && preRows.length > 0) {
-          preRows.map(r => {
-            if (r.productInfos) {
-              r.productInfosJson = JSON.parse(r.productInfos)
-              r.productInfosJson.map(item => {
-                item.productJson = JSON.parse(item.product)
-              })
-            }
-          })
-        }
+        console.log(resp.rows, '1111111111')
+        // if (preRows && preRows.length > 0) {
+        //   preRows.map(r => {
+        //     if (r.productInfos) {
+        //       r.productInfosJson = JSON.parse(r.productInfos)
+        //       r.productInfosJson.map(item => {
+        //         item.productJson = JSON.parse(item.product)
+        //       })
+        //     }
+        //   })
+        // }
         this.table.data = preRows
         this.pagination.pageNo = resp.pageNo + 1
         this.pagination.pageSize = resp.pageSize

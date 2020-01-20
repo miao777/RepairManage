@@ -7,7 +7,6 @@ class OrderApi {
    * @param {string} orderBookingId 预约订单ID
    * @param {string} remark 备注
    * @param {number} repairMinute 预计维修分钟数
-   *
    * @static
    * @memberof OrderApi
    */
@@ -18,23 +17,7 @@ class OrderApi {
       data
     })
   }
-  /**
-   * @description 增加服务项目
-   * @param {string} categoryId 分类ID
-   * @param {string} images 图片ID列表
-   * @param {string} itemId 项目ID
-   * @param {string} subclassId 小类ID
-   *
-   * @static
-   * @memberof OrderApi
-   */
-  static addService = (id, data) => {
-    return request({
-      url: urlPath + 'add/product/' + id,
-      method: 'post',
-      data
-    })
-  }
+
   /**
    * @description 指派维修人员
    * @param {}orderId 预约订单ID
@@ -90,19 +73,6 @@ class OrderApi {
       url: urlPath + 'pay/log/page',
       method: 'post',
       data
-    })
-  }
-  /**
-   * @description 删除服务项目
-   * @param {string} id  服务Id
-   * @static
-   * @memberof OrderApi
-   */
-  static removeProduct=id => {
-    return request({
-      url: urlPath + 'remove/product/' + id,
-      method: 'delete'
-
     })
   }
 }

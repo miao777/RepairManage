@@ -1,141 +1,51 @@
 <template>
   <div>
     <el-table
+      ref="table"
       v-loading="loading"
       :data="data"
+      :tree-props="{ children: 'children', hasChildren: 'children.length > 0' }"
       :element-loading-text="$t('common.loading')"
       :empty-text="$t('common.empty')"
+      row-key="id"
       border
       stripe
       fit
-      :max-height="height"
       highlight-current-row
-      @sort-change="handleSort"
-      @selection-change="handleSelectionChange"
+      :max-height="height"
     >
-      <el-table-column v-if="multiple" type="selection" width="35" />
-      <el-table-column align="center" type="index" width="35" class-name="table-detail" />
-      <!-- 下拉框 -->
-      <el-table-column type="expand" width="35" class-name="table-detail">
-        <template slot-scope="props">
-          <el-form label-position="left" inline class="table-detail-expand">
-            <el-form-item :label="$t('order.oederNumber') + '：'">
-              <span>{{ props.row.orderNo }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.consignee') + '：'">
-              <span>{{ props.row.addressee.name }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.waybillNo') + '：'">
-              <span>{{ props.row.addressee.waybillNo }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.consigneePhone') + '：'">
-              <span>{{ props.row.addressee.phone }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.consigneeaddr') + '：'">
-              <span>{{ props.row.addressee.address }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.orderState') + '：'">
-              <span>{{ props.row.orderStatus_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.orderType') + '：'">
-              <span>{{ props.row.orderType_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.delivery') + '：'">
-              <span>{{ props.row.deliveryType_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.orderTime') + '：'">
-              <span>{{ props.row.orderTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.paymentTime') + '：'">
-              <span>{{ props.row.payTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.deliveryTime') + '：'">
-              <span>{{ props.row.shipTime_fmt }}</span>
-            </el-form-item><el-form-item :label="$t('order.receivingTime') + '：'">
-              <span>{{ props.row.receiveTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.commentTime') + '：'">
-              <span>{{ props.row.commentTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.remarks') + '：'">
-              <span>{{ props.row.remark }}</span>
-            </el-form-item>
-            <hr>
-            <div v-for="(product,index) in props.row.productInfosJson" :key="index">
-              <el-form-item :label="$t('order.goodsimg') + '：'" class="productImagesClass">
-                <div v-if="product.productJson.images && product.productJson.images.length > 0">
-                  <a v-for="img in product.productJson.images" :key="img" :href="img" target="_blank" style="margin-left:20px;"><img :src="img" width="80px" height="80px"></a>
-                </div>
-                <div v-else>
-                  <span>暂无</span>
-                </div>
-              </el-form-item>
-              <br>
-              <el-form-item :label="$t('order.goodsname') + '：'">
-                <span>{{ product.name }}</span>
-              </el-form-item>
-
-              <el-form-item :label="$t('order.goodsprice') + '：'">
-                <span>￥{{ (product.price/ 100).toFixed(2) }}</span>
-              </el-form-item>
-
-              <el-form-item :label="$t('order.ordernums') + '：'">
-                <span>{{ product.nums }}</span>
-              </el-form-item>
-
-              <div v-show="index < props.row.productInfosJson.length - 1" style="width:100%;height: 0px;border-bottom:#000000 1px dashed;" />
-            </div>
-          </el-form>
-        </template>
-      </el-table-column>
-      <!-- 商品名称 -->
-      <el-table-column :label="$t('order.goodsname')" prop="productInfosJson[0].name" />
-      <!-- 订单编号 -->
-      <el-table-column :label="$t('order.oederNumber')" prop="orderNo" sortable width="166" />
-      <!-- 收货人 -->
-      <el-table-column :label="$t('order.consignee')" prop="addressee.name" />
-      <!-- 运单号 -->
-      <el-table-column :label="$t('order.waybillNo')" prop="addressee.waybillNo" sortable />
-      <!-- 收货人电话 -->
-      <el-table-column :label="$t('order.consigneePhone')" prop="addressee.phone" sortable />
-      <!-- 收货人地址 -->
-      <el-table-column :label="$t('order.consigneeaddr')" prop="addressee.address" />
-      <!-- 订单类型 -->
-      <el-table-column :label="$t('order.orderType')" prop="orderType_fmt" />
-      <!-- 订单状态 -->
-      <el-table-column :label="$t('order.orderState')" prop="orderStatus_fmt" sortable />
-      <!-- 配送方式 -->
-      <el-table-column :label="$t('order.delivery')" prop="deliveryType_fmt" />
-      <!-- 订单金额 -->
-      <el-table-column :label="$t('order.orderPrice')" prop="totalAmount_fmt" sortable />
-      <!-- 下单时间 -->
-      <el-table-column :label="$t('order.orderTime')" prop="orderTime_fmt" sortable />
-      <!-- 备注 -->
-      <el-table-column :label="$t('order.remarks')" prop="remark">
+      <el-table-column type="index" label="#" align="center" width="40px" />
+      <el-table-column label="姓名" prop="address.contactMan" />
+      <el-table-column label="联系电话" prop="address.mobileNo" />
+      <el-table-column label="用户类型" prop="customerType_fmt" />
+      <el-table-column label="地址" prop="address.addresstext" min-width="300" />
+      <el-table-column label="服务项目" align="center" width="160">
         <template slot-scope="scope">
-          <span>{{ scope.row.remark ? scope.row.remark : '无' }}</span>
+          <el-link type="primary" @click="openService(scope.row)">查看维修项目</el-link>
         </template>
       </el-table-column>
-
-      <edit-dialog ref="EditDialog" :is-show="isEditShow" :title="$t('common.edit')" :is-add="false" :data="selectRow" @close="handleEditDialogClose" />
+      <el-table-column label="操作" align="center" width="80">
+        <template slot-scope="scope">
+          <el-tooltip content="创建订单" placement="top">
+            <el-button type="success" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
+          </el-tooltip>
+        </template>
+      </el-table-column>
     </el-table>
+    <!-- 查看项目 -->
+    <show-merchant :show.sync="enterpriserighttable.visible" :shop-id="enterpriserighttable.id" @handleBindClose="handleBindClose" />
   </div>
 </template>
 
 <script>
-import EditDialog from './EditDialog'
+import BookingApi from '@/api/booking'
+import OrderApi from '@/api/order'
+import ShowMerchant from './ShowMerchant'
 import { MessageBox } from 'element-ui'
-import { remove, toggleStatus, resetPwd, showBlacklist } from '@/api/user'
-
 export default {
-  name: 'UserTable',
-  components: { EditDialog },
+  components: { ShowMerchant },
   props: {
     loading: {
-      type: Boolean,
-      default: false
-    },
-    multiple: {
       type: Boolean,
       default: false
     },
@@ -146,8 +56,8 @@ export default {
   },
   data() {
     return {
-      isEditShow: false,
-      selectRow: {}
+      selectRow: {},
+      enterpriserighttable: { visible: false, id: '' }
     }
   },
   computed: {
@@ -156,85 +66,60 @@ export default {
     }
   },
   methods: {
-    async toggleStatus() {
-      const resp = await toggleStatus(this.selectRow.id)
-      if (!resp.success) {
-        this.selectRow.status = !this.selectRow.status
-        this.$forceUpdate()
-      }
-    },
-    async resetPwd() {
-      const resp = await resetPwd(this.selectRow.id)
-      if (resp.success) {
-        MessageBox.alert('密码已重置为：' + resp.data, this.$t('common.info'))
-      }
-    },
-    async showBlacklist() {
-      const resp = await showBlacklist(this.selectRow.id)
-      if (resp.success) {
-        const html = resp.rows.map(row => {
-          return '<div>' + row.username + '   ' + row.name + '</div>'
-        }).join('')
-        MessageBox.alert(html, this.$t('common.detail'), {
-          dangerouslyUseHTMLString: true,
-          customClass: 'message-box-detail'
-        })
-      }
-    },
-    async delete() {
-      const resp = await remove(this.selectRow.id)
-      if (resp.success) {
-        this.$emit('search')
-      }
-    },
-    handleSort({ column, prop, order }) {
-      let sort = {}
-      if (order) {
-        sort = { field: prop.replace('_fmt', ''), order: 'asc' }
-        if (order === 'descending') {
-          sort.order = 'desc'
-        }
-      }
-      this.$emit('sort', sort)
-    },
     handleEditDialogOpen(row) {
       this.selectRow = row
-      this.isEditShow = true
-    },
-    handleDetele(row) {
-      this.selectRow = row
-      MessageBox.confirm(this.$t('common.alert.delete'), this.$t('common.please.confirm'), {
+      MessageBox.confirm('确认创建订单？', {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => {
-        this.delete()
+        // 创建订单
+        this.addOrder()
       }).catch(() => {})
     },
-    handleEditDialogClose() {
-      this.isEditShow = false
-      this.$emit('search')
+    // 创建订单
+    async addOrder() {
+      const param = {
+        filters: [
+          { field: 'booking.id', op: 'EQ', value: this.selectRow.id }
+        ],
+        page: { page: 0, size: 10, sorts: [{ field: 'createDate', order: 'desc' }] }
+      }
+      const resp = await BookingApi.searvicePage(param)
+      if (resp.success) {
+        // console.log(this.selectRow)
+        // console.log(resp.rows, 'shujuneirong')
+        let time = 0
+        const arr = []
+        resp.rows.map(item => {
+          time += item.item.repairMinute
+          const obj = {}
+          obj.orderProductId = item.item.id
+          obj.price = item.price
+          obj.remark = ''
+          arr.push(obj)
+        })
+        const obj = {
+          fixPriceVos: arr,
+          orderBookingId: this.selectRow.id,
+          remark: '',
+          repairMinute: time
+        }
+        const res = await OrderApi.add(obj)
+        if (res.success) {
+          this.$message({
+            message: '订单生成成功',
+            type: 'success'
+          })
+        }
+      }
     },
-    handleSelectionChange(rows) {
-      this.$emit('selection-change', rows)
+    openService(row) {
+      this.enterpriserighttable.visible = true
+      this.enterpriserighttable.id = row.id
     },
-    hanldeToggleStatus(row) {
-      this.selectRow = row
-      this.toggleStatus()
-    },
-    handleresetPwd(row) {
-      this.selectRow = row
-      MessageBox.confirm(this.$t('user.resetPwdInfo'), this.$t('user.resetPwd'), {
-        confirmButtonText: this.$t('common.confirm'),
-        cancelButtonText: this.$t('common.cancel'),
-        type: 'warning'
-      }).then(() => {
-        this.resetPwd()
-      }).catch(() => {})
-    },
-    handleShowBlacklist(row) {
-      this.selectRow = row
-      this.showBlacklist()
+    handleBindClose() {
+      this.this.enterpriserighttable.visible = false
     }
   }
 }

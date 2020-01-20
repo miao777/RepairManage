@@ -54,7 +54,7 @@ export default {
     }
   },
   created() {
-    this.showOrderList()
+    // this.showOrderList()
   },
   methods: {
     async showOrderList() {
