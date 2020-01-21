@@ -13,12 +13,6 @@
       <el-form-item label="联系电话" prop="filters[1].value">
         <el-input v-model="form.filters[1].value" placeholder="输入联系电话" />
       </el-form-item>
-      <!-- <el-form-item label="状态" prop="filters[2].value">
-        <el-select v-model="form.filters[2].value">
-          <el-option v-for="(item,i) in statuses" :key="i" :value="item.value" :label="item.label" />
-        </el-select>
-      </el-form-item> -->
-
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">{{
           $t("common.search")

@@ -19,6 +19,7 @@
       <el-table-column label="联系电话" prop="address.mobileNo" />
       <el-table-column label="用户类型" prop="customerType_fmt" />
       <el-table-column label="地址" prop="address.addresstext" min-width="300" />
+      <el-table-column label="状态" prop="status_fmt" min-width="70" align="center" />
       <el-table-column label="服务项目" align="center" width="160">
         <template slot-scope="scope">
           <el-link type="primary" @click="openService(scope.row)">查看维修项目</el-link>
@@ -26,9 +27,10 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="80">
         <template slot-scope="scope">
-          <el-tooltip content="创建订单" placement="top">
+          <el-tooltip v-if="scope.row.status==='BOOKING'" content="创建订单" placement="top">
             <el-button type="success" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
           </el-tooltip>
+          <span v-else>已创建</span>
         </template>
       </el-table-column>
     </el-table>
@@ -87,14 +89,12 @@ export default {
       }
       const resp = await BookingApi.searvicePage(param)
       if (resp.success) {
-        // console.log(this.selectRow)
-        // console.log(resp.rows, 'shujuneirong')
         let time = 0
         const arr = []
         resp.rows.map(item => {
           time += item.item.repairMinute
           const obj = {}
-          obj.orderProductId = item.item.id
+          obj.orderProductId = item.id
           obj.price = item.price
           obj.remark = ''
           arr.push(obj)
@@ -111,6 +111,7 @@ export default {
             message: '订单生成成功',
             type: 'success'
           })
+          this.$emit('search')
         }
       }
     },

@@ -54,11 +54,11 @@
 
         <!-- 操作 -->
         <el-table-column label="操作" align="center" width="130">
-          <template slot-scope="scope">
+          <template v-if="scope.row.booking.status==='BOOKING'" slot-scope="scope">
             <el-tooltip :content="$t('common.edit')" placement="top">
               <el-button type="primary" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
             </el-tooltip>
-            <el-tooltip :content="$t('common.delete')" placement="top">
+            <el-tooltip v-if="scope.row.booking.status==='BOOKING'" :content="$t('common.delete')" placement="top">
               <el-button type="danger" icon="el-icon-delete" circle @click="handleDetele(scope.row)" />
             </el-tooltip>
           </template>
