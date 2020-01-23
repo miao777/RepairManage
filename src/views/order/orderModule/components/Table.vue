@@ -13,10 +13,11 @@
       @sort-change="handleSort"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column v-if="multiple" type="selection" width="35" />
-      <el-table-column align="center" type="index" width="35" class-name="table-detail" />
+      <!-- <el-table-column v-if="multiple" type="selection" width="35" /> -->
+      <el-table-column type="index" width="60" label="序号" />
+      <!-- <el-table-column align="center" type="index" width="35" class-name="table-detail" /> -->
       <!-- 下拉框 -->
-      <el-table-column type="expand" width="35" class-name="table-detail">
+      <!-- <el-table-column type="expand" width="35" class-name="table-detail">
         <template slot-scope="props">
           <el-form label-position="left" inline class="table-detail-expand">
             <el-form-item :label="$t('order.oederNumber') + '：'">
@@ -87,38 +88,65 @@
             </div>
           </el-form>
         </template>
-      </el-table-column>
-      <!-- 商品名称 -->
-      <el-table-column :label="$t('order.goodsname')" prop="productInfosJson[0].name" />
-      <!-- 订单编号 -->
-      <el-table-column :label="$t('order.oederNumber')" prop="orderNo" sortable width="166" />
-      <!-- 收货人 -->
-      <el-table-column :label="$t('order.consignee')" prop="addressee.name" />
-      <!-- 运单号 -->
-      <el-table-column :label="$t('order.waybillNo')" prop="addressee.waybillNo" sortable />
-      <!-- 收货人电话 -->
-      <el-table-column :label="$t('order.consigneePhone')" prop="addressee.phone" sortable />
-      <!-- 收货人地址 -->
-      <el-table-column :label="$t('order.consigneeaddr')" prop="addressee.address" />
-      <!-- 订单类型 -->
-      <el-table-column :label="$t('order.orderType')" prop="orderType_fmt" />
-      <!-- 订单状态 -->
-      <el-table-column :label="$t('order.orderState')" prop="orderStatus_fmt" sortable />
-      <!-- 配送方式 -->
-      <el-table-column :label="$t('order.delivery')" prop="deliveryType_fmt" />
-      <!-- 订单金额 -->
-      <el-table-column :label="$t('order.orderPrice')" prop="totalAmount_fmt" sortable />
-      <!-- 下单时间 -->
-      <el-table-column :label="$t('order.orderTime')" prop="orderTime_fmt" sortable />
-      <!-- 备注 -->
-      <el-table-column :label="$t('order.remarks')" prop="remark">
+      </el-table-column> -->
+      <el-table-column prop="orderNo" label="订单号" />
+      <!-- <el-table-column prop="booking.contactMan" label="客户联系人"></el-table-column> -->
+      <el-table-column prop="customerType_fmt" label="客户类型" />
+      <el-table-column prop="orderStatus_fmt" label="订单状态" />
+      <el-table-column prop="repairMinute" label="维修时长" />
+      <el-table-column prop="totalPrice_fmt" label="维修总价" />
+      <el-table-column label="操作">
         <template slot-scope="scope">
-          <span>{{ scope.row.remark ? scope.row.remark : '无' }}</span>
+          <el-button type="primary" icon="el-icon-s-custom" @click="handlePerson(scope.row)">指派维修员</el-button>
+          <el-button type="success" icon="el-icon-edit" @click="handleChangePrise(scope.row)">修改价格</el-button>
         </template>
       </el-table-column>
+      <!-- 商品名称 -->
+      <!-- <el-table-column :label="$t('order.goodsname')" prop="productInfosJson[0].name" /> -->
+      <!-- 订单编号 -->
+      <!-- <el-table-column :label="$t('order.oederNumber')" prop="orderNo" sortable width="166" /> -->
+      <!-- 收货人 -->
+      <!-- <el-table-column :label="$t('order.consignee')" prop="addressee.name" /> -->
+      <!-- 运单号 -->
+      <!-- <el-table-column :label="$t('order.waybillNo')" prop="addressee.waybillNo" sortable /> -->
+      <!-- 收货人电话 -->
+      <!-- <el-table-column :label="$t('order.consigneePhone')" prop="addressee.phone" sortable /> -->
+      <!-- 收货人地址 -->
+      <!-- <el-table-column :label="$t('order.consigneeaddr')" prop="addressee.address" /> -->
+      <!-- 订单类型 -->
+      <!-- <el-table-column :label="$t('order.orderType')" prop="orderType_fmt" /> -->
+      <!-- 订单状态 -->
+      <!-- <el-table-column :label="$t('order.orderState')" prop="orderStatus_fmt" sortable /> -->
+      <!-- 配送方式 -->
+      <!-- <el-table-column :label="$t('order.delivery')" prop="deliveryType_fmt" /> -->
+      <!-- 订单金额 -->
+      <!-- <el-table-column :label="$t('order.orderPrice')" prop="totalAmount_fmt" sortable /> -->
+      <!-- 下单时间 -->
+      <!-- <el-table-column :label="$t('order.orderTime')" prop="orderTime_fmt" sortable /> -->
+      <!-- 备注 -->
+      <!-- <el-table-column :label="$t('order.remarks')" prop="remark"> -->
+      <!-- <template slot-scope="scope"> -->
+      <!-- <span>{{ scope.row.remark ? scope.row.remark : '无' }}</span> -->
+      <!-- </template> -->
+      <!-- </el-table-column> -->
 
-      <edit-dialog ref="EditDialog" :is-show="isEditShow" :title="$t('common.edit')" :is-add="false" :data="selectRow" @close="handleEditDialogClose" />
     </el-table>
+
+    <edit-dialog ref="EditDialog" :is-show="changePriseVisible" :title="$t('common.edit')" :is-add="false" :data="current" @add="changePrise" @close="handleEditDialogClose" />
+    <el-dialog title="指派人员" width="50%" :visible.sync="choosePersonVisible">
+      <el-form
+        ref="form"
+        :model="form"
+        status-icon
+        :rules="rules"
+        label-width="100px"
+      >
+        <el-form-item class="form-footer" style="margin: 0">
+          <el-button type="primary" icon="el-icon-check" @click="handleSubmit">{{ $t('common.confirm') }}</el-button>
+          <el-button type="default" icon="el-icon-close" @click="handleClose">{{ $t('common.cancel') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -147,7 +175,13 @@ export default {
   data() {
     return {
       isEditShow: false,
-      selectRow: {}
+      selectRow: {},
+      choosePersonVisible: false,
+      current: '',
+      changePriseVisible: false,
+      // current: {},
+      rules: {},
+      form: {}
     }
   },
   computed: {
@@ -156,6 +190,23 @@ export default {
     }
   },
   methods: {
+    handleSubmit() {
+      this.choosePersonVisible = false
+    },
+    handleClose() {
+      this.choosePersonVisible = false
+    },
+    changePrise(val) {
+
+    },
+    handlePerson(row) {
+      this.current = row
+      this.choosePersonVisible = true
+    },
+    handleChangePrise(row) {
+      this.current = row
+      this.changePriseVisible = true
+    },
     async toggleStatus() {
       const resp = await toggleStatus(this.selectRow.id)
       if (!resp.success) {
@@ -172,9 +223,11 @@ export default {
     async showBlacklist() {
       const resp = await showBlacklist(this.selectRow.id)
       if (resp.success) {
-        const html = resp.rows.map(row => {
-          return '<div>' + row.username + '   ' + row.name + '</div>'
-        }).join('')
+        const html = resp.rows
+          .map(row => {
+            return '<div>' + row.username + '   ' + row.name + '</div>'
+          })
+          .join('')
         MessageBox.alert(html, this.$t('common.detail'), {
           dangerouslyUseHTMLString: true,
           customClass: 'message-box-detail'
@@ -207,12 +260,14 @@ export default {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
-      }).then(() => {
-        this.delete()
-      }).catch(() => {})
+      })
+        .then(() => {
+          this.delete()
+        })
+        .catch(() => {})
     },
     handleEditDialogClose() {
-      this.isEditShow = false
+      this.changePriseVisible = false
       this.$emit('search')
     },
     handleSelectionChange(rows) {
@@ -228,9 +283,11 @@ export default {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
-      }).then(() => {
-        this.resetPwd()
-      }).catch(() => {})
+      })
+        .then(() => {
+          this.resetPwd()
+        })
+        .catch(() => {})
     },
     handleShowBlacklist(row) {
       this.selectRow = row

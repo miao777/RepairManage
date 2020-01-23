@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <!-- 订单管理 -->
-    111
-    <search-bar :form="searchForm" @reset="handleResetSearchForm" @search="fetchData" @service="addServiceVisible=true" />
-    <!-- <Table :loading="table.loading" :data="table.data" :multiple="table.multiple" @search="fetchData" @selection-change="handleSelectRows" /> -->
+    <!-- 111 -->
+    <search-bar :form="searchForm" @reset="handleResetSearchForm" @search="fetchData" @service="addServiceVisible = true" />
+    <Table :loading="table.loading" :data="table.data" :multiple="table.multiple" @search="fetchData" @selection-change="handleSelectRows" />
     <Pagination :page="pagination" @pagination="handleChangePagination" />
     <el-dialog title="新增服务" :visible.sync="addServiceVisible" />
   </div>
@@ -11,22 +11,18 @@
 
 <script>
 import SearchBar from './components/SearchBar'
-// import Table from './components/Table'
+import Table from './components/Table'
 import Pagination from '@/components/Pagination'
-// import { orderPage } from '@/api/order'
-import BookingApi from '@/api/booking'
+import OrderApi from '@/api/order'
+// import BookingApi from '@/api/booking'
 export default {
-  // components: { SearchBar, Table, Pagination },
-  components: { SearchBar, Pagination },
+  components: { SearchBar, Table, Pagination },
+  // components: { SearchBar, Pagination },
   data() {
     return {
       searchForm: {
         filters: [
-          { field: 'orderNo', op: 'EQ', value: '' },
-          { field: 'addressee.name', op: 'LIKE', value: '' },
-          { field: 'addressee.waybillNo', op: 'LIKE', value: '' },
-          { field: 'addressee.phone', op: 'LIKE', value: '' },
-          { field: 'orderStatus', op: 'EQ', value: '' }
+          { field: 'orderNo', op: 'EQ', value: '' }
         ],
         page: { page: 0, size: 10 }
       },
@@ -36,22 +32,23 @@ export default {
     }
   },
   created() {
-    // this.fetchData()
+    this.fetchData()
   },
   methods: {
-    async fetchData(page) { // 后台分页请求的数据
+    async fetchData(page) {
+      // 后台分页请求的数据
       if (page) {
         this.searchForm.page.page = page - 1
       }
       this.table.loading = true
-      const resp = await BookingApi.page(this.searchForm)
+      const resp = await OrderApi.page(this.searchForm)
       if (resp.success) {
-        if (resp.totalCount > 0 && resp.rows.length === 0) {
-          this.fetchData(1)
-        }
-        const preRows = resp.rows
-        console.log(resp.rows, '1111111111')
-        // if (preRows && preRows.length > 0) {
+        // if (resp.totalCount > 0 && resp.rows.length === 0) {
+        //   this.fetchData(1)
+        // }
+        // const preRows = resp.rows
+        // console.log(resp.rows, '1111111111')
+        // // if (preRows && preRows.length > 0) {
         //   preRows.map(r => {
         //     if (r.productInfos) {
         //       r.productInfosJson = JSON.parse(r.productInfos)
@@ -61,7 +58,7 @@ export default {
         //     }
         //   })
         // }
-        this.table.data = preRows
+        this.table.data = resp.rows
         this.pagination.pageNo = resp.pageNo + 1
         this.pagination.pageSize = resp.pageSize
         this.pagination.totalCount = resp.totalCount
@@ -69,13 +66,15 @@ export default {
       this.table.loading = false
     },
     // 分页
-    handleChangePagination() { // 分页的时候需要赋值请求参数
+    handleChangePagination() {
+      // 分页的时候需要赋值请求参数
       this.searchForm.page.page = this.pagination.pageNo - 1
       this.searchForm.page.size = this.pagination.pageSize
       this.fetchData()
     },
     // 重置
-    handleResetSearchForm() { // 查询条件重置
+    handleResetSearchForm() {
+      // 查询条件重置
       this.searchForm.filters = [
         { field: 'orderNo', op: 'EQ', value: '' },
         { field: 'addressee.name', op: 'LIKE', value: '' },
@@ -90,8 +89,6 @@ export default {
       console.log(rows)
       this.table.multipleSelection = rows
     }
-
   }
-
 }
 </script>

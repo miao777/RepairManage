@@ -7,7 +7,8 @@
       :rules="rules"
       label-width="100px"
     >
-      <el-form-item :label="$t('role.name')" prop="role.id">
+      <el-form-item />
+      <!-- <el-form-item :label="$t('role.name')" prop="role.id">
         <el-select v-model="form.role.id" :placeholder="$t('role.name')">
           <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
@@ -36,7 +37,7 @@
       </el-form-item>
       <el-form-item :label="$t('user.status')" prop="status">
         <el-switch v-model="form.status" active-color="#0fb336" />
-      </el-form-item>
+      </el-form-item> -->
       <!-- 确定，删除按钮 -->
       <el-form-item class="form-footer" style="margin: 0">
         <el-button type="primary" icon="el-icon-check" @click="handleSubmit">{{ $t('common.confirm') }}</el-button>
@@ -47,12 +48,12 @@
 </template>
 
 <script>
-import { add, edit, getManagerRoles } from '@/api/user'
-import Uploader from '@/components/Uploader'
+// import { add, edit, getManagerRoles } from '@/api/user'
+// import Uploader from '@/components/Uploader'
 import { assignExistField } from '@/utils'
 import { regular } from '@/utils/validate'
 export default {
-  components: { Uploader },
+  // components: { Uploader },
   props: {
     title: {
       type: String,
@@ -101,35 +102,35 @@ export default {
     }
   },
   created() {
-    this.loadRoles()
+    // this.loadRoles()
   },
   methods: {
-    async loadRoles() {
-      const resp = await getManagerRoles()
-      if (resp.success) {
-        this.roles = resp.rows
-      }
-    },
+    // async loadRoles() {
+    //   const resp = await getManagerRoles()
+    //   if (resp.success) {
+    //     this.roles = resp.rows
+    //   }
+    // },
     async add() {
-      delete this.form.id
-      const resp = await add(this.form)
-      if (resp.success) {
-        this.handleClose()
-      }
+      // delete this.form.id
+      // const resp = await add(this.form)
+      // if (resp.success) {
+      //   this.handleClose()
+      // }
     },
     async edit() {
-      const resp = await edit(this.form)
-      if (resp.success) {
-        this.handleClose()
-      }
+      // const resp = await edit(this.form)
+      // if (resp.success) {
+      //   this.handleClose()
+      // }
     },
     handleOpen() {
       if (!this.$props.isAdd) {
         assignExistField(this.$props.data, this.form)
         this.form.role.id = this.$props.data.roleId
-        this.$nextTick(() => {
-          this.$refs.uploader.loadImage()
-        })
+        // this.$nextTick(() => {
+        //   this.$refs.uploader.loadImage()
+        // })
       }
     },
     handleSubmit() {
