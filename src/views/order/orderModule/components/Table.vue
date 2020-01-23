@@ -14,7 +14,7 @@
       @selection-change="handleSelectionChange"
     >
       <!-- <el-table-column v-if="multiple" type="selection" width="35" /> -->
-      <el-table-column type="index" width="60" label="序号" />
+      <el-table-column type="index" width="30" label="#" align="center" />
       <!-- <el-table-column align="center" type="index" width="35" class-name="table-detail" /> -->
       <!-- 下拉框 -->
       <!-- <el-table-column type="expand" width="35" class-name="table-detail">
