@@ -76,11 +76,7 @@ export default {
     handleResetSearchForm() {
       // 查询条件重置
       this.searchForm.filters = [
-        { field: 'orderNo', op: 'EQ', value: '' },
-        { field: 'addressee.name', op: 'LIKE', value: '' },
-        { field: 'addressee.waybillNo', op: 'LIKE', value: '' },
-        { field: 'addressee.phone', op: 'LIKE', value: '' },
-        { field: 'orderStatus', op: 'EQ', value: '' }
+        { field: 'orderNo', op: 'EQ', value: '' }
       ]
       this.searchForm.page = { page: 0, size: 10 }
       this.fetchData()

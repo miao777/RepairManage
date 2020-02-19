@@ -17,78 +17,7 @@
       <el-table-column type="index" width="30" label="#" align="center" />
       <!-- <el-table-column align="center" type="index" width="35" class-name="table-detail" /> -->
       <!-- 下拉框 -->
-      <!-- <el-table-column type="expand" width="35" class-name="table-detail">
-        <template slot-scope="props">
-          <el-form label-position="left" inline class="table-detail-expand">
-            <el-form-item :label="$t('order.oederNumber') + '：'">
-              <span>{{ props.row.orderNo }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.consignee') + '：'">
-              <span>{{ props.row.addressee.name }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.waybillNo') + '：'">
-              <span>{{ props.row.addressee.waybillNo }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.consigneePhone') + '：'">
-              <span>{{ props.row.addressee.phone }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.consigneeaddr') + '：'">
-              <span>{{ props.row.addressee.address }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.orderState') + '：'">
-              <span>{{ props.row.orderStatus_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.orderType') + '：'">
-              <span>{{ props.row.orderType_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.delivery') + '：'">
-              <span>{{ props.row.deliveryType_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.orderTime') + '：'">
-              <span>{{ props.row.orderTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.paymentTime') + '：'">
-              <span>{{ props.row.payTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.deliveryTime') + '：'">
-              <span>{{ props.row.shipTime_fmt }}</span>
-            </el-form-item><el-form-item :label="$t('order.receivingTime') + '：'">
-              <span>{{ props.row.receiveTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.commentTime') + '：'">
-              <span>{{ props.row.commentTime_fmt }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('order.remarks') + '：'">
-              <span>{{ props.row.remark }}</span>
-            </el-form-item>
-            <hr>
-            <div v-for="(product,index) in props.row.productInfosJson" :key="index">
-              <el-form-item :label="$t('order.goodsimg') + '：'" class="productImagesClass">
-                <div v-if="product.productJson.images && product.productJson.images.length > 0">
-                  <a v-for="img in product.productJson.images" :key="img" :href="img" target="_blank" style="margin-left:20px;"><img :src="img" width="80px" height="80px"></a>
-                </div>
-                <div v-else>
-                  <span>暂无</span>
-                </div>
-              </el-form-item>
-              <br>
-              <el-form-item :label="$t('order.goodsname') + '：'">
-                <span>{{ product.name }}</span>
-              </el-form-item>
 
-              <el-form-item :label="$t('order.goodsprice') + '：'">
-                <span>￥{{ (product.price/ 100).toFixed(2) }}</span>
-              </el-form-item>
-
-              <el-form-item :label="$t('order.ordernums') + '：'">
-                <span>{{ product.nums }}</span>
-              </el-form-item>
-
-              <div v-show="index < props.row.productInfosJson.length - 1" style="width:100%;height: 0px;border-bottom:#000000 1px dashed;" />
-            </div>
-          </el-form>
-        </template>
-      </el-table-column> -->
       <el-table-column prop="orderNo" label="订单号" />
       <!-- <el-table-column prop="booking.contactMan" label="客户联系人"></el-table-column> -->
       <el-table-column prop="customerType_fmt" label="客户类型" />
@@ -101,39 +30,13 @@
           <el-button type="success" icon="el-icon-edit" @click="handleChangePrise(scope.row)">修改价格</el-button>
         </template>
       </el-table-column>
-      <!-- 商品名称 -->
-      <!-- <el-table-column :label="$t('order.goodsname')" prop="productInfosJson[0].name" /> -->
-      <!-- 订单编号 -->
-      <!-- <el-table-column :label="$t('order.oederNumber')" prop="orderNo" sortable width="166" /> -->
-      <!-- 收货人 -->
-      <!-- <el-table-column :label="$t('order.consignee')" prop="addressee.name" /> -->
-      <!-- 运单号 -->
-      <!-- <el-table-column :label="$t('order.waybillNo')" prop="addressee.waybillNo" sortable /> -->
-      <!-- 收货人电话 -->
-      <!-- <el-table-column :label="$t('order.consigneePhone')" prop="addressee.phone" sortable /> -->
-      <!-- 收货人地址 -->
-      <!-- <el-table-column :label="$t('order.consigneeaddr')" prop="addressee.address" /> -->
-      <!-- 订单类型 -->
-      <!-- <el-table-column :label="$t('order.orderType')" prop="orderType_fmt" /> -->
-      <!-- 订单状态 -->
-      <!-- <el-table-column :label="$t('order.orderState')" prop="orderStatus_fmt" sortable /> -->
-      <!-- 配送方式 -->
-      <!-- <el-table-column :label="$t('order.delivery')" prop="deliveryType_fmt" /> -->
-      <!-- 订单金额 -->
-      <!-- <el-table-column :label="$t('order.orderPrice')" prop="totalAmount_fmt" sortable /> -->
-      <!-- 下单时间 -->
-      <!-- <el-table-column :label="$t('order.orderTime')" prop="orderTime_fmt" sortable /> -->
-      <!-- 备注 -->
-      <!-- <el-table-column :label="$t('order.remarks')" prop="remark"> -->
-      <!-- <template slot-scope="scope"> -->
-      <!-- <span>{{ scope.row.remark ? scope.row.remark : '无' }}</span> -->
-      <!-- </template> -->
-      <!-- </el-table-column> -->
 
     </el-table>
 
+    <!-- 修改价格及备注 -->
     <edit-dialog ref="EditDialog" :is-show="changePriseVisible" :title="$t('common.edit')" :is-add="false" :data="current" @add="changePrise" @close="handleEditDialogClose" />
-    <el-dialog title="指派人员" width="50%" :visible.sync="choosePersonVisible">
+    <!-- 指派维修人员 -->
+    <el-dialog title="指派维修人员" width="30%" :visible.sync="choosePersonVisible">
       <el-form
         ref="form"
         :model="form"
@@ -141,6 +44,11 @@
         :rules="rules"
         label-width="100px"
       >
+        <el-form-item label="维修师傅">
+          <el-select v-model="table.value" filterable style="width:100%">
+            <el-option v-for="(item,i) in table.data" :key="i" :value="item.user.id" :label="item.user.name" />
+          </el-select>
+        </el-form-item>
         <el-form-item class="form-footer" style="margin: 0">
           <el-button type="primary" icon="el-icon-check" @click="handleSubmit">{{ $t('common.confirm') }}</el-button>
           <el-button type="default" icon="el-icon-close" @click="handleClose">{{ $t('common.cancel') }}</el-button>
@@ -152,8 +60,10 @@
 
 <script>
 import EditDialog from './EditDialog'
-import { MessageBox } from 'element-ui'
-import { remove, toggleStatus, resetPwd, showBlacklist } from '@/api/user'
+import repairManApi from '@/api/repairMan'
+import orderApi from '@/api/order'
+// import { MessageBox } from 'element-ui'
+// import { remove, toggleStatus, resetPwd, showBlacklist } from '@/api/user'
 
 export default {
   name: 'UserTable',
@@ -177,11 +87,19 @@ export default {
       isEditShow: false,
       selectRow: {},
       choosePersonVisible: false,
-      current: '',
+      current: {},
       changePriseVisible: false,
-      // current: {},
       rules: {},
-      form: {}
+      form: {},
+      searchForms: {
+        page: { page: 0, size: 1000, sorts: [
+          {
+            field: 'createDate',
+            order: 'desc'
+          }
+        ] }
+      },
+      table: { loding: false, data: [], value: '' }
     }
   },
   computed: {
@@ -189,9 +107,36 @@ export default {
       return window.innerHeight - 170
     }
   },
+  created() {
+    this.loadData()
+  },
   methods: {
+    // 维修人员列表
+    async loadData() {
+      this.table.loading = true
+      const resp = await repairManApi.page(this.searchForms)
+      if (resp.success) {
+        this.table.data = resp.rows
+      }
+      this.table.loading = false
+    },
+    // 指派维修人员
+    async fixrepairMan() {
+      const data = {
+        orderId: this.current.booking.id,
+        repairManId: this.table.value
+      }
+      const resp = await orderApi.asSign(data)
+      if (resp.success) {
+        console.log(resp, 'success')
+        this.choosePersonVisible = false
+      }
+    },
     handleSubmit() {
-      this.choosePersonVisible = false
+      // this.choosePersonVisible = false
+      console.log(this.current, 'shuju ')
+      console.log(this.table.value, 'id')
+      this.fixrepairMan()
     },
     handleClose() {
       this.choosePersonVisible = false
@@ -207,39 +152,39 @@ export default {
       this.current = row
       this.changePriseVisible = true
     },
-    async toggleStatus() {
-      const resp = await toggleStatus(this.selectRow.id)
-      if (!resp.success) {
-        this.selectRow.status = !this.selectRow.status
-        this.$forceUpdate()
-      }
-    },
-    async resetPwd() {
-      const resp = await resetPwd(this.selectRow.id)
-      if (resp.success) {
-        MessageBox.alert('密码已重置为：' + resp.data, this.$t('common.info'))
-      }
-    },
-    async showBlacklist() {
-      const resp = await showBlacklist(this.selectRow.id)
-      if (resp.success) {
-        const html = resp.rows
-          .map(row => {
-            return '<div>' + row.username + '   ' + row.name + '</div>'
-          })
-          .join('')
-        MessageBox.alert(html, this.$t('common.detail'), {
-          dangerouslyUseHTMLString: true,
-          customClass: 'message-box-detail'
-        })
-      }
-    },
-    async delete() {
-      const resp = await remove(this.selectRow.id)
-      if (resp.success) {
-        this.$emit('search')
-      }
-    },
+    // async toggleStatus() {
+    //   const resp = await toggleStatus(this.selectRow.id)
+    //   if (!resp.success) {
+    //     this.selectRow.status = !this.selectRow.status
+    //     this.$forceUpdate()
+    //   }
+    // },
+    // async resetPwd() {
+    //   const resp = await resetPwd(this.selectRow.id)
+    //   if (resp.success) {
+    //     MessageBox.alert('密码已重置为：' + resp.data, this.$t('common.info'))
+    //   }
+    // },
+    // async showBlacklist() {
+    //   const resp = await showBlacklist(this.selectRow.id)
+    //   if (resp.success) {
+    //     const html = resp.rows
+    //       .map(row => {
+    //         return '<div>' + row.username + '   ' + row.name + '</div>'
+    //       })
+    //       .join('')
+    //     MessageBox.alert(html, this.$t('common.detail'), {
+    //       dangerouslyUseHTMLString: true,
+    //       customClass: 'message-box-detail'
+    //     })
+    //   }
+    // },
+    // async delete() {
+    //   const resp = await remove(this.selectRow.id)
+    //   if (resp.success) {
+    //     this.$emit('search')
+    //   }
+    // },
     handleSort({ column, prop, order }) {
       let sort = {}
       if (order) {
@@ -254,45 +199,45 @@ export default {
       this.selectRow = row
       this.isEditShow = true
     },
-    handleDetele(row) {
-      this.selectRow = row
-      MessageBox.confirm(this.$t('common.alert.delete'), this.$t('common.please.confirm'), {
-        confirmButtonText: this.$t('common.confirm'),
-        cancelButtonText: this.$t('common.cancel'),
-        type: 'warning'
-      })
-        .then(() => {
-          this.delete()
-        })
-        .catch(() => {})
-    },
+    // handleDetele(row) {
+    //   this.selectRow = row
+    //   MessageBox.confirm(this.$t('common.alert.delete'), this.$t('common.please.confirm'), {
+    //     confirmButtonText: this.$t('common.confirm'),
+    //     cancelButtonText: this.$t('common.cancel'),
+    //     type: 'warning'
+    //   })
+    //     .then(() => {
+    //       this.delete()
+    //     })
+    //     .catch(() => {})
+    // },
     handleEditDialogClose() {
       this.changePriseVisible = false
       this.$emit('search')
     },
     handleSelectionChange(rows) {
       this.$emit('selection-change', rows)
-    },
-    hanldeToggleStatus(row) {
-      this.selectRow = row
-      this.toggleStatus()
-    },
-    handleresetPwd(row) {
-      this.selectRow = row
-      MessageBox.confirm(this.$t('user.resetPwdInfo'), this.$t('user.resetPwd'), {
-        confirmButtonText: this.$t('common.confirm'),
-        cancelButtonText: this.$t('common.cancel'),
-        type: 'warning'
-      })
-        .then(() => {
-          this.resetPwd()
-        })
-        .catch(() => {})
-    },
-    handleShowBlacklist(row) {
-      this.selectRow = row
-      this.showBlacklist()
     }
+    // hanldeToggleStatus(row) {
+    //   this.selectRow = row
+    //   this.toggleStatus()
+    // },
+    // handleresetPwd(row) {
+    //   this.selectRow = row
+    //   MessageBox.confirm(this.$t('user.resetPwdInfo'), this.$t('user.resetPwd'), {
+    //     confirmButtonText: this.$t('common.confirm'),
+    //     cancelButtonText: this.$t('common.cancel'),
+    //     type: 'warning'
+    //   })
+    //     .then(() => {
+    //       this.resetPwd()
+    //     })
+    //     .catch(() => {})
+    // },
+    // handleShowBlacklist(row) {
+    //   this.selectRow = row
+    //   this.showBlacklist()
+    // }
   }
 }
 </script>

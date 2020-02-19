@@ -48,7 +48,7 @@ export default {
       statuses: [], // 下拉框显示内容
       rules: {
         'filters[0].value': [
-          { max: 20, message: '长度不能超过20个字符', trigger: 'blur' }
+          { max: 30, message: '长度不能超过30个字符', trigger: 'blur' }
         ]
       }
     }
