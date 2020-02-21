@@ -145,6 +145,7 @@ export default {
     // 关闭事件
     handleClose() {
       this.pagination.totalCount = 0
+      this.searchForm.filters[1].value = ''
       this.$emit('close')
     },
     handleSearch() {
