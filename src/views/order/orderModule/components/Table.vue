@@ -10,7 +10,7 @@
       fit
       :max-height="height"
       highlight-current-row
-      @sort-change="handleSort"
+@sort-change="handleSort"
       @selection-change="handleSelectionChange"
     >
       <!-- <el-table-column v-if="multiple" type="selection" width="35" /> -->
@@ -30,23 +30,25 @@
           <el-button type="success" icon="el-icon-edit" @click="handleChangePrise(scope.row)">修改价格</el-button>
         </template>
       </el-table-column>
-
     </el-table>
 
     <!-- 修改价格及备注 -->
-    <edit-dialog ref="EditDialog" :is-show="changePriseVisible" :title="$t('common.edit')" :is-add="false" :data="current" @add="changePrise" @close="handleEditDialogClose" />
+    <!-- <edit-dialog ref="EditDialog" :is-show="changePriseVisible" :title="$t('common.edit')" :is-add="false" :data="current" @add="changePrise" @close="handleEditDialogClose" /> -->
+    <show-merchant
+      :show.sync="changePriseVisible"
+      :shop-id="current"
+      @handleBindClose="
+        () => {
+          changePriseVisible=false
+        }
+      "
+    />
     <!-- 指派维修人员 -->
     <el-dialog title="指派维修人员" width="30%" :visible.sync="choosePersonVisible">
-      <el-form
-        ref="form"
-        :model="form"
-        status-icon
-        :rules="rules"
-        label-width="100px"
-      >
+      <el-form ref="form" :model="form" status-icon :rules="rules" label-width="100px">
         <el-form-item label="维修师傅">
           <el-select v-model="table.value" filterable style="width:100%">
-            <el-option v-for="(item,i) in table.data" :key="i" :value="item.user.id" :label="item.user.name" />
+            <el-option v-for="(item, i) in table.data" :key="i" :value="item.user.id" :label="item.user.name" />
           </el-select>
         </el-form-item>
         <el-form-item class="form-footer" style="margin: 0">
@@ -59,7 +61,8 @@
 </template>
 
 <script>
-import EditDialog from './EditDialog'
+// import EditDialog from './EditDialog'
+import ShowMerchant from './ShowMerchant'
 import repairManApi from '@/api/repairMan'
 import orderApi from '@/api/order'
 // import { MessageBox } from 'element-ui'
@@ -67,7 +70,7 @@ import orderApi from '@/api/order'
 
 export default {
   name: 'UserTable',
-  components: { EditDialog },
+  components: { ShowMerchant },
   props: {
     loading: {
       type: Boolean,
@@ -92,12 +95,16 @@ export default {
       rules: {},
       form: {},
       searchForms: {
-        page: { page: 0, size: 1000, sorts: [
-          {
-            field: 'createDate',
-            order: 'desc'
-          }
-        ] }
+        page: {
+          page: 0,
+          size: 1000,
+          sorts: [
+            {
+              field: 'createDate',
+              order: 'desc'
+            }
+          ]
+        }
       },
       table: { loding: false, data: [], value: '' }
     }
@@ -123,7 +130,7 @@ export default {
     // 指派维修人员
     async fixrepairMan() {
       const data = {
-        orderId: this.current.booking.id,
+        orderId: this.current.id,
         repairManId: this.table.value
       }
       const resp = await orderApi.asSign(data)
@@ -141,15 +148,14 @@ export default {
     handleClose() {
       this.choosePersonVisible = false
     },
-    changePrise(val) {
-
-    },
+    changePrise(val) {},
     handlePerson(row) {
       this.current = row
       this.choosePersonVisible = true
     },
     handleChangePrise(row) {
-      this.current = row
+      this.current = row.booking.id
+      console.log(12, this.current)
       this.changePriseVisible = true
     },
     // async toggleStatus() {

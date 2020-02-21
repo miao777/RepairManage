@@ -72,8 +72,9 @@ export default {
     },
     handleOpen() {
       if (!this.$props.isAdd) {
-        this.form.orderProductId = this.$props.data.booking.id
-        this.form.price = this.$props.data.booking.price
+        console.log(this.data)
+        this.form.orderProductId = this.$props.data.item.id
+        this.form.price = this.$props.data.price
         this.form.remark = this.$props.data.booking.remark
       }
     },

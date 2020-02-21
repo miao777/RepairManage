@@ -10,7 +10,7 @@
       row-key="id"
       border
       stripe
-      fit
+fit
       highlight-current-row
       :max-height="height"
     >
@@ -27,7 +27,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="80">
         <template slot-scope="scope">
-          <el-tooltip v-if="scope.row.status==='BOOKING'" content="创建订单" placement="top">
+          <el-tooltip v-if="scope.row.status === 'BOOKING'" content="创建订单" placement="top">
             <el-button type="success" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
           </el-tooltip>
           <span v-else>已创建</span>
@@ -74,17 +74,17 @@ export default {
         confirmButtonText: this.$t('common.confirm'),
         cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
-      }).then(() => {
-        // 创建订单
-        this.addOrder()
-      }).catch(() => {})
+      })
+        .then(() => {
+          // 创建订单
+          this.addOrder()
+        })
+        .catch(() => {})
     },
     // 创建订单
     async addOrder() {
       const param = {
-        filters: [
-          { field: 'booking.id', op: 'EQ', value: this.selectRow.id }
-        ],
+        filters: [{ field: 'booking.id', op: 'EQ', value: this.selectRow.id }],
         page: { page: 0, size: 10, sorts: [{ field: 'createDate', order: 'desc' }] }
       }
       const resp = await BookingApi.searvicePage(param)
@@ -116,11 +116,12 @@ export default {
       }
     },
     openService(row) {
+      console.log(row, 'shahdjksahdjsahjdhsjadhjk')
       this.enterpriserighttable.visible = true
       this.enterpriserighttable.id = row.id
     },
     handleBindClose() {
-      this.this.enterpriserighttable.visible = false
+      this.enterpriserighttable.visible = false
     }
   }
 }
