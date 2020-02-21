@@ -41,6 +41,10 @@ export default {
       type: Boolean,
       default: true
     },
+    enterpriseId: {
+      type: String,
+      default: ''
+    },
     data: {
       type: Object,
       default: () => {}
@@ -65,7 +69,7 @@ export default {
   methods: {
     async edit() {
       this.form.price = +this.form.price
-      const resp = await orderApi.editPrice(this.$props.data.id, this.form)
+      const resp = await orderApi.editPrice(this.enterpriseId, this.form)
       if (resp.success) {
         this.handleClose()
       }
@@ -73,7 +77,7 @@ export default {
     handleOpen() {
       if (!this.$props.isAdd) {
         console.log(this.data)
-        this.form.orderProductId = this.$props.data.item.id
+        this.form.orderProductId = this.$props.data.id
         this.form.price = this.$props.data.price
         this.form.remark = this.$props.data.booking.remark
       }

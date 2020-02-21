@@ -81,6 +81,10 @@ export default {
     shopId: {
       type: String,
       default: ''
+    },
+    orderid: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -127,7 +131,7 @@ export default {
   methods: {
     // 打开事件
     handleOpen() {
-      this.enterpriseId = this.shopId
+      this.enterpriseId = this.orderid
       this.searchForm.filters[0].value = this.shopId
       this.loadMerchantData()
     },

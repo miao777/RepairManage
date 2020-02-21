@@ -10,7 +10,7 @@
       fit
       :max-height="height"
       highlight-current-row
-@sort-change="handleSort"
+      @sort-change="handleSort"
       @selection-change="handleSelectionChange"
     >
       <!-- <el-table-column v-if="multiple" type="selection" width="35" /> -->
@@ -36,7 +36,8 @@
     <!-- <edit-dialog ref="EditDialog" :is-show="changePriseVisible" :title="$t('common.edit')" :is-add="false" :data="current" @add="changePrise" @close="handleEditDialogClose" /> -->
     <show-merchant
       :show.sync="changePriseVisible"
-      :shop-id="current"
+      :shop-id="shopid"
+      :orderid="orderid"
       @handleBindClose="
         () => {
           changePriseVisible=false
@@ -91,6 +92,8 @@ export default {
       selectRow: {},
       choosePersonVisible: false,
       current: {},
+      shopid: '',
+      orderid: '',
       changePriseVisible: false,
       rules: {},
       form: {},
@@ -154,7 +157,8 @@ export default {
       this.choosePersonVisible = true
     },
     handleChangePrise(row) {
-      this.current = row.booking.id
+      this.shopid = row.booking.id
+      this.orderid = row.id
       console.log(12, this.current)
       this.changePriseVisible = true
     },
