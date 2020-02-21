@@ -10,7 +10,7 @@
       row-key="id"
       border
       stripe
-fit
+      fit
       highlight-current-row
       :max-height="height"
     >

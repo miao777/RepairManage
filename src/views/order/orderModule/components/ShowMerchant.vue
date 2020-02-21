@@ -75,7 +75,7 @@ export default {
     title: {
       type: String,
       default() {
-        return '维修预约项目列表'
+        return '维修项目列表'
       }
     },
     shopId: {
