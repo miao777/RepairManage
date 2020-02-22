@@ -46,7 +46,6 @@ export default {
     async showOrderType() {
       const resp = await orderApi.orderType()
       if (resp.success) {
-        console.log(resp.rows, 'sasasasas')
         const data = resp.rows
         data.map(item => {
           const obj = {}
