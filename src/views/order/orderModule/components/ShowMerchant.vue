@@ -11,7 +11,6 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="small" @click="handleSearch">{{ $t('common.search') }}</el-button>
           <el-button size="small" icon="el-icon-refresh" @click="handleReset">{{ $t('common.reset') }}</el-button>
-          <!-- <el-button type="success" icon="el-icon-plus" @click="handleAddDialogOpens">{{ $t("common.add")+'服务项目' }}</el-button> -->
         </el-form-item>
       </el-form>
       <el-table v-loading="merchantLoading" :data="merchantData" :element-loading-text="$t('common.loading')" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
@@ -52,13 +51,11 @@
     </el-drawer>
     <!-- 修改 -->
     <EditDialog ref="EditDialog" :is-show="isEditShow" :enterprise-id="enterpriseId" :title="titles" :is-add="false" :data="selectRow" @close="handleEditDialogClose" />
-    <!-- 新增 -->
-    <!-- <UserEditDialog ref="EditDialog" :is-show="isEditShowType" :enterprise-id="enterpriseId" :title="titles" :is-add="true" :data="selectRow" @close="handleEditDialogCloses" /> -->
   </div>
 </template>
 
 <script>
-// import UserEditDialog from './userEditDialog';
+// import orderApi from '@/api/order'
 import EditDialog from './EditDialog'
 import BookingApi from '@/api/booking'
 import { MessageBox } from 'element-ui'
@@ -90,7 +87,6 @@ export default {
   data() {
     return {
       isEditShow: false,
-      isEditShowType: false,
       titles: '新增',
       selectRow: {},
       enterpriseId: '', // 预定订单id
@@ -127,13 +123,23 @@ export default {
       console.log(val)
     }
   },
-  created() {},
+  created() {
+
+  },
   methods: {
+    // async test() {
+    //   console.log(this.orderid, 'orderid')
+    //   const resp = await orderApi.getOrderType(this.orderid)
+    //   if (resp.success) {
+    //     console.log(resp, '1111111111')
+    //   }
+    // },
     // 打开事件
     handleOpen() {
       this.enterpriseId = this.orderid
       this.searchForm.filters[0].value = this.shopId
       this.loadMerchantData()
+      // this.test()
     },
     // 关闭事件
     handleClose() {
@@ -159,11 +165,6 @@ export default {
       this.searchForm.page.size = this.pagination.pageSize
       this.loadMerchantData()
     },
-    // // 打开新增表
-    // handleAddDialogOpens() {
-    //   this.titles = '新增'
-    //   this.isEditShowType = true
-    // },
     // 修改
     handleEditDialogOpen(row) {
       this.titles = '修改'
@@ -172,10 +173,6 @@ export default {
     },
     handleEditDialogClose() {
       this.isEditShow = false
-      this.loadMerchantData()
-    },
-    handleEditDialogCloses() {
-      this.isEditShowType = false
       this.loadMerchantData()
     },
     // 删除

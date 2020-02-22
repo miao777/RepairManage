@@ -59,8 +59,7 @@ export default {
         remark: ''
       },
       rules: {
-        price: [{ required: true, message: '请输入价格', trigger: 'blur,change' }],
-        remark: [{ required: true, message: '请输入备注信息', trigger: 'blur,change' }]
+        price: [{ required: true, message: '请输入价格', trigger: 'blur,change' }]
       }
     }
   },
@@ -78,8 +77,6 @@ export default {
       if (!this.$props.isAdd) {
         console.log(this.data)
         this.form.orderProductId = this.$props.data.id
-        this.form.price = this.$props.data.price
-        this.form.remark = this.$props.data.booking.remark
       }
     },
     handleSubmit() {

@@ -77,5 +77,31 @@ class OrderApi {
       data
     })
   }
+
+  /**
+   * @description '订单状态'
+   * @param
+   * @static
+   * @memberof OrderApi
+  */
+ static orderType =() => {
+   return request({
+     url: urlPath + 'list/status',
+     method: 'get'
+   })
+ }
+
+ /**
+  * @description '订单状态查询'
+  * @param {String} id 'id'
+  * @static
+  * @memberof OrderApi
+ */
+static getOrderType =(id) => {
+  return request({
+    url: urlPath + 'list/status/' + id,
+    method: 'get'
+  })
+}
 }
 export default OrderApi

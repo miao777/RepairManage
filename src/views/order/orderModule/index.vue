@@ -1,7 +1,6 @@
 <template>
   <div class="app-container">
     <!-- 订单管理 -->
-    <!-- 111 -->
     <search-bar :form="searchForm" @reset="handleResetSearchForm" @search="fetchData" @service="addServiceVisible = true" />
     <Table :loading="table.loading" :data="table.data" :multiple="table.multiple" @search="fetchData" @selection-change="handleSelectRows" />
     <Pagination :page="pagination" @pagination="handleChangePagination" />
@@ -14,15 +13,14 @@ import SearchBar from './components/SearchBar'
 import Table from './components/Table'
 import Pagination from '@/components/Pagination'
 import OrderApi from '@/api/order'
-// import BookingApi from '@/api/booking'
 export default {
   components: { SearchBar, Table, Pagination },
-  // components: { SearchBar, Pagination },
   data() {
     return {
       searchForm: {
         filters: [
-          { field: 'orderNo', op: 'EQ', value: '' }
+          { field: 'orderNo', op: 'EQ', value: '' },
+          { field: 'orderStatus', op: 'EQ', value: '' }
         ],
         page: { page: 0, size: 10 }
       },
@@ -43,21 +41,9 @@ export default {
       this.table.loading = true
       const resp = await OrderApi.page(this.searchForm)
       if (resp.success) {
-        // if (resp.totalCount > 0 && resp.rows.length === 0) {
-        //   this.fetchData(1)
-        // }
-        // const preRows = resp.rows
-        // console.log(resp.rows, '1111111111')
-        // // if (preRows && preRows.length > 0) {
-        //   preRows.map(r => {
-        //     if (r.productInfos) {
-        //       r.productInfosJson = JSON.parse(r.productInfos)
-        //       r.productInfosJson.map(item => {
-        //         item.productJson = JSON.parse(item.product)
-        //       })
-        //     }
-        //   })
-        // }
+        if (resp.totalCount > 0 && resp.rows.length === 0) {
+          this.fetchData(1)
+        }
         this.table.data = resp.rows
         this.pagination.pageNo = resp.pageNo + 1
         this.pagination.pageSize = resp.pageSize
@@ -76,13 +62,13 @@ export default {
     handleResetSearchForm() {
       // 查询条件重置
       this.searchForm.filters = [
-        { field: 'orderNo', op: 'EQ', value: '' }
+        { field: 'orderNo', op: 'EQ', value: '' },
+        { field: 'orderStatus', op: 'EQ', value: '' }
       ]
       this.searchForm.page = { page: 0, size: 10 }
       this.fetchData()
     },
     handleSelectRows(rows) {
-      console.log(rows)
       this.table.multipleSelection = rows
     }
   }
