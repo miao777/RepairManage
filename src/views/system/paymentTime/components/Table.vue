@@ -59,7 +59,6 @@ export default {
   methods: {
     // 状态切换
     async change(row) {
-      console.log(row, 'shuju')
       const res = await OrderApi.putOrderPaymentTIme(row.id)
       if (res.success) {
         this.$emit('search')
