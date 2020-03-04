@@ -41,12 +41,12 @@ export default {
         { label: '全部', value: '' },
         { label: '执行中', value: true },
         { label: '已关闭', value: false }
-      ]
-      // rules: {
-      //   'filters[0].value': [
-      //     { max: 255, message: '长度不能超过255个字符', trigger: 'blur' }
-      //   ]
-      // }
+      ],
+      rules: {
+        // 'filters[0].value': [
+        //   { max: 255, message: '长度不能超过255个字符', trigger: 'blur' }
+        // ]
+      }
     }
   },
   created() {

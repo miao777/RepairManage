@@ -23,7 +23,7 @@
       <!-- 启停 -->
       <el-table-column label="启停" prop="status" align="center">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.status" :active-value="true" active-color="#13ce66" @change="change(scope.row)" />
+          <el-switch v-model="scope.row.status" :disabled="!scope.row.status" :active-value="true" active-color="#13ce66" @change="change(scope.row)" />
         </template>
       </el-table-column>
       <!-- 时间 -->
@@ -59,6 +59,7 @@ export default {
   methods: {
     // 状态切换
     async change(row) {
+      console.log(row, 'shuju')
       const res = await OrderApi.putOrderPaymentTIme(row.id)
       if (res.success) {
         this.$emit('search')
