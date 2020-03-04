@@ -103,5 +103,34 @@ static getOrderType =(id) => {
     method: 'get'
   })
 }
+
+// 订单支付定时任务管理API
+
+  /**
+   * @description '订单支付定时管理'
+   * @param {Object} filters 过滤条件
+   * @static
+   * @memberof OrderApi
+  */
+  static getOrderPaymentTime = (data) => {
+    return request({
+      url: '/admin/order/pay/job/page',
+      method: 'post',
+      data
+    })
+  }
+
+  /**
+   * @description '关闭任务’
+   * @param {String} id
+   * @static
+   * @memberof OrderApi
+   */
+  static putOrderPaymentTIme = (id) => {
+    return request({
+      url: '/admin/order/pay/job/close/' + id,
+      method: 'put'
+    })
+  }
 }
 export default OrderApi

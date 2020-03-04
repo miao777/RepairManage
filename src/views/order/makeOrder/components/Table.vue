@@ -116,7 +116,6 @@ export default {
       }
     },
     openService(row) {
-      console.log(row, 'shahdjksahdjsahjdhsjadhjk')
       this.enterpriserighttable.visible = true
       this.enterpriserighttable.id = row.id
     },
