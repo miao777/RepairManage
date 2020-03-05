@@ -51,7 +51,7 @@ export default {
         { field: 'address.contactMan', op: 'EQ', value: '' },
         { field: 'address.mobileNo', op: 'EQ', value: '' }
       ]
-      this.searchForm.page = { page: 0, size: 10 }
+      this.searchForm.page = { page: 0, size: 10, sorts: [{ field: 'createDate', order: 'desc' }] }
       this.fetchData()
     },
     handleChangePagination() {

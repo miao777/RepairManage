@@ -64,7 +64,7 @@ export default {
       this.searchForm.filters = [
         { field: 'user.name', op: 'EQ', value: '' }
       ]
-      this.searchForm.page = { page: 0, size: 10 }
+      this.searchForm.page = { page: 0, size: 10, sorts: [{ field: 'createDate', order: 'desc' }] }
       this.fetchData()
     },
     handleSelectRows(rows) {
