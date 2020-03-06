@@ -22,13 +22,13 @@
       <el-table-column prop="totalPrice_fmt" label="维修总价" />
       <el-table-column label="维修师傅" width="100" align="center">
         <template slot-scope="scope">
-          <span v-if="scope.row.repairMan.user.name">{{ scope.row.repairMan.user.name }}</span>
+          <span v-if="scope.row.repairMan&&scope.row.repairMan.user.name">{{ scope.row.repairMan.user.name }}</span>
           <span v-else>未指派</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button v-if="(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='CONFIRM_ORDER')||(scope.row.customerType==='FAMILY_CUSTOMER'&& scope.row.orderStatus==='PAID')" type="primary" icon="el-icon-s-custom" @click="handlePerson(scope.row)">指派维修员</el-button>
+          <el-button v-if="(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='CONFIRM_ORDER')||(scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='PAID')" type="primary" icon="el-icon-s-custom" @click="handlePerson(scope.row)">指派维修员</el-button>
           <!-- <el-button type="primary" icon="el-icon-s-custom" @click="handlePerson(scope.row)">指派维修员</el-button> -->
           <el-button v-if="scope.row.orderStatus!='CANCEL'" type="success" icon="el-icon-edit" @click="handleChangePrise(scope.row)">维修项目</el-button>
         </template>
