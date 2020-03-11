@@ -140,6 +140,7 @@ export default {
       if (resp.success) {
         console.log(resp, 'success')
         this.choosePersonVisible = false
+        this.$emit('search')
       }
     },
     // 指派维修人员确认按钮
