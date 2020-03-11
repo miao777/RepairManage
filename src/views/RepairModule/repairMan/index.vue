@@ -39,12 +39,7 @@ export default {
           { field: 'user.username', op: 'EQ', value: '' },
           { field: 'idCard', op: 'EQ', value: '' }
         ],
-        page: { page: 0, size: 10, sorts: [
-          {
-            field: 'createDate',
-            order: 'desc'
-          }
-        ] }
+        page: { page: 0, size: 10, sorts: [{ field: 'createDate', order: 'desc' }] }
       },
       table: { loding: false, tableData: [], businessCategory: [], businessType: [] },
       pagination: { pageNo: 1, pageSize: 10, totalCount: 0 }
@@ -62,7 +57,7 @@ export default {
         { field: 'user.username', op: 'EQ', value: '' },
         { field: 'idCard', op: 'EQ', value: '' }
       ]
-      this.searchForm.page = { page: 0, size: 10 }
+      this.searchForm.page = { page: 0, size: 10, sorts: [{ field: 'createDate', order: 'desc' }] }
       this.loadData()
     },
     // -----------------------------------------------------ajax------------------------------------
