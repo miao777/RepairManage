@@ -19,8 +19,11 @@
       <el-form-item v-if="isAdd" label="昵称" prop="user.nickname">
         <el-input v-model="form.user.nickname" type="text" placeholder="输入昵称" />
       </el-form-item>
-      <el-form-item v-if="isAdd" label="登陆手机号" prop="user.username">
-        <el-input v-model="form.user.username" type="text" placeholder="输入登陆手机号" maxlength="11" />
+      <el-form-item v-if="isAdd" label="登陆手机号" prop="user.mobileNo">
+        <el-input v-model="form.user.mobileNo" type="text" placeholder="输入登陆手机号" maxlength="11" />
+      </el-form-item>
+      <el-form-item v-if="isAdd" label="密码" prop="user.password">
+        <el-input v-model="form.user.password" type="text" placeholder="输入密码" />
       </el-form-item>
       <el-form-item v-if="isAdd" label="姓名" prop="user.name">
         <el-input v-model="form.user.name" type="text" :placeholder="$t('common.please.enter') + '姓名'" />
@@ -80,7 +83,8 @@ export default {
           nickname: '',
           roleId: '',
           sex: false,
-          username: ''
+          mobileNo: '',
+          password: ''
         }
       },
       rules: {
@@ -91,7 +95,7 @@ export default {
         'user.email': [{ validator: checkMailBox, trigger: 'blur' }],
         'user.name': [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         'user.nickname': [{ required: true, message: '请输入昵称', trigger: 'blur' }],
-        'user.username': [{ required: true, validator: checkMobile, trigger: 'blur' }],
+        'user.mobileNo': [{ required: true, validator: checkMobile, trigger: 'blur' }],
         'user.password': [{ required: true, message: '请输入密码', trigger: 'blur' }],
         'user.roleId': [{ required: true, message: '请选择角色', trigger: 'blur' }]
       },
@@ -155,7 +159,7 @@ export default {
     // 企业联系电话同步用户登录电话号码
     settel(row) {
       if (this.isAdd) {
-        this.form.user.username = row
+        this.form.user.mobileNo = row
       }
     }
   }

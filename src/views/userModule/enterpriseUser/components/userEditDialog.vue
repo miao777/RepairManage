@@ -8,8 +8,11 @@
       <el-form-item label="姓名" prop="name">
         <el-input v-model="forms.name" type="text" placeholder="请输入姓名" />
       </el-form-item>
-      <el-form-item label="登陆手机号" prop="username">
-        <el-input v-model="forms.username" type="text" placeholder="请输入登陆手机号" maxlength="11" />
+      <el-form-item label="登陆手机号" prop="mobileNo">
+        <el-input v-model="forms.mobileNo" type="text" placeholder="请输入登陆手机号" maxlength="11" />
+      </el-form-item>
+      <el-form-item v-if="!isAdd" label="密码" prop="password">
+        <el-input v-model="forms.password" type="text" placeholder="请输入密码" />
       </el-form-item>
       <el-form-item label="昵称" prop="nickname">
         <el-input v-model="forms.nickname" type="text" placeholder="请输入昵称" />
@@ -74,14 +77,16 @@ export default {
         nickname: '',
         roleId: '',
         sex: false,
-        username: ''
+        mobileNo: '',
+        password: ''
       },
       rules: {
         email: [{ validator: checkMailBox, trigger: 'blur' }],
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         nickname: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
         roleId: [{ required: true, message: '请选择角色', trigger: 'blur' }],
-        username: [{ required: true, validator: checkMobile, trigger: 'blur' }]
+        mobileNo: [{ required: true, validator: checkMobile, trigger: 'blur' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       },
       searchForm: {
         filters: [
@@ -124,7 +129,7 @@ export default {
         assignExistField(this.$props.data, this.forms)
         this.forms.roleId = this.$props.data.role.id
         this.forms.id = this.$props.data.id
-        this.forms.username = this.forms.username.substr(1, this.forms.username.length - 1)
+        // this.forms.mobileNo = this.forms.mobileNo.substr(1, this.forms.mobileNo.length - 1)
         this.$nextTick(() => {
           this.$refs.uploader.loadImage()
         })

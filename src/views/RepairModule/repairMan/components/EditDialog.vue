@@ -19,9 +19,9 @@
         <el-form-item label="昵称" prop="user.nickname">
           <el-input v-model="dialogForm.user.nickname" placeholder="请输入昵称" clearable />
         </el-form-item>
-        <!-- 账号 -->
-        <el-form-item label="用户名" prop="user.username">
-          <el-input v-model="dialogForm.user.username" placeholder="请输入用户名" clearable />
+        <!-- 手机号码 -->
+        <el-form-item label="手机号码" prop="user.mobileNo">
+          <el-input v-model="dialogForm.user.mobileNo" placeholder="请输入手机号码" clearable maxlength="11" />
         </el-form-item>
         <!-- 密码 -->
         <el-form-item v-if="isAdd" label="密码" prop="user.password">
@@ -34,10 +34,6 @@
         <!-- 身份证 -->
         <el-form-item label="身份证" prop="idCard">
           <el-input v-model="dialogForm.idCard" placeholder="请输入省份证号码" clearable />
-        </el-form-item>
-        <!-- 手机号码 -->
-        <el-form-item label="手机号码" prop="user.mobileNo">
-          <el-input v-model="dialogForm.user.mobileNo" placeholder="请输入手机号码" clearable maxlength="11" />
         </el-form-item>
         <!-- 性别 -->
         <el-form-item label="性别" prop="user.sex">
@@ -122,8 +118,7 @@ export default {
           nickname: '', // 11
           password: '', // 111
           roleId: '', // 11
-          sex: false, // 11
-          username: ''// 111
+          sex: false // 11
         }
       },
 
@@ -132,7 +127,7 @@ export default {
         idCard: [{ required: true, validator: checkIdNum, trigger: 'blur' }],
         'user.email': [{ required: true, validator: checkMailBox, trigger: 'blur' }],
         'user.mobileNo': [{ required: true, validator: checkMobile, trigger: 'blur' }],
-        'user.username': [{ required: true, message: '请输入账号', trigger: 'blur' }],
+        // 'user.username': [{ required: true, message: '请输入账号', trigger: 'blur' }],
         'user.name': [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         'user.password': [{ required: true, message: '请输入密码', trigger: 'blur' }],
         'user.nickname': [{ required: true, message: '请输入昵称', trigger: 'blur' }]
@@ -181,7 +176,6 @@ export default {
         this.$refs.uploader.loadImage()
       })
     },
-
     // 处理上传成功之后的图片
     handleImageSuccess(data) {
       if (data && data.success) {
