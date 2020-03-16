@@ -9,6 +9,11 @@
           <el-option v-for="item in statuses" :key="item.label" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
+      <el-form-item label="客户类型" prop="filters[2].value">
+        <el-select v-model="form.filters[2].value" placeholder="企业类型" clearable>
+          <el-option v-for="item in tycome" :key="item.label" :label="item.label" :value="item.value" />
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">{{ $t('common.search') }}</el-button>
         <el-button type="default" icon="el-icon-refresh" @click="handleReset">{{ $t('common.reset') }}</el-button>
@@ -32,6 +37,7 @@ export default {
   data() {
     return {
       statuses: [], // 下拉框显示内容
+      tycome: [{ label: '全部', value: '' }, { label: '企业客户', value: 'ENTERPRISE' }, { label: '家庭客户', value: 'FAMILY' }],
       rules: {
         'filters[0].value': [
           { max: 30, message: '长度不能超过30个字符', trigger: 'blur' }

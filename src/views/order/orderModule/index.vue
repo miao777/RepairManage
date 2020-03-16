@@ -20,7 +20,8 @@ export default {
       searchForm: {
         filters: [
           { field: 'orderNo', op: 'EQ', value: '' },
-          { field: 'orderStatus', op: 'EQ', value: '' }
+          { field: 'orderStatus', op: 'EQ', value: '' },
+          { field: 'customerType', op: 'EQ', value: '' }
         ],
         page: { page: 0, size: 10 }
       },
@@ -63,7 +64,8 @@ export default {
       // 查询条件重置
       this.searchForm.filters = [
         { field: 'orderNo', op: 'EQ', value: '' },
-        { field: 'orderStatus', op: 'EQ', value: '' }
+        { field: 'orderStatus', op: 'EQ', value: '' },
+        { field: 'customerType', op: 'EQ', value: '' }
       ]
       this.searchForm.page = { page: 0, size: 10 }
       this.fetchData()
