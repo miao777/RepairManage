@@ -138,7 +138,6 @@ export default {
       }
       const resp = await orderApi.asSign(data)
       if (resp.success) {
-        console.log(resp, 'success')
         this.choosePersonVisible = false
         this.$emit('search')
       }
