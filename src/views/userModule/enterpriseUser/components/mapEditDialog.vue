@@ -92,6 +92,10 @@ export default {
     data: {
       type: Object,
       default: () => {}
+    },
+    isId: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -137,7 +141,7 @@ export default {
       FamilyList: [], // 家庭列表
       CityList: [], // 城市列表
       DistrictList: [], // 区县列表
-      EnterPriseSearch: { page: { page: 0, size: 99999 }},
+      EnterPriseSearch: { filters: [{ field: 'id', op: 'EQ', value: '' }], page: { page: 0, size: 99999 }},
       ProvinceSearch: { page: { page: 0, size: 9999999 }},
       CitySearch: { filters: [{ field: 'province.id', op: 'EQ', value: '' }],
         page: { page: 0, size: 9999999 }
@@ -302,6 +306,7 @@ export default {
     },
     // 默认打开窗口事件
     handleOpen() {
+      this.EnterPriseSearch.filters[0].value = this.isId
       // if (!this.$props.isAdd) {
       // }
     },

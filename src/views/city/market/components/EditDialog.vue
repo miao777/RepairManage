@@ -78,7 +78,7 @@ export default {
     }
   },
   created() {
-
+    this.handleChangeLevel()
   },
   methods: {
     async addMenu() {
@@ -95,7 +95,7 @@ export default {
       }
     },
     handleOpen() {
-      this.handleChangeLevel()
+      // this.handleChangeLevel()
       if (!this.$props.isAdd) {
         this.form.provinceId = this.$props.data.id
         this.form = this.$props.data

@@ -64,9 +64,9 @@
       </div>
     </el-drawer>
     <!-- 编辑 -->
-    <EditDialogmap ref="EditDialog" :is-show="mapisEditShow" :title="$t('common.edit')" :is-add="false" :data="selectRow" @close="handleEditDialogClose" />
+    <EditDialogmap ref="EditDialog" :is-id="shopId" :is-show="mapisEditShow" :title="$t('common.edit')" :is-add="false" :data="selectRow" @close="handleEditDialogClose" />
     <!-- 新增 -->
-    <EditDialogmap ref="EditDialog" :is-show="isEditShow" :title="titlesmap" :is-add="true" :data="selectRow" @close="handleEditDialogCloseadd" />
+    <EditDialogmap ref="EditDialog" :is-id="shopId" :is-show="isEditShow" :title="titlesmap" :is-add="true" :data="selectRow" @close="handleEditDialogCloseadd" />
   </div>
 </template>
 
