@@ -73,7 +73,7 @@ export function resetRouter(menus) {
       constantRoutes.push(menu)
     }
   })
-  // console.log(constantRoutes, '路由刷新')
+  console.log(constantRoutes, '路由刷新')
   // const newRouter = createRouter()
   // router.matcher = newRouter.matcher // reset router
 }
