@@ -19,7 +19,7 @@
       <!-- 图片 -->
       <el-table-column label="图片" prop="fullPath">
         <template slot-scope="scope">
-          <el-image :class="scope.row.fullPath ? 'table-image-size' : ''" :src="scope.row.fullPath" :preview-src-list="scope.row.fullPaths" fit="cover">
+          <el-image :class="scope.row.fullPath ? 'table-image-size' : ''" :src="scope.row.fullPath" :preview-src-list="[scope.row.fullPath]" fit="cover">
             <div v-if="!scope.row.fullPath" slot="error" class="image-slot">
               <i class="el-icon-picture-outline" />{{ $t('common.notLoading') }}
             </div>
