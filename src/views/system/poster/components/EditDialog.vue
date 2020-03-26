@@ -1,16 +1,14 @@
 <template>
   <el-dialog :title="title" :visible.sync="isShow" width="50%" :before-close="handleClose" :close-on-click-modal="false" @open="handleOpen">
     <el-form ref="form" :model="form" status-icon :rules="rules" label-width="100px">
-      <el-form-item label="图片" prop="iconId">
+      <el-form-item label="图片" prop="imageId">
         <Uploader ref="uploader" :image="form.icon" @on-success="handleUploadSuccess" />
       </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select v-model="form.type" placeholder="请选择类型">
-          <el-option v-for="item in customerList" :key="item.name" :label="item.value" :value="item.name" />
-        </el-select>
+      <el-form-item label="标题" prop="title">
+        <el-input v-model="form.title" type="text" :placeholder="$t('common.please.enter') + '标题'" />
       </el-form-item>
-      <el-form-item label="分类名称" prop="name">
-        <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + '名称'" />
+      <el-form-item label="简介" prop="summary">
+        <el-input v-model="form.summary" type="text" :placeholder="$t('common.please.enter') + '简介'" />
       </el-form-item>
       <el-form-item label="排序" prop="sortNo">
         <el-input v-model="form.sortNo" type="tel" :placeholder="$t('common.please.enter') + '排序'" />
@@ -26,7 +24,7 @@
 <script>
 import { assignExistField } from '@/utils'
 import Uploader from '@/components/Uploader'
-import CategoryApi from '@/api/category'
+import PosterApi from '@/api/poster'
 export default {
   components: { Uploader },
   props: {
@@ -49,41 +47,36 @@ export default {
   },
   data() {
     return {
-      customerList: [],
       form: {
         id: '',
-        iconId: '',
-        name: '',
+        imageId: '',
         sortNo: '',
-        type: ''
+        summary: '',
+        title: '',
+        type: 'HOME_CAROUSEL'
       },
       rules: {
-        iconId: [{ required: true, message: '请上传图片', trigger: 'blur,change' }],
-        name: [{ required: true, message: '请输入名称', trigger: 'blur,change' }],
+        imageId: [{ required: true, message: '请上传图片', trigger: 'blur,change' }],
+        summary: [{ required: true, message: '请输入简介', trigger: 'blur,change' }],
         sortNo: [{ required: true, message: '请填写顺序', trigger: 'blur,change' }],
-        type: [{ required: true, message: '请选择类型', trigger: 'blur,change' }]
+        title: [{ required: true, message: '请选输入标题', trigger: 'blur,change' }]
       }
     }
   },
   created() {
-    this.custormerType()
   },
   methods: {
-    async custormerType() {
-      const resp = await CategoryApi.custormerType()
-      if (resp.success) {
-        this.customerList = resp.rows
-      }
-    },
     async addMenu() {
       delete this.form.id
-      const resp = await CategoryApi.add(this.form)
+      delete this.form.icon
+      const resp = await PosterApi.add(this.form)
       if (resp.success) {
         this.handleClose()
       }
     },
     async editMenu() {
-      const resp = await CategoryApi.edit(this.form)
+      delete this.form.icon
+      const resp = await PosterApi.edit(this.form)
       if (resp.success) {
         this.handleClose()
       }
@@ -94,7 +87,8 @@ export default {
         this.$nextTick(() => {
           this.$refs.uploader.loadImage()
         })
-        this.form.icon = this.$props.data.icon
+        this.form.icon = this.$props.data.image.fullPath
+        this.form.imageId = this.$props.data.image.id
       }
     },
 
@@ -112,7 +106,7 @@ export default {
       this.$emit('close')
     },
     handleUploadSuccess(resp) {
-      this.form.iconId = resp.data.id
+      this.form.imageId = resp.data.id
     }
   }
 }

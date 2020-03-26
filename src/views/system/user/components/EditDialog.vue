@@ -148,6 +148,7 @@ export default {
     handleClose(done) {
       this.$refs.form.resetFields()
       this.$refs.form.clearValidate()
+      this.$refs.uploader.closeMyself()
       this.$emit('close')
     },
     handleUploadSuccess(resp) {

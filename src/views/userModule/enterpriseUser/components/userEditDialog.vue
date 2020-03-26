@@ -146,6 +146,7 @@ export default {
     handleClose(done) {
       this.$refs.forms.resetFields()
       this.$refs.forms.clearValidate()
+      this.$refs.uploader.closeMyself()
       this.$emit('close')
     }
   }

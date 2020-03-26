@@ -155,6 +155,9 @@ export default {
         Message.warning('已超过最大上传数量（' + this.limit + '个）')
         this.$emit('on-exceed', files, fileList)
       }
+    },
+    closeMyself() {
+      this.imageUrl = ''
     }
   }
 }
