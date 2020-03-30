@@ -14,13 +14,16 @@
         <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + '维修项目名称'" />
       </el-form-item>
       <el-form-item label="价格" prop="price">
-        <el-input v-model="form.price" type="text" :placeholder="$t('common.please.enter') + '价格'" />
+        <!-- <el-input v-model="form.price" type="text" :placeholder="$t('common.please.enter') + '价格'" /> -->
+        <el-input-number v-model="form.price" :precision="2" :step="0.1" :min="0" label="价格" />
       </el-form-item>
       <el-form-item label="预计维修分钟数" prop="repairMinute">
-        <el-input v-model="form.repairMinute" type="text" :placeholder="$t('common.please.enter') + '预计维修分钟数'" />
+        <!-- <el-input v-model="form.repairMinute" type="text" :placeholder="$t('common.please.enter') + '预计维修分钟数'" /> -->
+        <el-input-number v-model="form.repairMinute" :min="0" :step="1" step-strictly label="预计维修分钟数" />
       </el-form-item>
       <el-form-item label="排序" prop="sortNo">
-        <el-input v-model="form.sortNo" type="tel" :placeholder="$t('common.please.enter') + '排序'" />
+        <!-- <el-input v-model="form.sortNo" type="tel" :placeholder="$t('common.please.enter') + '排序'" /> -->
+        <el-input-number v-model="form.sortNo" :min="0" :step="1" step-strictly label="排序" />
       </el-form-item>
       <el-form-item class="form-footer" style="margin: 0">
         <el-button type="primary" icon="el-icon-check" @click="handleSubmit">{{ $t('common.confirm') }}</el-button>

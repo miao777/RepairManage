@@ -4,7 +4,7 @@
     <div class="login-form-container">
       <div class="login-form">
         <div class="login-left">
-          <img src="@/images/login-logo.png" alt class="img">
+          <img src="@/images/logorepair.jpg" alt class="img">
           <p class="title">{{ $t('login.title') }}</p>
           <p>{{ $t('login.version') }}</p>
         </div>

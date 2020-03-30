@@ -18,9 +18,14 @@
       <!-- 项目 -->
       <el-table-column label="项目" prop="name" />
       <!-- 状态 -->
-      <el-table-column label="状态" prop="isShow_fmt" align="center" />
+      <el-table-column label="显示状态" align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.isShow">显示</span>
+          <span v-else>不显示</span>
+        </template>
+      </el-table-column>
       <!-- 启停 -->
-      <el-table-column label="启停" prop="isShow" align="center">
+      <el-table-column label="显示启停" prop="isShow" align="center">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.isShow" :active-value="true" active-color="#13ce66" @change="change(scope.row)" />
         </template>

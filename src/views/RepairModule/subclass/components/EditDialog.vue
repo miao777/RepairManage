@@ -14,7 +14,8 @@
         <el-input v-model="form.name" type="text" :placeholder="$t('common.please.enter') + '小类名称'" />
       </el-form-item>
       <el-form-item label="排序" prop="sortNo">
-        <el-input v-model="form.sortNo" type="tel" :placeholder="$t('common.please.enter') + '排序'" />
+        <!-- <el-input v-model="form.sortNo" type="tel" :placeholder="$t('common.please.enter') + '排序'" /> -->
+        <el-input-number v-model="form.sortNo" :min="0" :step="1" step-strictly label="排序" />
       </el-form-item>
       <el-form-item class="form-footer" style="margin: 0">
         <el-button type="primary" icon="el-icon-check" @click="handleSubmit">{{ $t('common.confirm') }}</el-button>
@@ -160,5 +161,8 @@ export default {
         font-size: 18px;
         color: #f56c6c;
         margin-right: 5px;
+    }
+    .el-cascader--small{
+        width: 100%;
     }
 </style>

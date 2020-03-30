@@ -154,7 +154,9 @@ export default {
     handleClose(done) {
       this.$refs.form.resetFields()
       this.$refs.form.clearValidate()
-      this.$refs.uploader.closeMyself()
+      if (this.$props.isAdd) {
+        this.$refs.uploader.closeMyself()
+      }
       this.$emit('close')
     },
     // 企业联系电话同步用户登录电话号码

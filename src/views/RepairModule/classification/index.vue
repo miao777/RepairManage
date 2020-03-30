@@ -17,7 +17,7 @@ export default {
     return {
       searchForm: {
         filters: [
-          { field: 'name', op: 'EQ', value: '' },
+          { field: 'name', op: 'LIKE', value: '' },
           { field: 'type', op: 'EQ', value: '' },
           { field: 'isShow', op: 'EQ', value: '' }
         ],
@@ -49,7 +49,7 @@ export default {
     },
     reset() {
       this.searchForm.filters = [
-        { field: 'name', op: 'EQ', value: '' },
+        { field: 'name', op: 'LIKE', value: '' },
         { field: 'type', op: 'EQ', value: '' },
         { field: 'isShow', op: 'EQ', value: '' }
       ]

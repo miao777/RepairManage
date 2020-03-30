@@ -58,8 +58,8 @@ export default {
       isSortShow: false,
       statuses: [
         { label: '全部', value: '' },
-        { label: '是', value: true },
-        { label: '否', value: false }
+        { label: '显示', value: true },
+        { label: '不显示', value: false }
       ],
       types: [],
       keys: [],
