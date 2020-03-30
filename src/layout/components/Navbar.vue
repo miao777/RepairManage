@@ -72,7 +72,6 @@ export default {
     },
     updatePwd() {
       this.updatePwdType = true
-      console.log(this.user, '我点击了修改')
     },
     handleAddDialogClose() {
       this.updatePwdType = false

@@ -99,7 +99,6 @@ export default {
       }
     },
     async edit() {
-      console.log(this.form)
       const resp = await edit(this.form)
       if (resp.success) {
         this.handleClose()

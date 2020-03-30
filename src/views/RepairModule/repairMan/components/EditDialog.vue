@@ -170,7 +170,6 @@ export default {
         delete this.dialogForm.user.status_fmt
         this.dialogForm.user.roleId = JSON.parse(JSON.stringify(this.dialogForm.user.role.id))
         delete this.dialogForm.user.role
-        console.log(this.dialogForm, '1212121212121')
       }
       this.$nextTick(() => {
         this.$refs.uploader.loadImage()

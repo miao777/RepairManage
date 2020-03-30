@@ -207,7 +207,6 @@ export default {
       const resp = await repairManApi.page(this.searchForms)
       if (resp.success) {
         this.table.data = resp.rows
-        console.log(resp.rows, 'repariLIst')
       }
       this.table.loading = false
     },

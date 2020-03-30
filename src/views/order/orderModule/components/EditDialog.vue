@@ -75,7 +75,6 @@ export default {
     },
     handleOpen() {
       if (!this.$props.isAdd) {
-        console.log(this.data)
         this.form.orderProductId = this.$props.data.id
       }
     },

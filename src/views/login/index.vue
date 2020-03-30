@@ -88,24 +88,8 @@ export default {
         password: ''
       },
       loginRules: {
-        username: [
-          { required: true, validator: (rule, value, callback) => {
-            if (!value) {
-              callback(new Error(this.$t('error.login.username.empty')))
-            } else {
-              callback()
-            }
-          }, trigger: 'change' }
-        ],
-        password: [
-          { required: true, validator: (rule, value, callback) => {
-            if (!value) {
-              callback(new Error(this.$t('error.login.password.empty')))
-            } else {
-              callback()
-            }
-          }, trigger: 'change' }
-        ]
+        username: [{ required: true, message: '请输入账号', trigger: 'blur,change' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur,change' }]
       },
       loading: false,
       passwordType: 'password',
@@ -143,8 +127,13 @@ export default {
           this.loading = true
           this.$store
             .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
+            .then((res) => {
+              if (res.success) {
+                this.$router.push({ path: this.redirect || '/' })
+              } else {
+                this.$refs.loginForm.resetFields()
+                this.$refs.loginForm.clearValidate()
+              }
               this.loading = false
             })
             .catch(() => {

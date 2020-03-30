@@ -98,7 +98,6 @@ export default {
       if (!this.$props.isAdd) {
         // this.form.cityId = this.$props.data.cityId
         this.form = this.$props.data
-        console.log(this.form, '1212121')
       }
     },
     handleChangeLevel() {

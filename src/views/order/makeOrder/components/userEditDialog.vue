@@ -11,7 +11,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="管理员头像" prop="headerUrl">
+      <el-form-item label="图片" prop="headerUrl">
         <Uploader ref="uploader" :image="forms.headerUrl" @on-success="handleUploadSuccess" />
       </el-form-item>
       <el-form-item label="评估价格" prop="price">
@@ -208,7 +208,6 @@ export default {
     handleSubmit() {
       this.$refs.forms.validate(valid => {
         if (valid) {
-          console.log(this.$props.isAdd, '1')
           this.$props.isAdd ? this.addMenu() : this.editMenu()
         }
       })

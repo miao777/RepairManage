@@ -100,7 +100,6 @@ export default {
         }
         arr.push(obj)
       })
-      console.log(arr, '数组')
       this.rolrList(arr)
     },
     handleSubmit() {

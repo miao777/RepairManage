@@ -207,7 +207,7 @@ export default {
   methods: {
     // 用户点击滴入获取坐标
     pointChange(ev) {
-      console.log('捕获到点击坐标', ev)
+      // console.log('捕获到点击坐标', ev)
       this.form.longitude = ev.lng
       this.form.latitude = ev.lat
     },
@@ -215,7 +215,6 @@ export default {
       EnterPrise.page(this.EnterPriseSearch).then(res => {
         if (res.success) {
           this.EnterPriseList = res.rows
-          console.log(this.EnterPriseList, 'EnterPriseListEnterPriseList')
         }
       })
     },

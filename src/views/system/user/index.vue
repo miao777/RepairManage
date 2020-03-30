@@ -97,7 +97,6 @@ export default {
       }
     },
     handleSelectRows(rows) {
-      console.log(rows)
       this.table.multipleSelection = rows
     }
   }

@@ -74,7 +74,6 @@ export default {
   methods: {
     // 修改自己信息
     async updateIfoContent() {
-      console.log(this.form, 'this.form')
       const resp = await updateUserconntentApi.updateIfoContent(this.form)
       if (resp.success) {
         this.$store.dispatch('user/getInfo')
@@ -85,7 +84,6 @@ export default {
     async getInfo() {
       const resp = await updateUserconntentApi.getInfo()
       if (resp.success) {
-        console.log(resp, 'sadsadasdsamdklas')
         const data = resp.data
         this.form.email = data.email
         this.form.headerUrl = data.headerUrl

@@ -47,7 +47,6 @@ export default {
           row.level = 1
           return row
         })
-        console.log(this.table.data, 'this.table.data ')
         this.pagination.pageNo = resp.pageNo + 1
         this.pagination.pageSize = resp.pageSize
         this.pagination.totalCount = resp.totalCount

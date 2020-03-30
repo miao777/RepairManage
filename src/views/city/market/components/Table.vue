@@ -75,7 +75,6 @@ export default {
       }
     },
     async change(row) {
-      console.log(row)
       const res = await CityApi.toggle(row.id)
       if (res.success) {
         this.$emit('search')

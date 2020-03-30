@@ -208,7 +208,6 @@ export default {
     handleSubmit() {
       this.$refs.forms.validate(valid => {
         if (valid) {
-          console.log(this.$props.isAdd, '1')
           this.$props.isAdd ? this.addMenu() : this.editMenu()
         }
       })

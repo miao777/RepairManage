@@ -135,7 +135,6 @@ export default {
         this.$nextTick(() => {
           this.$refs.uploader.loadImage()
         })
-        console.log(this.$props.data, '121212121')
       }
     },
     handleSubmit() {

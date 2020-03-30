@@ -92,7 +92,6 @@ export default {
     async updateUserPwd() {
       const resp = await updateUserconntentApi.updateUserPwd(this.form)
       if (resp.success) {
-        console.log(resp, '修改成功')
         this.handleClose()
         this.$emit('logout')
       }

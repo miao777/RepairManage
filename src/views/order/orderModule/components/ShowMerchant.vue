@@ -120,7 +120,7 @@ export default {
   },
   watch: {
     show: val => {
-      console.log(val)
+      // console.log(val)
     }
   },
   created() {

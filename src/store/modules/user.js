@@ -28,12 +28,14 @@ const actions = {
     return new Promise((resolve, reject) => {
       updateUserconntentApi.login({ username: username.trim(), password: password })
         .then(response => {
-          const { data } = response
-          commit('SET_TOKEN', data.Authorization)
-          sessionStorage.setItem('info', JSON.stringify('1'))
-          setToken(data.Authorization)
-          setRole(response.role)
-          resolve()
+          if (response.success) {
+            const { data } = response
+            commit('SET_TOKEN', data.Authorization)
+            sessionStorage.setItem('info', JSON.stringify('1'))
+            setToken(data.Authorization)
+            setRole(response.role)
+          }
+          resolve(response)
         }).catch(error => {
           reject(error)
         })

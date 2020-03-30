@@ -71,7 +71,6 @@ export default {
   watch: {
     oldmarker(newVal, oldVal) {
       if (newVal) {
-        console.log(typeof newVal)
         this.latlngCurrent = newVal
         this.qqmap && this.createMarker()
       }
@@ -106,7 +105,6 @@ export default {
       this.loadQQmap()
     }
     window.onMapFileLoad = function() {
-      console.log('qqmap加载完成')
       that.createMap()
     }
   },
@@ -132,7 +130,7 @@ export default {
       })
       const address = this.inputVal
       // 通过getLocation();方法获取位置信息值
-      console.log('搜索地址：', address)
+      // console.log('搜索地址：', address)
       geocoder.getLocation(address)
     },
     inputChange() {
@@ -157,7 +155,6 @@ export default {
         that.premarker.setMap(null)
       }
       if (this.oldmarker) {
-        console.log('编辑模式：', this.oldmarker)
         that.qqmap.setCenter(new qq.maps.LatLng(that.oldmarker.split(',')[0], that.oldmarker.split(',')[1]))
         that.premarker = new qq.maps.Marker({
           position: new qq.maps.LatLng(that.oldmarker.split(',')[0], that.oldmarker.split(',')[1]),

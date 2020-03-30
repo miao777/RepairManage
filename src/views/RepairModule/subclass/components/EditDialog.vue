@@ -131,7 +131,6 @@ export default {
     },
     handleOpen() {
       if (!this.$props.isAdd) {
-        console.log(this.$props.data, '11111222')
         assignExistField(this.$props.data, this.form)
         this.form.categoryId = this.$props.data.category.id
         this.values = [this.$props.data.category.type, this.$props.data.category.id]

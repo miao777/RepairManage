@@ -131,7 +131,6 @@ export default {
       }
     },
     async change(row) {
-      console.log(row)
       const res = await ProvinceApi.toggle(row.id)
       if (res.success) {
         this.$emit('search')
