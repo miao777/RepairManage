@@ -8,7 +8,7 @@ class PosterApi {
      * @param {string} sortNo 排序
      * @param {string} summary 简介
      * @param {string} title 标题
-     * @param {string} type 类型
+     * @param {string} type 类型~
      * @static
      * @memberof PosterApi
      */
