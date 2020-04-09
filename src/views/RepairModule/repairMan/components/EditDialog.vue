@@ -8,16 +8,11 @@
       top="5vh"
       width="55%"
       @open="handleOpen"
-      @close="handleDialogClose('dialogFormRef')"
     >
       <el-form ref="dialogFormRef" :model="dialogForm" :rules="rules" label-position="right" label-width="180px">
         <!-- 头像 -->
         <el-form-item id="uploadImageId3" label="头像">
           <Uploader ref="uploader" :image="dialogForm.user.headerUrl" @on-success="handleImageSuccess" @before-upload="handleBeforeUpload" />
-        </el-form-item>
-        <!-- 昵称 -->
-        <el-form-item label="昵称" prop="user.nickname">
-          <el-input v-model="dialogForm.user.nickname" placeholder="请输入昵称" clearable />
         </el-form-item>
         <!-- 手机号码 -->
         <el-form-item label="手机号码" prop="user.mobileNo">
@@ -40,6 +35,10 @@
           <el-radio v-model="dialogForm.user.sex" :label="true">男</el-radio>
           <el-radio v-model="dialogForm.user.sex" :label="false">女</el-radio>
         </el-form-item>
+        <!-- 昵称 -->
+        <el-form-item label="昵称" prop="user.nickname">
+          <el-input v-model="dialogForm.user.nickname" placeholder="请输入昵称" clearable />
+        </el-form-item>
         <!-- 邮箱 -->
         <el-form-item label="邮箱" prop="user.email">
           <el-input v-model="dialogForm.user.email" placeholder="请输入邮箱" clearable />
@@ -47,9 +46,10 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button icon="el-icon-close" @click="dialogVisible = false">{{ $t('common.cancel') }}</el-button>
+        <!-- <el-button icon="el-icon-close" @click="dialogVisible = false">{{ $t('common.cancel') }}</el-button> -->
+        <el-button icon="el-icon-close" @click="handleDialogClose">{{ $t('common.cancel') }}</el-button>
         <!-- <el-button type="primary" icon="el-icon-check" :disabled="dialogBtnDisabled" @click="handleAddOrUpdate('dialogFormRef')">{{ $t('common.confirm') }}</el-button> -->
-        <el-button type="primary" icon="el-icon-check" @click="handleAddOrUpdate('dialogFormRef')">{{ $t('common.confirm') }}</el-button>
+        <el-button type="primary" icon="el-icon-check" @click="handleAddOrUpdate">{{ $t('common.confirm') }}</el-button>
       </div>
     </el-dialog>
 
@@ -63,7 +63,8 @@ import Uploader from '@/components/Uploader'
 import { assignExistField } from '@/utils'
 import { Message } from 'element-ui'
 import { page } from '@/api/role'
-import { checkMobile, checkMailBox, checkIdNum } from '@/tools/date.js'
+// import { checkMobile, checkMailBox, checkIdNum } from '@/tools/date.js'
+import { checkMobile, checkIdNum } from '@/tools/date.js'
 import repairManApi from '@/api/repairMan'
 
 export default {
@@ -125,12 +126,12 @@ export default {
       // 校验
       rules: {
         idCard: [{ required: true, validator: checkIdNum, trigger: 'blur' }],
-        'user.email': [{ required: true, validator: checkMailBox, trigger: 'blur' }],
+        // 'user.email': [{ required: true, validator: checkMailBox, trigger: 'blur' }],
         'user.mobileNo': [{ required: true, validator: checkMobile, trigger: 'blur' }],
         // 'user.username': [{ required: true, message: '请输入账号', trigger: 'blur' }],
         'user.name': [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        'user.password': [{ required: true, message: '请输入密码', trigger: 'blur' }],
-        'user.nickname': [{ required: true, message: '请输入昵称', trigger: 'blur' }]
+        'user.password': [{ required: true, message: '请输入密码', trigger: 'blur' }]
+        // 'user.nickname': [{ required: true, message: '请输入昵称', trigger: 'blur' }]
       }
     }
   },
@@ -170,10 +171,10 @@ export default {
         delete this.dialogForm.user.status_fmt
         this.dialogForm.user.roleId = JSON.parse(JSON.stringify(this.dialogForm.user.role.id))
         delete this.dialogForm.user.role
+        this.$nextTick(() => {
+          this.$refs.uploader.loadImage()
+        })
       }
-      this.$nextTick(() => {
-        this.$refs.uploader.loadImage()
-      })
     },
     // 处理上传成功之后的图片
     handleImageSuccess(data) {
@@ -195,6 +196,7 @@ export default {
       // this.$refs[formName].resetFields()
       this.$refs.dialogFormRef.resetFields()
       this.$refs.dialogFormRef.clearValidate()
+      this.$refs.uploader.closeMyself()
       this.$emit('reloadTableData')
     },
 

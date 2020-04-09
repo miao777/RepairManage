@@ -81,7 +81,7 @@
       <!-- 昵称 -->
       <el-table-column prop="user.nickname" label="昵称" />
       <!-- 身份证 -->
-      <el-table-column prop="idCard" label="身份证" />
+      <el-table-column prop="idCard" label="身份证" min-width="170" />
       <!-- 邮箱 -->
       <el-table-column prop="user.email" label="邮箱" />
       <!-- 角色 -->
@@ -96,10 +96,13 @@
       <!-- 创建时间 -->
       <el-table-column prop="user.createDate_fmt" label="创建时间" align="center" sortable />
 
-      <el-table-column fixed="right" :label="$t('common.oper')" width="100px" align="center">
+      <el-table-column fixed="right" :label="$t('common.oper')" width="160" align="center">
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" :content="$t('common.edit')" placement="top-start">
             <el-button type="primary" icon="el-icon-edit" circle size="mini" @click="handleUpdateBtn(scope.row)" />
+          </el-tooltip>
+          <el-tooltip :content="$t('user.resetPwd')" placement="top">
+            <el-button type="warning" icon="el-icon-s-tools" circle @click="handleresetPwd(scope.row)" />
           </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('common.delete')" placement="top-start">
             <el-button type="danger" icon="el-icon-delete" circle size="mini" @click="handleDeleteBtn(scope.row)" />
@@ -124,6 +127,7 @@
 import EditDialog from './EditDialog'
 import { MessageBox } from 'element-ui'
 import repairManApi from '@/api/repairMan'
+import { resetPwd } from '@/api/user'
 import('@/styles/upload.scss')
 
 export default {
@@ -169,7 +173,6 @@ export default {
       this.dialogTitle = this.$t('common.edit')
       this.dialogData = Object.assign({}, row)
     },
-
     // 删除事件
     handleDeleteBtn(row) {
       MessageBox.confirm(this.$t('common.alert.delete'), this.$t('common.confirm'), {
@@ -196,6 +199,23 @@ export default {
       if (resp.success) {
         this.$emit('reloadTableData', 1)
       }
+    },
+    // 重置密码
+    async resetPwd() {
+      const resp = await resetPwd(this.selectRow.user.id)
+      if (resp.success) {
+        MessageBox.alert('密码已重置为：' + resp.data, this.$t('common.info'))
+      }
+    },
+    handleresetPwd(row) {
+      this.selectRow = row
+      MessageBox.confirm(this.$t('user.resetPwdInfo'), this.$t('user.resetPwd'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'warning'
+      }).then(() => {
+        this.resetPwd()
+      }).catch(() => {})
     }
   }
 }

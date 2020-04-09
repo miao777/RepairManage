@@ -11,8 +11,11 @@
         />
       </el-form-item>
 
-      <el-form-item label="图片" prop="headerUrl">
-        <Uploader ref="uploader" :image="forms.headerUrl" @on-success="handleUploadSuccess" />
+      <el-form-item label="图片">
+        <!-- <Uploader ref="uploader" :image="forms.headerUrl" :list-type="listType" :limit="3" :show-file-list="true" @on-success="handleUploadSuccess" />
+         -->
+        <Uploader ref="uploader" :disabled="!isAdd" :images-list="forms.headerUrl" :list-type="listType" :limit="3" :show-file-list="true" @on-success="handleUploadSuccess" />
+
       </el-form-item>
       <el-form-item label="评估价格" prop="price">
         <el-input v-model="forms.price" type="text" placeholder="请输入评估价格" />
@@ -57,6 +60,7 @@ export default {
   },
   data() {
     return {
+      listType: 'picture-card',
       values: [],
       showParent: false,
       enterpriseststus: [],
@@ -68,7 +72,7 @@ export default {
         itemId: '',
         subclassId: '',
         price: '',
-        headerUrl: ''
+        headerUrl: []
       },
       rules: {
         price: [{ required: true, message: '评估价格不能为空', trigger: 'blur' }]
@@ -175,7 +179,8 @@ export default {
       }
     },
     handleUploadSuccess(resp) {
-      this.forms.images = [resp.data.id]
+      const arr = this.forms.images
+      arr.push(resp.data.id)
     },
     async addMenu() {
       delete this.forms.id
@@ -198,7 +203,12 @@ export default {
         this.forms.itemId = this.$props.data.item.id
         this.forms.subclassId = this.$props.data.subclass.id
         this.forms.price = this.$props.data.price
-        this.forms.headerUrl = this.$props.data.images[0].fullPath
+        const arr = this.$props.data.imagesList
+        const ARR = []
+        arr.map(item => {
+          ARR.push({ 'url': item })
+        })
+        this.forms.headerUrl = ARR
         this.values = [this.$props.data.booking.customerType, this.$props.data.category.id, this.$props.data.subclass.id, this.$props.data.item.id]
         this.$nextTick(() => {
           this.$refs.uploader.loadImage()
@@ -216,7 +226,7 @@ export default {
       this.$refs.forms.resetFields()
       this.$refs.forms.clearValidate()
       this.values = []
-      this.forms.headerUrl = ''
+      this.forms.headerUrl = []
       this.forms.images = []
       this.$emit('close')
     },
