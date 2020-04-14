@@ -21,8 +21,8 @@
       <el-table-column label="地址" prop="address.addresstext" min-width="230" show-overflow-tooltip />
       <el-table-column label="备注信息" prop="remark" min-width="200" show-overflow-tooltip />
       <el-table-column label="状态" prop="status_fmt" min-width="80" align="center" />
-      <el-table-column label="创建时间" prop="createDate_fmt" min-width="160" align="center" />
-      <el-table-column label="期待上门时间" prop="doorstepTime_fmt" min-width="160" align="center" />
+      <el-table-column label="创建时间" prop="createDate_fmt" min-width="160" align="center" sortable />
+      <el-table-column label="期待上门时间" prop="doorstepTime_fmt" min-width="160" align="center" sortable />
       <el-table-column label="服务项目" align="center" width="160">
         <template slot-scope="scope">
           <el-link type="primary" @click="openService(scope.row)">查看维修项目</el-link>

@@ -103,8 +103,8 @@
           <span v-else>未指派</span>
         </template>
       </el-table-column>
-      <el-table-column prop="doorstepTime_fmt" label="上门时间" min-width="160" align="center" />
-      <el-table-column prop="completeTime_fmt" label="完成时间" min-width="160" align="center" />
+      <el-table-column prop="doorstepTime_fmt" label="上门时间" min-width="160" align="center" sortable />
+      <el-table-column prop="completeTime_fmt" label="完成时间" min-width="160" align="center" sortable />
       <el-table-column label="操作" align="center" min-width="130">
         <template slot-scope="scope">
           <el-tooltip v-if="(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='PAID')||(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='ASSIGN')||(scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='PAID') || (scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='ASSIGN')" type="success" icon="el-icon-edit" content="指派维修员" placement="top">
