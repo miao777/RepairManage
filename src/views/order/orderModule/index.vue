@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <div class="test">123</div>
     <!-- 订单管理 -->
     <search-bar :form="searchForm" @reset="handleResetSearchForm" @search="fetchData" @service="addServiceVisible = true" />
     <Table :loading="table.loading" :data="table.data" :multiple="table.multiple" @search="fetchData" @selection-change="handleSelectRows" />
@@ -23,7 +24,7 @@ export default {
           { field: 'orderStatus', op: 'EQ', value: '' },
           { field: 'customerType', op: 'EQ', value: '' }
         ],
-        page: { page: 0, size: 10 }
+        page: { page: 0, size: 10, sorts: [{ field: 'applyTime', 'order': 'desc' }] }
       },
       table: { loading: false, data: [], multiple: false, multipleSelection: [] }, // 表格的数据
       pagination: { pageNo: 1, pageSize: 10, totalCount: 0 }, // 这个是返回结果的时候的分页数据
@@ -67,7 +68,7 @@ export default {
         { field: 'orderStatus', op: 'EQ', value: '' },
         { field: 'customerType', op: 'EQ', value: '' }
       ]
-      this.searchForm.page = { page: 0, size: 10 }
+      this.searchForm.page = { page: 0, size: 10, sorts: [{ field: 'applyTime', 'order': 'desc' }] }
       this.fetchData()
     },
     handleSelectRows(rows) {
@@ -76,3 +77,4 @@ export default {
   }
 }
 </script>
+

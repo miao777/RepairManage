@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- 企业登陆用户列表 -->
+    <!-- 企业登录用户列表 -->
     <el-drawer
       :title="title"
       :visible.sync="drawerVisible"
@@ -173,7 +173,7 @@ export default {
     title: {
       type: String,
       default() {
-        return '企业登陆用户列表'
+        return '企业登录用户列表'
       }
     },
     shopId: {

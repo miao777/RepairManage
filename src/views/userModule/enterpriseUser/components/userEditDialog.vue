@@ -14,9 +14,6 @@
       <el-form-item v-if="!isAdd" label="密码" prop="password">
         <el-input v-model="forms.password" type="text" placeholder="请输入密码" />
       </el-form-item>
-      <el-form-item label="昵称" prop="nickname">
-        <el-input v-model="forms.nickname" type="text" placeholder="请输入昵称" />
-      </el-form-item>
       <el-form-item label="角色" prop="roleId">
         <el-select v-model="forms.roleId" placeholder="请选择角色">
           <el-option v-for="item in enterpriseststus" :key="item.id" :label="item.name" :value="item.id" />
@@ -25,6 +22,9 @@
       <el-form-item label="性别" prop="sex">
         <el-radio v-model="forms.sex" :label="true">男</el-radio>
         <el-radio v-model="forms.sex" :label="false">女</el-radio>
+      </el-form-item>
+      <el-form-item label="昵称" prop="nickname">
+        <el-input v-model="forms.nickname" type="text" placeholder="请输入昵称" />
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="forms.email" type="text" placeholder="输入邮箱" />
@@ -41,7 +41,8 @@
 import Uploader from '@/components/Uploader'
 import { assignExistField } from '@/utils'
 import EnterpriseApi from '@/api/enterprise'
-import { checkMobile, checkMailBox } from '@/tools/date.js'
+// import { checkMobile, checkMailBox } from '@/tools/date.js'
+import { checkMobile } from '@/tools/date.js'
 export default {
   components: { Uploader },
   props: {
@@ -81,9 +82,9 @@ export default {
         password: ''
       },
       rules: {
-        email: [{ validator: checkMailBox, trigger: 'blur' }],
+        // email: [{ validator: checkMailBox, trigger: 'blur' }],
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        nickname: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+        // nickname: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
         roleId: [{ required: true, message: '请选择角色', trigger: 'blur' }],
         mobileNo: [{ required: true, validator: checkMobile, trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]

@@ -18,9 +18,10 @@ export default {
       searchForm: {
         filters: [
           { field: 'address.contactMan', op: 'EQ', value: '' },
-          { field: 'address.mobileNo', op: 'EQ', value: '' }
+          { field: 'address.mobileNo', op: 'EQ', value: '' },
+          { field: 'status', op: 'EQ', value: '' }
         ],
-        page: { page: 0, size: 10, sorts: [{ field: 'createDate', order: 'desc' }] }
+        page: { page: 0, size: 10, sorts: [{ field: 'status', order: 'asc' }, { field: 'doorstepTime', order: 'asc' }] }
       },
       table: { loading: false, data: [], multiple: false, multipleSelection: [] }, // 表格的数据
       pagination: { pageNo: 1, pageSize: 10, totalCount: 0 }
@@ -49,9 +50,10 @@ export default {
     reset() {
       this.searchForm.filters = [
         { field: 'address.contactMan', op: 'EQ', value: '' },
-        { field: 'address.mobileNo', op: 'EQ', value: '' }
+        { field: 'address.mobileNo', op: 'EQ', value: '' },
+        { field: 'status', op: 'EQ', value: '' }
       ]
-      this.searchForm.page = { page: 0, size: 10, sorts: [{ field: 'createDate', order: 'desc' }] }
+      this.searchForm.page = { page: 0, size: 10, sorts: [{ field: 'status', order: 'asc' }, { field: 'doorstepTime', order: 'asc' }] }
       this.fetchData()
     },
     handleChangePagination() {

@@ -16,10 +16,13 @@
     >
       <el-table-column type="index" label="#" align="center" width="40px" />
       <el-table-column label="姓名" prop="address.contactMan" />
-      <el-table-column label="联系电话" prop="address.mobileNo" />
-      <el-table-column label="用户类型" prop="customerType_fmt" />
-      <el-table-column label="地址" prop="address.addresstext" min-width="300" />
-      <el-table-column label="状态" prop="status_fmt" min-width="70" align="center" />
+      <el-table-column label="联系电话" prop="address.mobileNo" min-width="90" />
+      <el-table-column label="用户类型" prop="customerType_fmt" width="80" />
+      <el-table-column label="地址" prop="address.addresstext" min-width="230" show-overflow-tooltip />
+      <el-table-column label="备注信息" prop="remark" min-width="200" show-overflow-tooltip />
+      <el-table-column label="状态" prop="status_fmt" min-width="80" align="center" />
+      <el-table-column label="创建时间" prop="createDate_fmt" min-width="160" align="center" />
+      <el-table-column label="期待上门时间" prop="doorstepTime_fmt" min-width="160" align="center" />
       <el-table-column label="服务项目" align="center" width="160">
         <template slot-scope="scope">
           <el-link type="primary" @click="openService(scope.row)">查看维修项目</el-link>
@@ -35,7 +38,7 @@
       </el-table-column>
     </el-table>
     <!-- 查看项目 -->
-    <show-merchant :show.sync="enterpriserighttable.visible" :shop-id="enterpriserighttable.id" @handleBindClose="handleBindClose" />
+    <show-merchant :show.sync="enterpriserighttable.visible" :shop-id="enterpriserighttable.id" :shop-type="enterpriserighttable.type" @handleBindClose="handleBindClose" />
   </div>
 </template>
 
@@ -59,7 +62,7 @@ export default {
   data() {
     return {
       selectRow: {},
-      enterpriserighttable: { visible: false, id: '' }
+      enterpriserighttable: { visible: false, id: '', type: '' }
     }
   },
   computed: {
@@ -118,6 +121,7 @@ export default {
     openService(row) {
       this.enterpriserighttable.visible = true
       this.enterpriserighttable.id = row.id
+      this.enterpriserighttable.type = row.status
     },
     handleBindClose() {
       this.enterpriserighttable.visible = false

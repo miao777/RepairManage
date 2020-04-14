@@ -18,23 +18,29 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="small" @click="handleSearch">{{ $t('common.search') }}</el-button>
           <el-button size="small" icon="el-icon-refresh" @click="handleReset">{{ $t('common.reset') }}</el-button>
-          <el-button type="success" icon="el-icon-plus" @click="handleAddDialogOpens">{{ $t("common.add")+'服务项目' }}</el-button>
+          <el-button v-if="shopType==='BOOKING'" type="success" icon="el-icon-plus" @click="handleAddDialogOpens">{{ $t("common.add")+'服务项目' }}</el-button>
         </el-form-item>
       </el-form>
       <el-table
         v-loading="merchantLoading"
         :data="merchantData"
         :element-loading-text="$t('common.loading')"
+        border
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.8)"
       >
         <el-table-column align="center" type="index" width="30" class-name="table-detail" />
         <!-- 图像 -->
-        <el-table-column prop="images[0].fullPath" label="图片" min-width="60px">
+        <el-table-column label="图片" min-width="60px">
           <template slot-scope="scope">
-            <el-image :class="scope.row.images[0].fullPath ? 'table-image-size' : ''" :src="scope.row.images[0].fullPath" :preview-src-list="scope.row.imagesList" fit="cover">
+            <!-- <el-image :class="scope.row.images[0].fullPath ? 'table-image-size' : ''" :src="scope.row.images[0].fullPath" :preview-src-list="scope.row.imagesList" fit="cover">
               <div v-if="!scope.row.images[0].fullPath" slot="error" class="image-slot">
                 <i class="el-icon-picture-outline" />{{ $t('common.notLoading') }}
+              </div>
+            </el-image> -->
+            <el-image :class="scope.row.headerUrl ? 'table-image-size' : ''" :src="scope.row.headerUrl" :preview-src-list="scope.row.imagesList" fit="cover">
+              <div v-if="!scope.row.headerUrl" slot="error" class="image-slot">
+                <i class="el-icon-picture-outline" />{{ $t('common.noImgLoading') }}
               </div>
             </el-image>
           </template>
@@ -98,6 +104,10 @@ export default {
       }
     },
     shopId: {
+      type: String,
+      default: ''
+    },
+    shopType: {
       type: String,
       default: ''
     }
@@ -220,6 +230,11 @@ export default {
 
         resp.rows.map(item => {
           const arr = []
+          if (item.images.length !== 0) {
+            item.headerUrl = item.images[0].fullPath
+          } else {
+            item.headerUrl = ''
+          }
           item.images.map(k => {
             arr.push(k.fullPath)
           })

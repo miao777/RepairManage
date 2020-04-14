@@ -20,10 +20,12 @@
       :disabled="disabled"
       :accept="accept"
     >
+      <!-- 单张图片上传 -->
       <template v-if="listType === 'text'">
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon" />
       </template>
+      <!-- 多张图片上传 -->
       <template v-if="listType === 'picture-card'">
         <i class="el-icon-plus" />
       </template>
@@ -52,7 +54,7 @@ export default {
       type: String,
       default: 'text'
     },
-    showFileList: {
+    showFileList: {// 是否显示已上传文件列表
       type: Boolean,
       default: false
     },
@@ -62,7 +64,7 @@ export default {
         return ['jpg', 'gif', 'png', 'bmp', 'jpeg']
       }
     },
-    limit: {
+    limit: {// 设置上传图片个数
       type: Number,
       default: 5
     },
@@ -82,11 +84,11 @@ export default {
       type: Boolean,
       default: false
     },
-    imagesList: {
+    imagesList: {// 多图片默认显示图片数组
       type: Array,
       default: () => { return [] }
     },
-    disabled: {
+    disabled: {// 是否禁用
       type: Boolean,
       default: false
     },

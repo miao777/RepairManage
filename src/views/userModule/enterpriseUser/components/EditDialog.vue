@@ -16,9 +16,6 @@
       <el-form-item v-if="isAdd" label="管理员头像" prop="user.headerUrl">
         <Uploader ref="uploader" :image="form.headerUrl" @on-success="handleUploadSuccess" />
       </el-form-item>
-      <el-form-item v-if="isAdd" label="昵称" prop="user.nickname">
-        <el-input v-model="form.user.nickname" type="text" placeholder="输入昵称" />
-      </el-form-item>
       <el-form-item v-if="isAdd" label="登陆手机号" prop="user.mobileNo">
         <el-input v-model="form.user.mobileNo" type="text" placeholder="输入登陆手机号" maxlength="11" />
       </el-form-item>
@@ -31,6 +28,9 @@
       <el-form-item v-if="isAdd" label="性别" prop="user.sex">
         <el-radio v-model="form.user.sex" :label="true">男</el-radio>
         <el-radio v-model="form.user.sex" :label="false">女</el-radio>
+      </el-form-item>
+      <el-form-item v-if="isAdd" label="昵称" prop="user.nickname">
+        <el-input v-model="form.user.nickname" type="text" placeholder="输入昵称" />
       </el-form-item>
       <el-form-item v-if="isAdd" label="管理员邮箱" prop="user.email">
         <el-input v-model="form.user.email" type="text" placeholder="输入管理员邮箱" />
@@ -47,7 +47,8 @@
 import Uploader from '@/components/Uploader'
 import { assignExistField } from '@/utils'
 import EnterpriseApi from '@/api/enterprise'
-import { checkMobile, checkMailBox } from '@/tools/date.js'
+// import { checkMobile, checkMailBox } from '@/tools/date.js'
+import { checkMobile } from '@/tools/date.js'
 export default {
   components: { Uploader },
   props: {
@@ -92,9 +93,9 @@ export default {
         contactPerson: [{ required: true, message: '请输入企业联系人', trigger: 'blur' }],
         contractPhone: [{ required: true, message: '请输入企业联系电话', trigger: 'blur' }],
         name: [{ required: true, message: '请输入企业名称', trigger: 'blur' }],
-        'user.email': [{ validator: checkMailBox, trigger: 'blur' }],
+        // 'user.email': [{ validator: checkMailBox, trigger: 'blur' }],
         'user.name': [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        'user.nickname': [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+        // 'user.nickname': [{ required: true, message: '请输入昵称', trigger: 'blur' }],
         'user.mobileNo': [{ required: true, validator: checkMobile, trigger: 'blur' }],
         'user.password': [{ required: true, message: '请输入密码', trigger: 'blur' }],
         'user.roleId': [{ required: true, message: '请选择角色', trigger: 'blur' }]

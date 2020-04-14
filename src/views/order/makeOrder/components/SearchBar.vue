@@ -13,6 +13,11 @@
       <el-form-item label="联系电话" prop="filters[1].value">
         <el-input v-model="form.filters[1].value" placeholder="输入联系电话" />
       </el-form-item>
+      <el-form-item label="订单状态" prop="filters[2].value">
+        <el-select v-model="form.filters[2].value" :placeholder="$t('order.orderState')" clearable>
+          <el-option v-for="item in statuses" :key="item.label" :label="item.label" :value="item.value" />
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">{{
           $t("common.search")
@@ -41,8 +46,9 @@ export default {
       isSortShow: false,
       statuses: [
         { label: '全部', value: '' },
-        { label: '是', value: true },
-        { label: '否', value: false }
+        { label: '预约中', value: 'BOOKING' },
+        { label: '订单执行中', value: 'POSTING' },
+        { label: '取消预约', value: 'CANCEL' }
       ],
       types: [],
       keys: [],
