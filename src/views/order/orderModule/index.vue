@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="test">123</div>
     <!-- 订单管理 -->
     <search-bar :form="searchForm" @reset="handleResetSearchForm" @search="fetchData" @service="addServiceVisible = true" />
     <Table :loading="table.loading" :data="table.data" :multiple="table.multiple" @search="fetchData" @selection-change="handleSelectRows" />
