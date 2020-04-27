@@ -123,6 +123,7 @@
       :show.sync="changePriseVisible"
       :shop-id="shopid"
       :orderid="orderid"
+      @showprice="showprice"
       @handleBindClose="
         () => {
           changePriseVisible=false
@@ -230,6 +231,9 @@ export default {
     },
     handleClose() {
       this.choosePersonVisible = false
+    },
+    showprice() {
+      this.$emit('search')
     },
     changePrise(val) {},
     handlePerson(row) {

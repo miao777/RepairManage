@@ -8,9 +8,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{ '维修师傅' }}
+            {{ '家庭用户' }}
           </div>
-          <count-to :start-val="0" :end-val="formFirstColumnData.newUserCount" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="formFirstColumnData.familyNumber" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -21,9 +21,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{ '维修总计' }}
+            {{ '企业用户' }}
           </div>
-          <count-to :start-val="0" :end-val="formFirstColumnData.newShopCount" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="formFirstColumnData.enterpriceNumber" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -34,9 +34,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{ '新的维修' }}
+            {{ '维修师傅' }}
           </div>
-          <count-to :start-val="0" :end-val="formFirstColumnData.newGoodsCount" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="formFirstColumnData.repairManNumber" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -47,9 +47,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{ '建议数目' }}
+            {{ '完成订单' }}
           </div>
-          <count-to :start-val="0" :end-val="formFirstColumnData.newForumCount" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="formFirstColumnData.orderNumber" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -59,7 +59,7 @@
 
 <script>
 import CountTo from 'vue-count-to'
-// import { NewestTotalList } from '@/api/statistics'
+import StatisticsApi from '@/api/statistics'
 
 export default {
   components: {
@@ -67,25 +67,40 @@ export default {
   },
   data() {
     return {
-      formFirstColumnData: {}
+      formFirstColumnData: { familyNumber: 0, enterpriceNumber: 0, repairManNumber: 0, orderNumber: 0 }
     }
   },
   created() {
-    // this.fetchData()
+    this.familyNumber()
+    this.enterpriceNumber()
+    this.repairManNumber()
+    this.orderNumber()
   },
   methods: {
-    // async fetchData() {
-    //   const resp = await NewestTotalList()
-    //   if (resp.success) {
-    //     if (resp.data.newGoodsCount === '') {
-    //       resp.data.newGoodsCount = 0
-    //     }
-    //     if (resp.data.newShopCount === '') {
-    //       resp.data.newShopCount = 0
-    //     }
-    //     this.formFirstColumnData = resp.data
-    //   }
-    // },
+    async familyNumber() {
+      const resp = await StatisticsApi.familyNumber()
+      if (resp.success) {
+        this.formFirstColumnData.familyNumber = resp.data
+      }
+    },
+    async enterpriceNumber() {
+      const resp = await StatisticsApi.enterpriceNumber()
+      if (resp.success) {
+        this.formFirstColumnData.enterpriceNumber = resp.data
+      }
+    },
+    async repairManNumber() {
+      const resp = await StatisticsApi.repairManNumber()
+      if (resp.success) {
+        this.formFirstColumnData.repairManNumber = resp.data
+      }
+    },
+    async orderNumber() {
+      const resp = await StatisticsApi.orderNumber()
+      if (resp.success) {
+        this.formFirstColumnData.orderNumber = resp.data
+      }
+    },
     handleSetLineChartData(type) {
       this.$emit('handleSetLineChartData', type)
     }

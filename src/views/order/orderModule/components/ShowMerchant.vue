@@ -150,6 +150,7 @@ export default {
     handleClose() {
       this.pagination.totalCount = 0
       this.searchForm.filters[1].value = ''
+      this.$emit('showprice')
       this.$emit('close')
     },
     handleSearch() {
