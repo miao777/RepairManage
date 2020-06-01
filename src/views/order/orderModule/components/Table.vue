@@ -94,10 +94,19 @@
       <el-table-column prop="booking.address.contactMan" label="姓名" width="100" />
       <el-table-column prop="booking.address.mobileNo" label="联系电话" width="150" />
       <el-table-column prop="customerType_fmt" label="客户类型" min-width="120" />
-      <el-table-column prop="orderStatus_fmt" label="订单状态" min-width="120" />
+      <el-table-column prop="orderStatus_fmt" label="订单状态" min-width="120" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.orderStatus==='PENDING'||scope.row.orderStatus==='CONFIRM_ORDER'||scope.row.orderStatus==='CONFIRM_COMPLETE'">{{ scope.row.orderStatus_fmt }}</el-tag>
+          <el-tag v-if="scope.row.orderStatus==='PAID'" color="#66CDAA" style="color:white;">{{ scope.row.orderStatus_fmt }}</el-tag>
+          <el-tag v-if="scope.row.orderStatus==='ASSIGN'" type="danger">{{ scope.row.orderStatus_fmt }}</el-tag>
+          <el-tag v-if="scope.row.orderStatus==='TAKE_ORDER'||scope.row.orderStatus==='BEFORE_REPAIR'||scope.row.orderStatus==='REPAIRING'" type="warning">{{ scope.row.orderStatus_fmt }}</el-tag>
+          <el-tag v-if="scope.row.orderStatus==='AFTER_REPAIR'" type="warning">{{ scope.row.orderStatus_fmt }}</el-tag>
+          <el-tag v-if="scope.row.orderStatus==='CANCEL'" type="info">{{ scope.row.orderStatus_fmt }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="repairMinute" label="维修时长" min-width="90" align="center" />
       <el-table-column prop="totalPrice_fmt" label="维修总价" min-width="90" align="center" />
-      <el-table-column label="维修师傅" width="100" align="center">
+      <el-table-column label="维修师傅" width="110" align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.repairMan&&scope.row.repairMan.user.name">{{ scope.row.repairMan.user.name }}</span>
           <span v-else>未指派</span>
@@ -269,3 +278,4 @@ export default {
   }
 }
 </script>
+

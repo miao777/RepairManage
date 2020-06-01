@@ -83,4 +83,3 @@ export function checkIdNum(rule, value, callback) {
     callback()
   }
 }
-
