@@ -20,7 +20,7 @@ export function add(data) {
 
 export function edit(data) {
   return request({
-    url: '/user/edit',
+    url: '/admin/user/edit',
     method: 'put',
     data: data
   })
