@@ -84,5 +84,32 @@ class BookingApi {
       data
     })
   }
+
+  /**
+   * @description '取消订单'
+   * @param {Object}
+   * @static
+   * @memberof OrderApi
+   */
+  static cancelOrder = (data) => {
+    return request({
+      url: UrlPath + 'cancel',
+      method: 'delete',
+      data: data
+    })
+  }
+
+  /**
+   * @description '删除订单'
+   * @param {String} id
+   * @static
+   * @memberof OrderApi
+   */
+  static delete = (id) => {
+    return request({
+      url: UrlPath + 'delete/' + id,
+      method: 'delete'
+    })
+  }
 }
 export default BookingApi

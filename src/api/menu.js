@@ -94,7 +94,7 @@ class menuApi {
      */
     static remove = (parentId, id) => {
       return request({
-        url: UrlPath + '/delete/' + parentId + '/' + id,
+        url: UrlPath + 'delete/' + parentId + '/' + id,
         method: 'delete'
       })
     }

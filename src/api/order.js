@@ -132,5 +132,32 @@ static getOrderType =(id) => {
       method: 'put'
     })
   }
+
+  /**
+   * @description '取消订单'
+   * @param {Object}
+   * @static
+   * @memberof OrderApi
+   */
+  static cancelOrder = (data) => {
+    return request({
+      url: urlPath + 'cancel',
+      method: 'delete',
+      data: data
+    })
+  }
+
+  /**
+   * @description '删除订单'
+   * @param {String} id
+   * @static
+   * @memberof OrderApi
+   */
+  static delete = (id) => {
+    return request({
+      url: urlPath + 'delete/' + id,
+      method: 'delete'
+    })
+  }
 }
 export default OrderApi

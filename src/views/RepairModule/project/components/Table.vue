@@ -37,7 +37,7 @@
       <!-- 用户类型（关联） -->
       <el-table-column label="用户类型（关联）" prop="category.type_fmt" />
       <!-- 维修小类（关联） -->
-      <el-table-column label="维修小类（关联）" prop="subclass.name" />
+      <!-- <el-table-column label="维修小类（关联）" prop="subclass.name" /> -->
       <!-- 操作 -->
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">

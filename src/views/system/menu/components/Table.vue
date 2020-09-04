@@ -74,6 +74,7 @@ export default {
   },
   methods: {
     async deleteMenu() {
+      console.log(this.selectRow, '121212')
       const resp = await menuApi.remove(this.selectRow.parentId ? this.selectRow.parentId : null, this.selectRow.id)
       if (resp.success) {
         this.$emit('search')

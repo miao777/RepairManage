@@ -28,12 +28,21 @@
           <el-link type="primary" @click="openService(scope.row)">查看维修项目</el-link>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="80">
+      <el-table-column label="操作" align="center" width="180">
         <template slot-scope="scope">
           <el-tooltip v-if="scope.row.status === 'BOOKING'" content="创建订单" placement="top">
             <el-button type="success" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
           </el-tooltip>
-          <span v-else>已创建</span>
+          <!-- <span v-if="scope.row.status === 'CANCEL'">已取消</span>
+          <span v-if="scope.row.status === 'POSTING'">已创建</span> -->
+          <!-- 取消预约 -->
+          <el-tooltip v-if="scope.row.status !== 'CANCEL'" class="item" effect="dark" content="取消预约" placement="top-start">
+            <el-button type="primary" icon="el-icon-document-delete" circle @click="handleDeleteBtn(scope.row)" />
+          </el-tooltip>
+          <!-- 删除订单 -->
+          <el-tooltip content="删除预约订单" placement="top-start">
+            <el-button type="danger" icon="el-icon-delete" circle @click="handleDetele(scope.row)" />
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
@@ -125,6 +134,44 @@ export default {
     },
     handleBindClose() {
       this.enterpriserighttable.visible = false
+    },
+    async deleteMethod(data) {
+      const resp = await BookingApi.cancelOrder(data)
+      if (resp.success) {
+        this.$emit('search')
+      }
+    },
+    async delete() {
+      const resp = await BookingApi.delete(this.selectRow.id)
+      if (resp.success) {
+        this.$emit('search')
+      }
+    },
+    // 删除订单
+    handleDetele(row) {
+      this.selectRow = row
+      MessageBox.confirm(this.$t('common.alert.delete'), this.$t('common.please.confirm'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'warning'
+      }).then(() => {
+        this.delete()
+      }).catch(() => {})
+    },
+    // 删除事件
+    handleDeleteBtn(row) {
+      MessageBox.prompt('请填写取消预约的原因（必填）', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        inputValidator: (value) => {
+          if (!value) {
+            return '请输入取消点预约原因'
+          }
+        }
+      }).then(({ value }) => {
+        const obj = { id: row.id, remark: value }
+        this.deleteMethod(obj)
+      }).catch(() => {})
     }
   }
 }

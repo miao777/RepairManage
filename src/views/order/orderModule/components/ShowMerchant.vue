@@ -37,7 +37,7 @@
         <!-- 所属维修分类 -->
         <el-table-column prop="category.name" label="所属维修分类" align="center" />
         <!-- 所属维修小类 -->
-        <el-table-column prop="subclass.name" label="所属维修小类" align="center" />
+        <!-- <el-table-column prop="subclass.name" label="所属维修小类" align="center" /> -->
         <!-- 评估价格 -->
         <el-table-column prop="price_fmt" label="评估价格" align="center" />
 

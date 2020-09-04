@@ -9,7 +9,7 @@
     >
       <el-form-item :label="$t('menu.level')" prop="level">
         <el-select v-model="form.level" :placeholder="$t('common.please.select') + $t('menu.level')" @change="handleChangeLevel">
-          <el-option v-for="item in levels" :key="item.value" :label="item.label" :value="item.value" />
+          <el-option v-for="(item,index) in levels" :key="index" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('menu.title')" prop="title">
@@ -18,12 +18,12 @@
 
       <el-form-item v-if="showParent" :label="$t('menu.parentId')" prop="parentId">
         <el-select v-model="form.parentId" :placeholder="$t('common.please.select') + $t('menu.parentId')">
-          <el-option v-for="item in parents" :key="item.id" :label="item.title" :value="item.id" />
+          <el-option v-for="(item,index) in parents" :key="index" :label="item.title" :value="item.id" />
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('menu.icon')" prop="icon">
         <el-select v-model="form.icon" filterable :placeholder="$t('common.please.select') + $t('menu.icon')">
-          <el-option v-for="item in icons" :key="item" :label="item" :value="item">
+          <el-option v-for="(item,index) in icons" :key="index" :label="item" :value="item">
             <i :class="item + ' icon-in-table'" />{{ item }}
           </el-option>
         </el-select>

@@ -193,16 +193,28 @@ export default {
 
     // 关闭
     handleDialogClose(formName) {
-      // this.$refs[formName].resetFields()
-      this.$refs.dialogFormRef.resetFields()
-      this.$refs.dialogFormRef.clearValidate()
+      this.dialogForm = {
+        id: '',
+        idCard: '',
+        user: {
+          email: '',
+          headerUrl: '',
+          id: '',
+          mobileNo: '',
+          name: '',
+          nickname: '',
+          password: '',
+          roleId: '',
+          sex: false
+        }
+      }
       this.$refs.uploader.closeMyself()
       this.$emit('reloadTableData')
     },
 
     // 新增or编辑事件
     handleAddOrUpdate(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs.dialogFormRef.validate(valid => {
         if (valid) {
           this.$props.isAdd ? this.add() : this.edit()
         }

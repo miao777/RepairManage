@@ -30,7 +30,7 @@
 
 <script>
 import CategoryApi from '@/api/category'
-import SubclassApi from '@/api/subclass'
+// import SubclassApi from '@/api/subclass'
 import RepairItemApi from '@/api/repairItem'
 import Uploader from '@/components/Uploader'
 import BookingApi from '@/api/booking'
@@ -70,7 +70,7 @@ export default {
         categoryId: '',
         images: [],
         itemId: '',
-        subclassId: '',
+        // subclassId: '',
         price: '',
         headerUrl: []
       },
@@ -97,26 +97,20 @@ export default {
     async repairItemList() {
       const resp = await RepairItemApi.page(this.searchFormsrepairt)
       if (resp.success) {
-        this.options.map(item => {
-          item.children.map(i => {
-            i.children.map(k => {
-              resp.rows.map(q => {
-                const obj = {}
-                if (k.value === q.subclass.id) {
-                  obj.value = q.id
-                  obj.label = q.name
-                  k.children.push(obj)
-                }
-              })
-            })
-          })
-        })
-      }
-    },
-    // 维修小类
-    async subclassFun() {
-      const resp = await SubclassApi.page(this.subclassSearchForm)
-      if (resp.success) {
+        // this.options.map(item => {
+        //   item.children.map(i => {
+        //     i.children.map(k => {
+        //       resp.rows.map(q => {
+        //         const obj = {}
+        //         if (k.value === q.subclass.id) {
+        //           obj.value = q.id
+        //           obj.label = q.name
+        //           k.children.push(obj)
+        //         }
+        //       })
+        //     })
+        //   })
+        // })
         this.options.map(item => {
           item.children.map(i => {
             resp.rows.map(g => {
@@ -124,15 +118,33 @@ export default {
               if (g.category.id === i.value) {
                 obj.value = g.id
                 obj.label = g.name
-                obj.children = []
                 i.children.push(obj)
               }
             })
           })
         })
-        this.repairItemList()
       }
     },
+    // // 维修小类
+    // async subclassFun() {
+    //   const resp = await SubclassApi.page(this.subclassSearchForm)
+    //   if (resp.success) {
+    //     this.options.map(item => {
+    //       item.children.map(i => {
+    //         resp.rows.map(g => {
+    //           const obj = {}
+    //           if (g.category.id === i.value) {
+    //             obj.value = g.id
+    //             obj.label = g.name
+    //             obj.children = []
+    //             i.children.push(obj)
+    //           }
+    //         })
+    //       })
+    //     })
+    //     this.repairItemList()
+    //   }
+    // },
     // 维修分类
     async categoryList() {
       const resp = await CategoryApi.page(this.searchForms)
@@ -160,7 +172,7 @@ export default {
             item.children = Farr
           }
         })
-        this.subclassFun()
+        this.repairItemList()
       }
     },
     async custormerTypess() {
@@ -201,15 +213,21 @@ export default {
         this.forms.id = this.$props.data.id
         this.forms.categoryId = this.$props.data.category.id
         this.forms.itemId = this.$props.data.item.id
-        this.forms.subclassId = this.$props.data.subclass.id
+        // this.forms.subclassId = this.$props.data.subclass.id
         this.forms.price = this.$props.data.price
         const arr = this.$props.data.imagesList
+        const rty = this.$props.data.images
         const ARR = []
+        const array = []
         arr.map(item => {
           ARR.push({ 'url': item })
         })
+        rty.map(item => {
+          array.push(item.id)
+        })
+        this.forms.images = array
         this.forms.headerUrl = ARR
-        this.values = [this.$props.data.booking.customerType, this.$props.data.category.id, this.$props.data.subclass.id, this.$props.data.item.id]
+        this.values = [this.$props.data.booking.customerType, this.$props.data.category.id, this.$props.data.item.id]
         this.$nextTick(() => {
           this.$refs.uploader.loadImage()
         })
@@ -232,8 +250,8 @@ export default {
     },
     handleChange(value) {
       this.forms.categoryId = value[1]
-      this.forms.subclassId = value[2]
-      this.forms.itemId = value[3]
+      // this.forms.subclassId = value[2]
+      this.forms.itemId = value[2]
     }
   }
 }

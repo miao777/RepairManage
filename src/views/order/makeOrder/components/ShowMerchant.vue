@@ -54,7 +54,7 @@
         <!-- 所属维修分类 -->
         <el-table-column prop="category.name" label="所属维修分类" align="center" />
         <!-- 所属维修小类 -->
-        <el-table-column prop="subclass.name" label="所属维修小类" align="center" />
+        <!-- <el-table-column prop="subclass.name" label="所属维修小类" align="center" /> -->
         <!-- 评估价格 -->
         <el-table-column prop="price_fmt" label="评估价格" align="center" />
 
@@ -231,13 +231,17 @@ export default {
         resp.rows.map(item => {
           const arr = []
           if (item.images.length !== 0) {
-            item.headerUrl = item.images[0].fullPath
+            item.images.map(k => {
+              if (k !== null) {
+                arr.push(k.fullPath)
+              } else {
+                arr.push('https://img.cdjingchu.net/unfound.jpg')
+              }
+            })
+            item.headerUrl = arr[0]
           } else {
             item.headerUrl = ''
           }
-          item.images.map(k => {
-            arr.push(k.fullPath)
-          })
           item.imagesList = arr
         })
         this.merchantData = resp.rows

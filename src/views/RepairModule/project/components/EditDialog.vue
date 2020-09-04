@@ -36,7 +36,7 @@
 <script>
 import { assignExistField } from '@/utils'
 import CategoryApi from '@/api/category'
-import SubclassApi from '@/api/subclass'
+// import SubclassApi from '@/api/subclass'
 import RepairItemApi from '@/api/repairItem'
 export default {
   props: {
@@ -66,14 +66,14 @@ export default {
         price: '',
         repairMinute: '',
         sortNo: '',
-        subclassId: ''
+        categoryId: ''
       },
       rules: {
         name: [{ required: true, message: '请输入名称', trigger: 'blur,change' }],
         price: [{ required: true, message: '请输入指导价格', trigger: 'blur,change' }],
         repairMinute: [{ required: true, message: '请输入预计维修分钟数', trigger: 'blur,change' }],
         sortNo: [{ required: true, message: '请填写顺序', trigger: 'blur,change' }],
-        subclassId: [{ required: true, message: '请选择维修类型', trigger: 'blur,change' }]
+        categoryId: [{ required: true, message: '请选择维修分类', trigger: 'blur,change' }]
       },
       searchForms: {
         page: { page: 0, size: 1000 }
@@ -88,23 +88,23 @@ export default {
     this.custormerTypess()
   },
   methods: {
-    async subclassFun() {
-      const resp = await SubclassApi.page(this.subclassSearchForm)
-      if (resp.success) {
-        this.options.map(item => {
-          item.children.map(i => {
-            resp.rows.map(g => {
-              const obj = {}
-              if (g.category.id === i.value) {
-                obj.value = g.id
-                obj.label = g.name
-                i.children.push(obj)
-              }
-            })
-          })
-        })
-      }
-    },
+    // async subclassFun() {
+    //   const resp = await SubclassApi.page(this.subclassSearchForm)
+    //   if (resp.success) {
+    //     this.options.map(item => {
+    //       item.children.map(i => {
+    //         resp.rows.map(g => {
+    //           const obj = {}
+    //           if (g.category.id === i.value) {
+    //             obj.value = g.id
+    //             obj.label = g.name
+    //             i.children.push(obj)
+    //           }
+    //         })
+    //       })
+    //     })
+    //   }
+    // },
     // 维修分类
     async categoryList() {
       const resp = await CategoryApi.page(this.searchForms)
@@ -116,12 +116,12 @@ export default {
           if (item.type === 'ENTERPRISE') {
             obj.value = item.id
             obj.label = item.name
-            obj.children = []
+            // obj.children = []
             Earr.push(obj)
           } else if (item.type === 'FAMILY') {
             obj.value = item.id
             obj.label = item.name
-            obj.children = []
+            // obj.children = []
             Farr.push(obj)
           }
         })
@@ -132,7 +132,7 @@ export default {
             item.children = Farr
           }
         })
-        this.subclassFun()
+        // this.subclassFun()
       }
     },
     async custormerTypess() {
@@ -168,8 +168,8 @@ export default {
     handleOpen() {
       if (!this.$props.isAdd) {
         assignExistField(this.$props.data, this.form)
-        this.form.subclassId = this.$props.data.subclass.id
-        this.values = [this.$props.data.category.type, this.$props.data.category.id, this.$props.data.subclass.id]
+        this.form.categoryId = this.$props.data.category.id
+        this.values = [this.$props.data.category.type, this.$props.data.category.id]
       }
     },
     handleSubmit() {
@@ -186,7 +186,7 @@ export default {
       this.$emit('close')
     },
     handleChange(value) {
-      this.form.subclassId = value[2]
+      this.form.categoryId = value[1]
     }
   }
 }

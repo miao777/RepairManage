@@ -21,7 +21,9 @@ export default {
         filters: [
           { field: 'orderNo', op: 'EQ', value: '' },
           { field: 'orderStatus', op: 'EQ', value: '' },
-          { field: 'customerType', op: 'EQ', value: '' }
+          { field: 'customerType', op: 'EQ', value: '' },
+          { field: 'booking.enterprise.name', op: 'LIKE', value: '' },
+          { field: 'createDate_fmt', op: 'EQ', value: '' }
         ],
         page: { page: 0, size: 10, sorts: [{ field: 'applyTime', 'order': 'desc' }] }
       },
@@ -39,8 +41,14 @@ export default {
       if (page) {
         this.searchForm.page.page = page - 1
       }
+      const data = JSON.parse(JSON.stringify(this.searchForm))
+      if (data.filters[4].value.length > 0) {
+        data.filters.push({ field: 'createDate', op: 'GTE', value: data.filters[4].value[0] + ' 00:00:00' })
+        data.filters.push({ field: 'createDate', op: 'LTE', value: data.filters[4].value[1] + ' 23:59:59' })
+        data.filters.splice(4, 1)
+      }
       this.table.loading = true
-      const resp = await OrderApi.page(this.searchForm)
+      const resp = await OrderApi.page(data)
       if (resp.success) {
         if (resp.totalCount > 0 && resp.rows.length === 0) {
           this.fetchData(1)
@@ -65,7 +73,9 @@ export default {
       this.searchForm.filters = [
         { field: 'orderNo', op: 'EQ', value: '' },
         { field: 'orderStatus', op: 'EQ', value: '' },
-        { field: 'customerType', op: 'EQ', value: '' }
+        { field: 'customerType', op: 'EQ', value: '' },
+        { field: 'booking.enterprise.name', op: 'LIKE', value: '' },
+        { field: 'createDate_fmt', op: 'EQ', value: '' }
       ]
       this.searchForm.page = { page: 0, size: 10, sorts: [{ field: 'applyTime', 'order': 'desc' }] }
       this.fetchData()

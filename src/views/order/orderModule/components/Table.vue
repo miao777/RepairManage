@@ -31,6 +31,9 @@
             <el-form-item label="客户类型">
               <span>{{ props.row.customerType_fmt }}</span>
             </el-form-item>
+            <el-form-item v-if="props.row.customerType==='ENTERPRISE'" label="公司名称">
+              <span>{{ props.row.booking.enterprise.name }}</span>
+            </el-form-item>
             <el-form-item label="客户地址">
               <span>{{ props.row.booking.address.province.name }}{{ props.row.booking.address.city.name }}{{ props.row.booking.address.district.name }}{{ props.row.booking.address.address }}</span>
             </el-form-item>
@@ -116,12 +119,20 @@
       <el-table-column prop="completeTime_fmt" label="完成时间" min-width="160" align="center" sortable />
       <el-table-column label="操作" align="center" min-width="130">
         <template slot-scope="scope">
+          <!-- 取消订单 -->
+          <el-tooltip v-if="scope.row.orderStatus!=='CANCEL'" class="item" effect="dark" content="取消订单" placement="top-start">
+            <el-button type="primary" icon="el-icon-document-delete" circle @click="handleDeleteBtn(scope.row)" />
+          </el-tooltip>
           <el-tooltip v-if="(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='PAID')||(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='ASSIGN')||(scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='PAID') || (scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='ASSIGN')" type="success" icon="el-icon-edit" content="指派维修员" placement="top">
             <el-button type="primary" icon="el-icon-s-custom" circle @click="handlePerson(scope.row)" />
           </el-tooltip>
           <!-- <el-button type="primary" icon="el-icon-s-custom" @click="handlePerson(scope.row)">指派维修员</el-button> -->
           <el-tooltip v-if="scope.row.orderStatus!='CANCEL'" type="success" icon="el-icon-edit" content="查看维修项目" placement="top">
             <el-button type="success" icon="el-icon-edit" circle @click="handleChangePrise(scope.row)" />
+          </el-tooltip>
+          <!-- 删除订单 -->
+          <el-tooltip content="删除订单" placement="top-start">
+            <el-button type="danger" icon="el-icon-delete" circle @click="handleDetele(scope.row)" />
           </el-tooltip>
         </template>
       </el-table-column>
@@ -160,6 +171,7 @@
 import ShowMerchant from './ShowMerchant'
 import repairManApi from '@/api/repairMan'
 import orderApi from '@/api/order'
+import { MessageBox } from 'element-ui'
 
 export default {
   name: 'UserTable',
@@ -233,6 +245,44 @@ export default {
         this.choosePersonVisible = false
         this.$emit('search')
       }
+    },
+    async delete() {
+      const resp = await orderApi.delete(this.selectRow.id)
+      if (resp.success) {
+        this.$emit('search')
+      }
+    },
+    async deleteMethod(data) {
+      const resp = await orderApi.cancelOrder(data)
+      if (resp.success) {
+        this.$emit('search')
+      }
+    },
+    // 删除订单
+    handleDetele(row) {
+      this.selectRow = row
+      MessageBox.confirm(this.$t('common.alert.delete'), this.$t('common.please.confirm'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        type: 'warning'
+      }).then(() => {
+        this.delete()
+      }).catch(() => {})
+    },
+    // 删除事件
+    handleDeleteBtn(row) {
+      MessageBox.prompt('请填写取消订单的原因（必填）', {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
+        inputValidator: (value) => {
+          if (!value) {
+            return '请输入取消点订单原因'
+          }
+        }
+      }).then(({ value }) => {
+        const obj = { id: row.id, remark: value }
+        this.deleteMethod(obj)
+      }).catch(() => {})
     },
     // 指派维修人员确认按钮
     handleSubmit() {

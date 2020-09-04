@@ -77,7 +77,7 @@
       <!-- 交易渠道 -->
       <el-table-column prop="channel_fmt" label="交易渠道" min-width="90" align="center" />
       <!-- 交易金额 -->
-      <el-table-column prop="amount" label="交易金额" min-width="60" align="center" />
+      <el-table-column prop="amount_fmt" label="交易金额" min-width="60" align="center" />
       <!-- 手续费 -->
       <el-table-column prop="fee" label="手续费" min-width="60" align="center" />
       <!-- 支付状态 -->
