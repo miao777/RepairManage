@@ -89,3 +89,19 @@ div:focus {
 	margin-bottom: 0;
 	width: 48%;
 }
+.table-detail-expands label {
+  color: #5b6a80;
+  width: 150px;
+}
+
+.table-detail-expands .el-form-item {
+	margin-right: 0;
+  display: flex;
+  margin-bottom: 0;
+}
+.table-detail-expands .el-form-item__label{
+  width: 160px;
+}
+.table-detail-expands .el-form-item__content{
+  width: 100%;
+}

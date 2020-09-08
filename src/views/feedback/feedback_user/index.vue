@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import PosterApi from '@/api/poster'
+import FeedbackApi from '@/api/feedback.js'
 import SearchBar from './components/SearchBar'
 import Table from './components/Table'
 import Pagination from '@/components/Pagination'
@@ -17,14 +17,16 @@ export default {
     return {
       searchForm: {
         filters: [
-          { field: 'title', op: 'EQ', value: '' },
-          { field: 'type', op: 'EQ', value: '' }
+          { field: 'title', op: 'LIKE', value: '' },
+          { field: 'level', op: 'EQ', value: '' },
+          { field: 'name', op: 'LIKE', value: '' },
+          { field: 'mobileNo', op: 'LIKE', value: '' },
+          { field: 'status', op: 'EQ', value: '' }
         ],
         page: {
           page: 0,
           size: 10
         }
-        //  sorts: [{ field: 'sortNo', order: 'desc' }]
       },
       table: { loading: false, data: [], multiple: false, multipleSelection: [] }, // 表格的数据
       pagination: { pageNo: 1, pageSize: 10, totalCount: 0 }
@@ -37,9 +39,20 @@ export default {
     //   初始化数据（TableData）
     fetchData() {
       this.table.loading = true
-      PosterApi.page({ ...this.searchForm }, 0).then(res => {
+      FeedbackApi.feedbackpage({ ...this.searchForm }).then(res => {
         if (res.success) {
-          this.table.data = res.rows.sort(this.sortData)
+          res.rows.map(item => {
+            item.status = !item.status
+            if (item.images.length !== 0) {
+              const arr = []
+              item.images.map(k => {
+                arr.push(k.fullPath)
+              })
+              item.icon = arr[0]
+              item.iconarr = arr
+            }
+          })
+          this.table.data = res.rows
           this.pagination.pageNo = res.pageNo + 1
           this.pagination.pageSize = res.pageSize
           this.pagination.totalCount = res.totalCount
@@ -47,13 +60,13 @@ export default {
         this.table.loading = false
       })
     },
-    sortData(a, b) {
-      return a.sortNo - b.sortNo
-    },
     reset() {
       this.searchForm.filters = [
-        { field: 'title', op: 'EQ', value: '' },
-        { field: 'type', op: 'EQ', value: '' }
+        { field: 'title', op: 'LIKE', value: '' },
+        { field: 'level', op: 'EQ', value: '' },
+        { field: 'name', op: 'LIKE', value: '' },
+        { field: 'mobileNo', op: 'LIKE', value: '' },
+        { field: 'status', op: 'EQ', value: '' }
       ]
       this.searchForm.page = { page: 0, size: 10 }
       this.fetchData()

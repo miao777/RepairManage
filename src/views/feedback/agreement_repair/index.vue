@@ -17,8 +17,7 @@ export default {
     return {
       searchForm: {
         filters: [
-          { field: 'title', op: 'EQ', value: '' },
-          { field: 'type', op: 'EQ', value: '' }
+          { field: 'title', op: 'LIKE', value: '' }
         ],
         page: {
           page: 0,
@@ -37,7 +36,7 @@ export default {
     //   初始化数据（TableData）
     fetchData() {
       this.table.loading = true
-      PosterApi.page({ ...this.searchForm }, 0).then(res => {
+      PosterApi.page({ ...this.searchForm }, 2).then(res => {
         if (res.success) {
           this.table.data = res.rows.sort(this.sortData)
           this.pagination.pageNo = res.pageNo + 1
@@ -52,8 +51,7 @@ export default {
     },
     reset() {
       this.searchForm.filters = [
-        { field: 'title', op: 'EQ', value: '' },
-        { field: 'type', op: 'EQ', value: '' }
+        { field: 'title', op: 'LIKE', value: '' }
       ]
       this.searchForm.page = { page: 0, size: 10 }
       this.fetchData()

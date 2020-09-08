@@ -52,6 +52,12 @@ class PosterApi {
       })
     }
 
+    //     HOME_CAROUSEL("首页轮播"),
+    //  COMPANY_SUMMARY("企业简介"),
+    //  REPAIR_SERVICE_PROTOCOL("维修服务协议"),
+    //  THIRD_PARTY_PROTOCOL("第三者责任险协议"),
+    //  REPAIRE_PRICE_EXPLAIN("维修价格相关说明"),
+
     /**
    * @description 获取广告位列表数据
    * @param {Object} filters  {field	,op,value} value [EQ, NEQ, LIKE, LLIKE, RLIKE, GT, LT, GTE, LTE, IN, NOTIN, EXISTS, NEXISTS, BETWEEN, ISNULL, NOTNULL, EMPTY, NOTEMPTY, DISTINCT]
@@ -59,9 +65,10 @@ class PosterApi {
    * @static
    * @memberof CityApi
    */
-  static page = (data) => {
+  static page = (data, num) => {
+    const arr = [' HOME_CAROUSEL', ' COMPANY_SUMMARY', 'REPAIR_SERVICE_PROTOCOL', 'THIRD_PARTY_PROTOCOL', 'REPAIRE_PRICE_EXPLAIN']
     return request({
-      url: urlPath + 'page',
+      url: urlPath + 'page?type=' + arr[num],
       method: 'post',
       data
     })
