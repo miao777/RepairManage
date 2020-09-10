@@ -20,7 +20,14 @@
       <el-table-column label="用户类型" prop="customerType_fmt" width="80" />
       <el-table-column label="地址" prop="address.addresstext" min-width="230" show-overflow-tooltip />
       <el-table-column label="备注信息" prop="remark" min-width="200" show-overflow-tooltip />
-      <el-table-column label="状态" prop="status_fmt" min-width="80" align="center" />
+      <el-table-column label="状态" prop="status_fmt" min-width="90" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.status==='BOOKING'" type="danger">{{ scope.row.status_fmt }}</el-tag>
+          <el-tag v-if="scope.row.status==='POSTING'" type="warning">{{ scope.row.status_fmt }}</el-tag>
+          <el-tag v-if="scope.row.status==='CANCEL'" type="info" style="border-color:#e9e9eb;background-color:#f4f4f5;color:#909399;">{{ scope.row.status_fmt }}</el-tag>
+          <el-tag v-if="scope.row.status==='COMPLETE'" type="success">{{ scope.row.status_fmt }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" prop="createDate_fmt" min-width="160" align="center" sortable />
       <el-table-column label="期待上门时间" prop="doorstepTime_fmt" min-width="160" align="center" sortable />
       <el-table-column label="服务项目" align="center" width="160">
@@ -36,7 +43,7 @@
           <!-- <span v-if="scope.row.status === 'CANCEL'">已取消</span>
           <span v-if="scope.row.status === 'POSTING'">已创建</span> -->
           <!-- 取消预约 -->
-          <el-tooltip v-if="scope.row.status !== 'CANCEL'" class="item" effect="dark" content="取消预约" placement="top-start">
+          <el-tooltip v-if="scope.row.status == 'BOOKING' || scope.row.status === 'POSTING'" class="item" effect="dark" content="取消预约" placement="top-start">
             <el-button type="primary" icon="el-icon-document-delete" circle @click="handleDeleteBtn(scope.row)" />
           </el-tooltip>
           <!-- 删除订单 -->

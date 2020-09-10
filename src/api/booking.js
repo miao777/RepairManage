@@ -89,7 +89,7 @@ class BookingApi {
    * @description '取消订单'
    * @param {Object}
    * @static
-   * @memberof OrderApi
+   * @memberof BookingApi
    */
   static cancelOrder = (data) => {
     return request({
@@ -103,7 +103,7 @@ class BookingApi {
    * @description '删除订单'
    * @param {String} id
    * @static
-   * @memberof OrderApi
+   * @memberof BookingApi
    */
   static delete = (id) => {
     return request({
@@ -111,5 +111,18 @@ class BookingApi {
       method: 'delete'
     })
   }
+
+  /**
+     * @description '获取订单状态'
+     * @param
+     * @static
+     * @memberof BookingApi
+    */
+   static getOrderstatus = () => {
+     return request({
+       url: UrlPath + 'list/status',
+       method: 'get'
+     })
+   }
 }
 export default BookingApi

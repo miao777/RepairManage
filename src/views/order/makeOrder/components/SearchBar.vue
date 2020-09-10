@@ -14,8 +14,9 @@
         <el-input v-model="form.filters[1].value" placeholder="输入联系电话" />
       </el-form-item>
       <el-form-item label="订单状态" prop="filters[2].value">
-        <el-select v-model="form.filters[2].value" :placeholder="$t('order.orderState')" clearable>
-          <el-option v-for="item in statuses" :key="item.label" :label="item.label" :value="item.value" />
+        <el-select v-model="form.filters[2].value" placeholder="请选择订单状态" clearable>
+          <el-option label="全部" value="" />
+          <el-option v-for="item in statuses" :key="item.name" :label="item.value" :value="item.name" />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -32,7 +33,7 @@
 </template>
 
 <script>
-
+import BookingApi from '@/api/booking'
 export default {
   props: {
     form: {
@@ -44,12 +45,7 @@ export default {
     return {
       isAddShow: false,
       isSortShow: false,
-      statuses: [
-        { label: '全部', value: '' },
-        { label: '预约中', value: 'BOOKING' },
-        { label: '订单执行中', value: 'POSTING' },
-        { label: '取消预约', value: 'CANCEL' }
-      ],
+      statuses: [],
       types: [],
       keys: [],
       rules: {
@@ -62,7 +58,9 @@ export default {
       }
     }
   },
-  created() {},
+  created() {
+    this.getOrderstatus()
+  },
   methods: {
     handleSearch() {
       this.$refs.form.validate(valid => {
@@ -70,6 +68,13 @@ export default {
           this.$emit('search')
         }
       })
+    },
+    async getOrderstatus() {
+      const resp = await BookingApi.getOrderstatus()
+      if (resp.success) {
+        this.statuses = resp.rows
+        console.log(resp.rows, '121212')
+      }
     },
     handleReset() {
       this.$refs.form.resetFields()
