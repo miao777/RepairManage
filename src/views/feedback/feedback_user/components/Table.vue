@@ -59,12 +59,12 @@
           </el-image>
         </template>
       </el-table-column>
-      <!-- 用户名 -->
-      <el-table-column label="用户名" prop="name" width="130" align="center" />
+      <!-- 反馈人 -->
+      <el-table-column label="反馈人" prop="name" width="130" align="center" />
       <!-- 电话 -->
       <el-table-column label="电话" prop="mobileNo" width="120" align="center" />
       <!-- 反馈类型 -->
-      <el-table-column label="反馈类型" prop="title.title" width="190" align="center" />
+      <el-table-column label="反馈标题" prop="title.title" width="190" align="center" />
       <!-- 反馈内容 -->
       <el-table-column label="反馈内容" prop="content" show-overflow-tooltip />
       <!-- 状态 -->

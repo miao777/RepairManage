@@ -63,7 +63,7 @@ class PosterApi {
    * @param {Object} filters  {field	,op,value} value [EQ, NEQ, LIKE, LLIKE, RLIKE, GT, LT, GTE, LTE, IN, NOTIN, EXISTS, NEXISTS, BETWEEN, ISNULL, NOTNULL, EMPTY, NOTEMPTY, DISTINCT]
    * @param {Object} page  {page	,size,sorts } sort [ asc, desc]
    * @static
-   * @memberof CityApi
+   * @memberof PosterApi
    */
   static page = (data, num) => {
     const arr = [' HOME_CAROUSEL', ' COMPANY_SUMMARY', 'REPAIR_SERVICE_PROTOCOL', 'THIRD_PARTY_PROTOCOL', 'REPAIRE_PRICE_EXPLAIN']
@@ -71,6 +71,19 @@ class PosterApi {
       url: urlPath + 'page?type=' + arr[num],
       method: 'post',
       data
+    })
+  }
+
+  /**
+   * @description '是否启用'
+   * @param id id
+   * @static
+   * @memberof PosterApi
+   */
+  static updatestatus = (id) => {
+    return request({
+      url: urlPath + 'toggle/status/' + id,
+      method: 'put'
     })
   }
 }

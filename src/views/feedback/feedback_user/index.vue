@@ -17,8 +17,8 @@ export default {
     return {
       searchForm: {
         filters: [
-          { field: 'title', op: 'LIKE', value: '' },
-          { field: 'level', op: 'EQ', value: '' },
+          { field: 'title.title', op: 'LIKE', value: '' },
+          { field: 'title.level', op: 'EQ', value: '' },
           { field: 'name', op: 'LIKE', value: '' },
           { field: 'mobileNo', op: 'LIKE', value: '' },
           { field: 'status', op: 'EQ', value: '' }
@@ -62,8 +62,8 @@ export default {
     },
     reset() {
       this.searchForm.filters = [
-        { field: 'title', op: 'LIKE', value: '' },
-        { field: 'level', op: 'EQ', value: '' },
+        { field: 'title.title', op: 'LIKE', value: '' },
+        { field: 'title.level', op: 'EQ', value: '' },
         { field: 'name', op: 'LIKE', value: '' },
         { field: 'mobileNo', op: 'LIKE', value: '' },
         { field: 'status', op: 'EQ', value: '' }

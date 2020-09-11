@@ -38,7 +38,7 @@
       <el-table-column label="操作" align="center" width="180">
         <template slot-scope="scope">
           <el-tooltip v-if="scope.row.status === 'BOOKING'" content="创建订单" placement="top">
-            <el-button type="success" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
+            <el-button type="success" icon="el-icon-plus" circle @click="handleEditDialogOpen(scope.row)" />
           </el-tooltip>
           <!-- <span v-if="scope.row.status === 'CANCEL'">已取消</span>
           <span v-if="scope.row.status === 'POSTING'">已创建</span> -->

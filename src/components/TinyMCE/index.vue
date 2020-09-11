@@ -125,11 +125,11 @@ export default {
             loading.close()
             if (resp.success) {
               if (meta.filetype === 'file') {
-                callback(resp.data.url, { text: file.name, title: file.name })
+                callback(resp.data.fullPath, { text: file.name, title: file.name })
               } else if (meta.filetype === 'image') {
-                callback(resp.data.url, { alt: file.name, title: file.name })
+                callback(resp.data.fullPath, { alt: file.name, title: file.name })
               } else if (meta.filetype === 'media') {
-                callback(resp.data.url, { source2: resp.data.url, poster: '' })
+                callback(resp.data.fullPath, { source2: resp.data.url, poster: '' })
               }
               that.$emit('picker', resp)
             }

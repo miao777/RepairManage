@@ -20,6 +20,12 @@
       <el-table-column label="标题" prop="title" width="300" align="center" />
       <!-- 简介 -->
       <el-table-column label="简介" prop="summary" align="center" show-overflow-tooltip />
+      <!-- 状态 -->
+      <el-table-column label="是否启用" width="90" align="center">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.status" active-color="#0fb336" @change="hanldeToggleStatus(scope.row)" />
+        </template>
+      </el-table-column>
       <!-- 排序 -->
       <el-table-column label="序号" prop="sortNo" align="center" width="90" sortable />
 
@@ -91,6 +97,16 @@ export default {
     handleEditDialogClose() {
       this.isEditShow = false
       this.$emit('search')
+    },
+    // 状态切换
+    async updatestatus(id) {
+      const resp = await PosterApi.updatestatus(id)
+      if (resp.success) {
+        this.$emit('search')
+      }
+    },
+    hanldeToggleStatus(row) {
+      this.updatestatus(row.id)
     }
   }
 }
