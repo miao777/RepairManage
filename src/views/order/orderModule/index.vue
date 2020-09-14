@@ -53,6 +53,9 @@ export default {
         if (resp.totalCount > 0 && resp.rows.length === 0) {
           this.fetchData(1)
         }
+        resp.rows.map(item => {
+          item.repairimg = ''
+        })
         this.table.data = resp.rows
         this.pagination.pageNo = resp.pageNo + 1
         this.pagination.pageSize = resp.pageSize

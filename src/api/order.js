@@ -41,8 +41,6 @@ class OrderApi {
    * @memberof OrderApi
    */
   static editPrice =(id, data) => {
-    console.log(id, '12121212')
-    console.log(data, 'fhdsjhfjdksh')
     return request({
       url: urlPath + 'edit/price/' + id,
       method: 'put',

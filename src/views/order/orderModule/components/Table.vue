@@ -17,6 +17,7 @@
       <el-table-column type="index" width="30" label="#" align="center" />
       <!-- 下拉框 -->
       <el-table-column type="expand" width="35" class-name="table-detail">
+
         <template slot-scope="props">
           <el-form label-position="left" inline class="table-detail-expand">
             <el-form-item label="订单号">
@@ -95,8 +96,8 @@
       </el-table-column>
       <el-table-column prop="orderNo" label="订单号" min-width="150" />
       <el-table-column prop="booking.address.contactMan" label="姓名" width="100" />
-      <el-table-column prop="booking.address.mobileNo" label="联系电话" width="150" />
-      <el-table-column prop="customerType_fmt" label="客户类型" min-width="120" />
+      <el-table-column prop="booking.address.mobileNo" label="联系电话" width="100" align="center" />
+      <el-table-column prop="customerType_fmt" label="客户类型" width="80" />
       <el-table-column prop="orderStatus_fmt" label="订单状态" min-width="120" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.orderStatus==='PENDING'||scope.row.orderStatus==='CONFIRM_ORDER'||scope.row.orderStatus==='CONFIRM_COMPLETE'">{{ scope.row.orderStatus_fmt }}</el-tag>
@@ -109,7 +110,7 @@
       </el-table-column>
       <el-table-column prop="repairMinute" label="维修时长" min-width="90" align="center" />
       <el-table-column prop="totalPrice_fmt" label="维修总价" min-width="90" align="center" />
-      <el-table-column label="维修师傅" width="110" align="center">
+      <el-table-column label="维修师傅" width="90" align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.repairMan&&scope.row.repairMan.user.name">{{ scope.row.repairMan.user.name }}</span>
           <span v-else>未指派</span>
@@ -117,7 +118,12 @@
       </el-table-column>
       <el-table-column prop="doorstepTime_fmt" label="上门时间" min-width="160" align="center" sortable />
       <el-table-column prop="completeTime_fmt" label="完成时间" min-width="160" align="center" sortable />
-      <el-table-column label="操作" align="center" min-width="130">
+      <el-table-column label="维修进度" width="80" align="center">
+        <template slot-scope="scope">
+          <el-button type="text" @click="getOrderType(scope.row)">查看进度</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" min-width="170">
         <template slot-scope="scope">
           <!-- 取消订单 -->
           <el-tooltip v-if="scope.row.orderStatus!=='CANCEL'" class="item" effect="dark" content="取消订单" placement="top-start">
@@ -150,6 +156,16 @@
         }
       "
     />
+
+    <Showimg
+      :show.sync="changePriseVisibles"
+      :grid-data="gridData"
+      @handleBindClose="
+        () => {
+          changePriseVisibles=false
+        }
+      "
+    />
     <!-- 指派维修人员 -->
     <el-dialog title="指派维修人员" width="30%" :visible.sync="choosePersonVisible">
       <el-form ref="form" :model="form" status-icon :rules="rules" label-width="100px">
@@ -169,13 +185,14 @@
 
 <script>
 import ShowMerchant from './ShowMerchant'
+import Showimg from './Showimg'
 import repairManApi from '@/api/repairMan'
 import orderApi from '@/api/order'
 import { MessageBox } from 'element-ui'
 
 export default {
   name: 'UserTable',
-  components: { ShowMerchant },
+  components: { ShowMerchant, Showimg },
   props: {
     loading: {
       type: Boolean,
@@ -192,6 +209,8 @@ export default {
   },
   data() {
     return {
+      changePriseVisibles: false,
+      gridData: [],
       isEditShow: false,
       selectRow: {},
       choosePersonVisible: false,
@@ -324,6 +343,26 @@ export default {
     },
     handleSelectionChange(rows) {
       this.$emit('selection-change', rows)
+    },
+    async getOrderType(row) {
+      const resp = await orderApi.getOrderType(row.id)
+      if (resp.success) {
+        resp.rows.map(item => {
+          if (item.images && item.images.length !== 0) {
+            item.img = item.images[0].fullPath
+            const arr = []
+            item.images.map(i => {
+              arr.push(i.fullPath)
+            })
+            item.imgarray = arr
+          } else {
+            item.img = ''
+            item.imgarray = []
+          }
+        })
+        this.gridData = resp.rows
+        this.changePriseVisibles = true
+      }
     }
   }
 }
