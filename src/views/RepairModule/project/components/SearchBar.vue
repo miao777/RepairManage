@@ -13,16 +13,13 @@
       <el-form-item label="维修分类" prop="filters[1].value">
         <el-input v-model="form.filters[1].value" placeholder="维修分类" />
       </el-form-item>
-      <el-form-item label="维修小类" prop="filters[2].value">
-        <el-input v-model="form.filters[2].value" placeholder="维修小类" />
-      </el-form-item>
-      <el-form-item label="用户类型" prop="filters[3].value">
-        <el-select v-model="form.filters[3].value">
+      <el-form-item label="用户类型" prop="filters[2].value">
+        <el-select v-model="form.filters[2].value">
           <el-option v-for="item in customerListserch" :key="item.name" :label="item.value" :value="item.name" />
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="filters[4].value">
-        <el-select v-model="form.filters[4].value">
+      <el-form-item label="状态" prop="filters[3].value">
+        <el-select v-model="form.filters[3].value">
           <el-option v-for="(item,i) in statuses" :key="i" :value="item.value" :label="item.label" />
         </el-select>
       </el-form-item>

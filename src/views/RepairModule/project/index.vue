@@ -20,7 +20,6 @@ export default {
         filters: [
           { field: 'name', op: 'LIKE', value: '' },
           { field: 'category.name', op: 'EQ', value: '' },
-          { field: 'subclass.name', op: 'EQ', value: '' },
           { field: 'type', op: 'EQ', value: '' },
           { field: 'isShow', op: 'EQ', value: '' }
         ],
@@ -50,7 +49,6 @@ export default {
       this.searchForm.filters = [
         { field: 'name', op: 'LIKE', value: '' },
         { field: 'category.name', op: 'EQ', value: '' },
-        { field: 'subclass.name', op: 'EQ', value: '' },
         { field: 'type', op: 'EQ', value: '' },
         { field: 'isShow', op: 'EQ', value: '' }
       ]
