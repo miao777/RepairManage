@@ -16,26 +16,26 @@
     >
       <el-table-column type="index" label="#" align="center" width="40px" />
       <!-- 项目 -->
-      <el-table-column label="项目" prop="name" />
+      <el-table-column label="项目" prop="name" width="320" />
       <!-- 状态 -->
-      <el-table-column label="显示状态" align="center">
+      <el-table-column label="显示状态" align="center" width="90">
         <template slot-scope="scope">
           <span v-if="scope.row.isShow">显示</span>
           <span v-else>不显示</span>
         </template>
       </el-table-column>
       <!-- 启停 -->
-      <el-table-column label="显示启停" prop="isShow" align="center">
+      <el-table-column label="显示启停" prop="isShow" align="center" width="90">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.isShow" :active-value="true" active-color="#13ce66" @change="change(scope.row)" />
         </template>
       </el-table-column>
       <!-- 排序 -->
-      <el-table-column label="序号" prop="sortNo" align="center" />
+      <el-table-column label="序号" prop="sortNo" align="center" width="90" />
       <!-- 维修分类（关联） -->
-      <el-table-column label="维修分类（关联）" prop="category.name" />
+      <el-table-column label="维修分类（关联）" prop="category.name" align="center" />
       <!-- 用户类型（关联） -->
-      <el-table-column label="用户类型（关联）" prop="category.type_fmt" />
+      <el-table-column label="用户类型（关联）" prop="category.type_fmt" align="center" />
       <!-- 维修小类（关联） -->
       <!-- <el-table-column label="维修小类（关联）" prop="subclass.name" /> -->
       <!-- 操作 -->

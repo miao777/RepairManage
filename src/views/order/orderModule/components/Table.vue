@@ -96,7 +96,7 @@
       </el-table-column>
       <el-table-column prop="orderNo" label="订单号" min-width="150" />
       <el-table-column prop="booking.address.contactMan" label="姓名" width="100" />
-      <el-table-column prop="booking.address.mobileNo" label="联系电话" width="100" align="center" />
+      <el-table-column prop="booking.address.mobileNo" label="联系电话" width="110" align="center" />
       <el-table-column prop="customerType_fmt" label="客户类型" width="80" />
       <el-table-column prop="orderStatus_fmt" label="订单状态" min-width="120" align="center">
         <template slot-scope="scope">

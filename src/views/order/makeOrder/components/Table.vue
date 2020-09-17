@@ -16,7 +16,7 @@
     >
       <el-table-column type="index" label="#" align="center" width="40px" />
       <el-table-column label="姓名" prop="address.contactMan" />
-      <el-table-column label="联系电话" prop="address.mobileNo" min-width="90" />
+      <el-table-column label="联系电话" prop="address.mobileNo" width="110" align="center" />
       <el-table-column label="用户类型" prop="customerType_fmt" width="80" />
       <el-table-column label="地址" prop="address.addresstext" min-width="230" show-overflow-tooltip />
       <el-table-column label="备注信息" prop="remark" min-width="200" show-overflow-tooltip />
