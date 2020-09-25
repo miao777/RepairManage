@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      title: '小工匠房屋维修管理系统',
+      title: '家维修后台管理系统',
       logo: Logo
     }
   },

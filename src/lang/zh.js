@@ -66,7 +66,7 @@ export default {
     }
   },
   login: {
-    title: '欢迎使用小工匠房屋维修管理系统',
+    title: '欢迎使用家维后台管理系统',
     tip: '系统登录',
     version: 'V 1.10',
     login: '登　　录',
