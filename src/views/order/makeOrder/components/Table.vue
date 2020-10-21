@@ -28,7 +28,7 @@
           <el-tag v-if="scope.row.status==='COMPLETE'" type="success">{{ scope.row.status_fmt }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="支付方式" prop="payMode_fmt" min-width="90" align="center">
+      <el-table-column label="支付方式" prop="payMode_fmt" min-width="100" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.payMode==='AFTER'">{{ scope.row.payMode_fmt }}</el-tag>
           <el-tag v-if="scope.row.payMode==='BEFORE'" type="success">{{ scope.row.payMode_fmt }}</el-tag>
