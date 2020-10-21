@@ -87,6 +87,9 @@
               <span v-if="props.row.star!=''">{{ props.row.star }}</span>
               <span v-else>未打分</span>
             </el-form-item>
+            <el-form-item label="支付方式">
+              <span style="color:red;">{{ props.row.payMode_fmt }}</span>
+            </el-form-item>
             <el-form-item label="留言">
               <span v-if="props.row.comment!=''">{{ props.row.comment }}</span>
               <span v-else>未留言</span>
@@ -129,7 +132,7 @@
           <el-tooltip v-if="scope.row.orderStatus!=='CANCEL'" class="item" effect="dark" content="取消订单" placement="top-start">
             <el-button type="primary" icon="el-icon-document-delete" circle @click="handleDeleteBtn(scope.row)" />
           </el-tooltip>
-          <el-tooltip v-if="(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='PAID')||(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='ASSIGN')||(scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='PAID') || (scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='ASSIGN')" type="success" icon="el-icon-edit" content="指派维修员" placement="top">
+          <el-tooltip v-if="(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='PAID')||(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='ASSIGN')||(scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='PAID') || (scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='ASSIGN')||( scope.row.orderStatus==='CONFIRM_ORDER'&&scope.row.payMode==='AFTER')||( scope.row.orderStatus==='ASSIGN'&&scope.row.payMode==='AFTER')" type="success" icon="el-icon-edit" content="指派维修员" placement="top">
             <el-button type="primary" icon="el-icon-s-custom" circle @click="handlePerson(scope.row)" />
           </el-tooltip>
           <!-- <el-button type="primary" icon="el-icon-s-custom" @click="handlePerson(scope.row)">指派维修员</el-button> -->

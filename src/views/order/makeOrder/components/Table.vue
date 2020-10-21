@@ -28,6 +28,12 @@
           <el-tag v-if="scope.row.status==='COMPLETE'" type="success">{{ scope.row.status_fmt }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column label="支付方式" prop="payMode_fmt" min-width="90" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.payMode==='AFTER'">{{ scope.row.payMode_fmt }}</el-tag>
+          <el-tag v-if="scope.row.payMode==='BEFORE'" type="success">{{ scope.row.payMode_fmt }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" prop="createDate_fmt" min-width="160" align="center" sortable />
       <el-table-column label="期待上门时间" prop="doorstepTime_fmt" min-width="160" align="center" sortable />
       <el-table-column label="服务项目" align="center" width="160">
@@ -53,6 +59,27 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!-- 选择支付方式 -->
+    <el-dialog
+      title="确认创建订单？"
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      :before-close="handleCloseds"
+      :close-on-click-modal="false"
+    >
+      <p style="font-size:15px;margin-top:-6px;color:red;"><i class="el-icon-warning" /> 请选择支付方式</p>
+      <div style="width：100%;text-align:center;margin-top:30px;">
+        <el-radio v-model="radio" :label="radioarr[0]&&radioarr[0].name" style="margin-right:0;margin-bottom:20px;display:inline-block;width:80%;" border size="small">{{ radioarr[0]&&radioarr[0].value }}</el-radio>
+        <br>
+        <el-radio v-model="radio" style="display:inline-block;width:80%;" :label="radioarr[1]&&radioarr[1].name" border size="small">{{ radioarr[1]&&radioarr[1].value }}</el-radio>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handleCloseds">取 消</el-button>
+        <el-button type="primary" @click="addOrder">确 定</el-button>
+      </span>
+    </el-dialog>
+
     <!-- 查看项目 -->
     <show-merchant :show.sync="enterpriserighttable.visible" :shop-id="enterpriserighttable.id" :shop-type="enterpriserighttable.type" @handleBindClose="handleBindClose" />
   </div>
@@ -78,7 +105,10 @@ export default {
   data() {
     return {
       selectRow: {},
-      enterpriserighttable: { visible: false, id: '', type: '' }
+      enterpriserighttable: { visible: false, id: '', type: '' },
+      centerDialogVisible: false,
+      radio: 'BEFORE',
+      radioarr: []
     }
   },
   computed: {
@@ -86,19 +116,25 @@ export default {
       return window.innerHeight - 170
     }
   },
+  created() {
+    this.getordermode()
+  },
   methods: {
+    async getordermode() {
+      const resp = await OrderApi.orderMode()
+      if (resp.success) {
+        this.radioarr = resp.rows
+      }
+    },
+    handleCloseds() {
+      this.centerDialogVisible = false
+      this.radio = 'BEFORE'
+    },
     handleEditDialogOpen(row) {
       this.selectRow = row
-      MessageBox.confirm('确认创建订单？', {
-        confirmButtonText: this.$t('common.confirm'),
-        cancelButtonText: this.$t('common.cancel'),
-        type: 'warning'
-      })
-        .then(() => {
-          // 创建订单
-          this.addOrder()
-        })
-        .catch(() => {})
+      // 获取用户选择支付方式
+      this.radio = row.payMode
+      this.centerDialogVisible = true
     },
     // 创建订单
     async addOrder() {
@@ -122,10 +158,12 @@ export default {
           fixPriceVos: arr,
           orderBookingId: this.selectRow.id,
           remark: '',
-          repairMinute: time
+          repairMinute: time,
+          payMode: this.radio
         }
         const res = await OrderApi.add(obj)
         if (res.success) {
+          this.handleCloseds()
           this.$message({
             message: '订单生成成功',
             type: 'success'

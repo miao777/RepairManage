@@ -90,6 +90,19 @@ class OrderApi {
  }
 
  /**
+   * @description '支付方式'
+   * @param
+   * @static
+   * @memberof OrderApi
+  */
+ static orderMode =() => {
+   return request({
+     url: urlPath + 'list/pay/mode',
+     method: 'get'
+   })
+ }
+
+ /**
   * @description '订单状态查询'
   * @param {String} id 'id'
   * @static
