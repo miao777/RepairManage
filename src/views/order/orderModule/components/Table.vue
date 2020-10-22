@@ -88,7 +88,8 @@
               <span v-else>未打分</span>
             </el-form-item>
             <el-form-item label="支付方式">
-              <span style="color:red;">{{ props.row.payMode_fmt }}</span>
+              <el-tag v-if="props.row.payMode==='AFTER'">{{ props.row.payMode_fmt }}</el-tag>
+              <el-tag v-if="props.row.payMode==='BEFORE'" type="success">{{ props.row.payMode_fmt }}</el-tag>
             </el-form-item>
             <el-form-item label="留言">
               <span v-if="props.row.comment!=''">{{ props.row.comment }}</span>
