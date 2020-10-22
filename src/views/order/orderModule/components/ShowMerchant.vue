@@ -44,7 +44,7 @@
         <!-- 操作 -->
         <el-table-column label="操作" align="center" width="130">
           <template slot-scope="scope">
-            <el-tooltip :content="$t('common.edit')" placement="top">
+            <el-tooltip v-if="scope.row.order.orderStatus!=='CONFIRM_COMPLETE' && scope.row.order.orderStatus!='CANCEL'" :content="$t('common.edit')" placement="top">
               <el-button type="primary" icon="el-icon-edit" circle @click="handleEditDialogOpen(scope.row)" />
             </el-tooltip>
           </template>
@@ -173,6 +173,7 @@ export default {
     },
     // 修改
     handleEditDialogOpen(row) {
+      console.log(row, '111111')
       this.titles = '修改'
       this.selectRow = row // 改变
       this.isEditShow = true

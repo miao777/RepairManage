@@ -20,7 +20,7 @@
       <el-table-column label="用户类型" prop="customerType_fmt" width="80" />
       <el-table-column label="地址" prop="address.addresstext" min-width="230" show-overflow-tooltip />
       <el-table-column label="备注信息" prop="remark" min-width="200" show-overflow-tooltip />
-      <el-table-column label="状态" prop="status_fmt" min-width="90" align="center">
+      <el-table-column label="状态" prop="status_fmt" min-width="100" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.status==='BOOKING'" type="danger">{{ scope.row.status_fmt }}</el-tag>
           <el-tag v-if="scope.row.status==='POSTING'" type="warning">{{ scope.row.status_fmt }}</el-tag>
@@ -36,7 +36,7 @@
       </el-table-column>
       <el-table-column label="创建时间" prop="createDate_fmt" min-width="160" align="center" sortable />
       <el-table-column label="期待上门时间" prop="doorstepTime_fmt" min-width="160" align="center" sortable />
-      <el-table-column label="服务项目" align="center" width="160">
+      <el-table-column label="服务项目" align="center" width="120">
         <template slot-scope="scope">
           <el-link type="primary" @click="openService(scope.row)">查看维修项目</el-link>
         </template>

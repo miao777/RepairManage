@@ -130,14 +130,14 @@
       <el-table-column label="操作" align="center" min-width="170">
         <template slot-scope="scope">
           <!-- 取消订单 -->
-          <el-tooltip v-if="scope.row.orderStatus!=='CANCEL'" class="item" effect="dark" content="取消订单" placement="top-start">
+          <el-tooltip v-if="scope.row.orderStatus!=='CANCEL' && scope.row.orderStatus!=='CONFIRM_COMPLETE'" class="item" effect="dark" content="取消订单" placement="top-start">
             <el-button type="primary" icon="el-icon-document-delete" circle @click="handleDeleteBtn(scope.row)" />
           </el-tooltip>
           <el-tooltip v-if="(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='PAID')||(scope.row.customerType==='ENTERPRISE'&& scope.row.orderStatus==='ASSIGN')||(scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='PAID') || (scope.row.customerType==='FAMILY'&& scope.row.orderStatus==='ASSIGN')||( scope.row.orderStatus==='CONFIRM_ORDER'&&scope.row.payMode==='AFTER')||( scope.row.orderStatus==='ASSIGN'&&scope.row.payMode==='AFTER')" type="success" icon="el-icon-edit" content="指派维修员" placement="top">
             <el-button type="primary" icon="el-icon-s-custom" circle @click="handlePerson(scope.row)" />
           </el-tooltip>
           <!-- <el-button type="primary" icon="el-icon-s-custom" @click="handlePerson(scope.row)">指派维修员</el-button> -->
-          <el-tooltip v-if="scope.row.orderStatus!='CANCEL'" type="success" icon="el-icon-edit" content="查看维修项目" placement="top">
+          <el-tooltip type="success" icon="el-icon-edit" content="查看维修项目" placement="top">
             <el-button type="success" icon="el-icon-edit" circle @click="handleChangePrise(scope.row)" />
           </el-tooltip>
           <!-- 删除订单 -->
